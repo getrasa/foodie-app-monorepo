@@ -1,0 +1,1 @@
+Get DB up: docker compose -f compose.db.yml up -d

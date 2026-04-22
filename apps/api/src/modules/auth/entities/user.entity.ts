@@ -1,7 +1,6 @@
 import {
   Collection,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryKey,
   Property,
@@ -9,7 +8,6 @@ import {
 import { v4 } from 'uuid';
 import type { Account } from './account.entity';
 import type { Session } from './session.entity';
-import type { PatreonMember } from '../../patreon/entities/patreon-member.entity';
 
 @Entity({ tableName: 'user' })
 export class User {
@@ -51,7 +49,4 @@ export class User {
 
   @OneToMany('Account', 'user')
   accounts = new Collection<Account>(this);
-
-  @ManyToOne('PatreonMember', { nullable: true, fieldName: 'patreonMemberId' })
-  patreonMember?: PatreonMember;
 }
