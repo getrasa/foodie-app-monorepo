@@ -11,7 +11,7 @@ import { useState } from "react";
 import { createQueryClient } from "#/lib/query-client";
 
 const theme = createTheme({
-  primaryColor: "pink",
+  primaryColor: "orange",
 });
 
 export const Route = createRootRoute({
