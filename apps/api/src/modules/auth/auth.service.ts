@@ -6,10 +6,56 @@ import { mikroOrmAdapter } from 'better-auth-mikro-orm';
 import { MikroORM } from '@mikro-orm/core';
 import { Resend } from 'resend';
 
+function createBetterAuth(
+  orm: MikroORM,
+  configService: ConfigService,
+  resend: Resend,
+) {
+  const emailFrom = configService.get('email.from');
+  const webAppUrl = configService.get('WEB_APP_URL');
+  const railwayFrontendUrl = process.env.RAILWAY_FRONTEND_URL;
+
+  return betterAuth({
+    basePath: "/api/auth",
+    trustedOrigins: [
+      "http://localhost:3000",
+      "https://localhost:3002",
+      webAppUrl,
+      railwayFrontendUrl,
+      process.env.UNIFIED_PLAYER_URL,
+    ].filter(Boolean),
+    database: mikroOrmAdapter(orm),
+
+    plugins: [
+      emailOTP({
+        sendVerificationOTP: async ({ email, otp, type }) => {
+          await resend.emails.send({
+            from: `LustorVR <${emailFrom}>`,
+            to: email,
+            subject: type === 'sign-in' ? 'LustorVR - Your login code' : 'LustorVR - Verify your email',
+            html: `<p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 5 minutes.</p>`,
+          });
+        },
+      }),
+      admin(),
+    ],
+
+    advanced: {
+      database: {
+        generateId: false,
+      },
+      crossSubDomainCookies: {
+        enabled: !!process.env.COOKIE_DOMAIN,
+        domain: process.env.COOKIE_DOMAIN,
+      },
+    },
+  });
+}
+
 @Injectable()
 export class AuthService implements OnModuleInit {
-  private auth: ReturnType<typeof betterAuth>;
-  private resend: Resend;
+  private auth!: ReturnType<typeof createBetterAuth>;
+  private resend!: Resend;
 
   constructor(
     private readonly configService: ConfigService,
@@ -18,50 +64,7 @@ export class AuthService implements OnModuleInit {
 
   onModuleInit() {
     this.resend = new Resend(this.configService.get('email.resendKey'));
-    this.auth = this.initializeAuth();
-  }
-
-  private initializeAuth() {
-    const emailFrom = this.configService.get('email.from');
-
-    const webAppUrl = this.configService.get('WEB_APP_URL');
-    const railwayFrontendUrl = process.env.RAILWAY_FRONTEND_URL;
-
-    return betterAuth({
-      basePath: "/api/auth",
-      trustedOrigins: [
-        "http://localhost:3000",
-        "https://localhost:3002",
-        webAppUrl,
-        railwayFrontendUrl,
-        process.env.UNIFIED_PLAYER_URL,
-      ].filter(Boolean),
-      database: mikroOrmAdapter(this.orm),
-
-      plugins: [
-        emailOTP({
-          sendVerificationOTP: async ({ email, otp, type }) => {
-            await this.resend.emails.send({
-              from: `LustorVR <${emailFrom}>`,
-              to: email,
-              subject: type === 'sign-in' ? 'LustorVR - Your login code' : 'LustorVR - Verify your email',
-              html: `<p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 5 minutes.</p>`,
-            });
-          },
-        }),
-        admin(),
-      ],
-
-      advanced: {
-        database: {
-          generateId: false,
-        },
-        crossSubDomainCookies: {
-          enabled: !!process.env.COOKIE_DOMAIN,
-          domain: process.env.COOKIE_DOMAIN,
-        },
-      },
-    });
+    this.auth = createBetterAuth(this.orm, this.configService, this.resend);
   }
 
   async getSession(headers: Record<string, string | string[] | undefined>) {
