@@ -26,13 +26,40 @@ function createBetterAuth(
     ].filter(Boolean),
     database: mikroOrmAdapter(orm),
 
+    emailAndPassword: {
+      enabled: true,
+      requireEmailVerification: true,
+      minPasswordLength: 8,
+      sendResetPassword: async ({ user, url }) => {
+        await resend.emails.send({
+          from: `FeedbackBite <${emailFrom}>`,
+          to: user.email,
+          subject: 'FeedbackBite - Reset your password',
+          html: `<p>Click the link below to reset your password:</p><p><a href="${url}">${url}</a></p><p>This link expires in 1 hour.</p>`,
+        });
+      },
+    },
+
+    emailVerification: {
+      sendOnSignUp: true,
+      autoSignInAfterVerification: true,
+      sendVerificationEmail: async ({ user, url }) => {
+        await resend.emails.send({
+          from: `FeedbackBite <${emailFrom}>`,
+          to: user.email,
+          subject: 'FeedbackBite - Verify your email',
+          html: `<p>Welcome to FeedbackBite!</p><p>Click the link below to verify your email:</p><p><a href="${url}">${url}</a></p>`,
+        });
+      },
+    },
+
     plugins: [
       emailOTP({
         sendVerificationOTP: async ({ email, otp, type }) => {
           await resend.emails.send({
-            from: `LustorVR <${emailFrom}>`,
+            from: `FeedbackBite <${emailFrom}>`,
             to: email,
-            subject: type === 'sign-in' ? 'LustorVR - Your login code' : 'LustorVR - Verify your email',
+            subject: type === 'sign-in' ? 'FeedbackBite - Your login code' : 'FeedbackBite - Verify your email',
             html: `<p>Your verification code is: <strong>${otp}</strong></p><p>This code expires in 5 minutes.</p>`,
           });
         },

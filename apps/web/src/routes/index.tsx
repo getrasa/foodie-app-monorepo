@@ -1,14 +1,34 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Container, Text, Title } from "@mantine/core";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { authClient } from "#/lib/auth-client";
 
-export const Route = createFileRoute('/')({ component: Home })
+const Home = () => {
+	const { data: session, isPending } = authClient.useSession();
+	const navigate = useNavigate();
 
-function Home() {
-  return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg">
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
-    </div>
-  )
-}
+	useEffect(() => {
+		if (!isPending && !session) {
+			void navigate({ to: "/login" });
+		}
+	}, [isPending, session, navigate]);
+
+	if (isPending) {
+		return null;
+	}
+
+	if (!session) {
+		return null;
+	}
+
+	return (
+		<Container size="sm" py="xl" px="md">
+			<Title order={2}>Welcome to FeedbackBite</Title>
+			<Text c="dimmed" mt="sm">
+				Hello, {session.user.name}. Your dashboard will be here.
+			</Text>
+		</Container>
+	);
+};
+
+export const Route = createFileRoute("/")({ component: Home });
