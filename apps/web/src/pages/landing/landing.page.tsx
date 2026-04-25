@@ -377,9 +377,9 @@ export const LandingPage = () => {
 					</div>
 
 					<div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-						<PriceCard tier="Trattoria" sub="Up to 200 feedbacks/mo" price="$29" features={["Unlimited QR codes & locations", "Discount engine + cashier mode", "Google review nudge", "Email support"]} onCta={() => void navigate({ to: "/signup" })} />
-						<PriceCard tier="Osteria" sub="Unlimited feedback, multi-location" price="$59" features={["Everything in Trattoria", "Up to 5 locations under one account", "Custom branding on diner flow", "Weekly digest + low-rating alerts", "Priority support"]} featured onCta={() => void navigate({ to: "/signup" })} />
-						<PriceCard tier="Famiglia" sub="For groups & small chains" price="Let's talk" features={["6+ locations", "Manager-level dashboards & roles", "CSV/API export", "Dedicated onboarding"]} ghost onCta={() => void navigate({ to: "/signup" })} />
+						<PriceCard tier="Starter" sub="Up to 200 feedbacks/mo" price="$199" features={["Unlimited QR codes & locations", "Discount engine + cashier mode", "Google review nudge", "Email support"]} onCta={() => void navigate({ to: "/signup" })} />
+						<PriceCard tier="Growth" sub="Unlimited feedback, multi-location" price="$349" features={["Everything in Starter", "Up to 5 locations under one account", "Custom branding on diner flow", "Weekly digest + low-rating alerts", "Priority support"]} featured onCta={() => void navigate({ to: "/signup" })} />
+						<PriceCard tier="Enterprise" sub="For groups & small chains" price="Let's talk" features={["6+ locations", "Manager-level dashboards & roles", "CSV/API export", "Dedicated onboarding"]} ghost onCta={() => void navigate({ to: "/signup" })} />
 					</div>
 				</div>
 			</section>
@@ -452,32 +452,174 @@ export const LandingPage = () => {
 /* ─── Sub-components ─── */
 
 const QrIllustration = () => (
-	<svg width="80" height="80" viewBox="0 0 21 21" shapeRendering="crispEdges">
-		<rect width="21" height="21" fill="#fff" />
+	<svg width="80" height="80" viewBox="0 0 33 33" shapeRendering="crispEdges">
+		<rect width="33" height="33" fill="#fff" />
+		{/* Top-left finder */}
 		<rect x="0" y="0" width="7" height="1" fill="var(--fb-ink)" />
 		<rect x="0" y="6" width="7" height="1" fill="var(--fb-ink)" />
 		<rect x="0" y="0" width="1" height="7" fill="var(--fb-ink)" />
 		<rect x="6" y="0" width="1" height="7" fill="var(--fb-ink)" />
 		<rect x="2" y="2" width="3" height="3" fill="var(--fb-ink)" />
-		<rect x="14" y="0" width="7" height="1" fill="var(--fb-ink)" />
-		<rect x="14" y="6" width="7" height="1" fill="var(--fb-ink)" />
-		<rect x="14" y="0" width="1" height="7" fill="var(--fb-ink)" />
-		<rect x="20" y="0" width="1" height="7" fill="var(--fb-ink)" />
-		<rect x="16" y="2" width="3" height="3" fill="var(--fb-ink)" />
-		<rect x="0" y="14" width="7" height="1" fill="var(--fb-ink)" />
-		<rect x="0" y="20" width="7" height="1" fill="var(--fb-ink)" />
-		<rect x="0" y="14" width="1" height="7" fill="var(--fb-ink)" />
-		<rect x="6" y="14" width="1" height="7" fill="var(--fb-ink)" />
-		<rect x="2" y="16" width="3" height="3" fill="var(--fb-ink)" />
-		<rect x="9" y="2" width="1" height="1" fill="var(--fb-ink)" />
-		<rect x="11" y="3" width="1" height="1" fill="var(--fb-ink)" />
-		<rect x="8" y="5" width="1" height="1" fill="var(--fb-ink)" />
+		{/* Top-right finder */}
+		<rect x="26" y="0" width="7" height="1" fill="var(--fb-ink)" />
+		<rect x="26" y="6" width="7" height="1" fill="var(--fb-ink)" />
+		<rect x="26" y="0" width="1" height="7" fill="var(--fb-ink)" />
+		<rect x="32" y="0" width="1" height="7" fill="var(--fb-ink)" />
+		<rect x="28" y="2" width="3" height="3" fill="var(--fb-ink)" />
+		{/* Bottom-left finder */}
+		<rect x="0" y="26" width="7" height="1" fill="var(--fb-ink)" />
+		<rect x="0" y="32" width="7" height="1" fill="var(--fb-ink)" />
+		<rect x="0" y="26" width="1" height="7" fill="var(--fb-ink)" />
+		<rect x="6" y="26" width="1" height="7" fill="var(--fb-ink)" />
+		<rect x="2" y="28" width="3" height="3" fill="var(--fb-ink)" />
+		{/* Alignment pattern */}
+		<rect x="24" y="24" width="5" height="1" fill="var(--fb-ink)" />
+		<rect x="24" y="28" width="5" height="1" fill="var(--fb-ink)" />
+		<rect x="24" y="24" width="1" height="5" fill="var(--fb-ink)" />
+		<rect x="28" y="24" width="1" height="5" fill="var(--fb-ink)" />
+		<rect x="26" y="26" width="1" height="1" fill="var(--fb-ink)" />
+		{/* Timing patterns */}
+		<rect x="8" y="6" width="1" height="1" fill="var(--fb-ink)" />
 		<rect x="10" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="16" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="18" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="20" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="22" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="24" y="6" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="8" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="12" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="16" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="6" y="24" width="1" height="1" fill="var(--fb-ink)" />
+		{/* Data modules */}
+		<rect x="8" y="2" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="1" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="3" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="0" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="15" y="2" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="17" y="4" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="19" y="1" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="21" y="3" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="23" y="5" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="9" y="4" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="11" y="5" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="13" y="1" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="16" y="3" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="20" y="5" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="24" y="2" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="8" y="8" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="9" width="1" height="1" fill="var(--fb-ink)" />
 		<rect x="12" y="8" width="1" height="1" fill="var(--fb-ink)" />
-		<rect x="9" y="9" width="1" height="1" fill="var(--fb-ink)" />
-		<rect x="14" y="9" width="1" height="1" fill="var(--fb-ink)" />
-		<rect x="16" y="10" width="1" height="1" fill="var(--fb-ink)" />
-		<rect x="11" y="11" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="9" y="11" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="11" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="13" y="12" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="15" y="9" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="17" y="11" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="19" y="8" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="21" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="23" y="12" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="16" y="8" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="18" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="20" y="12" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="22" y="9" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="24" y="11" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="8" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="13" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="15" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="9" y="16" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="11" y="15" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="13" y="13" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="15" y="16" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="17" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="19" y="13" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="21" y="15" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="16" y="13" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="18" y="15" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="20" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="22" y="16" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="8" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="19" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="9" y="21" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="11" y="19" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="13" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="15" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="17" y="21" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="19" y="19" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="21" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="23" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="16" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="18" y="19" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="20" y="21" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="22" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="24" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="8" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="23" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="24" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="9" y="23" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="11" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="13" y="24" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="15" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="17" y="23" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="19" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="21" y="24" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="1" y="8" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="3" y="9" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="5" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="2" y="11" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="4" y="12" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="1" y="13" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="3" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="5" y="15" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="2" y="16" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="4" y="17" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="1" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="3" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="5" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="4" y="24" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="27" y="8" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="29" y="9" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="31" y="10" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="28" y="11" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="30" y="12" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="27" y="13" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="29" y="15" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="31" y="14" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="28" y="16" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="30" y="18" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="32" y="17" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="27" y="19" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="29" y="20" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="31" y="21" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="30" y="22" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="32" y="23" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="8" y="27" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="28" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="27" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="29" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="9" y="30" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="11" y="28" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="13" y="31" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="15" y="27" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="17" y="29" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="19" y="30" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="21" y="28" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="16" y="30" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="18" y="31" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="20" y="27" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="22" y="29" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="10" y="31" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="14" y="32" width="1" height="1" fill="var(--fb-ink)" />
+		<rect x="12" y="30" width="1" height="1" fill="var(--fb-ink)" />
 	</svg>
 );
 

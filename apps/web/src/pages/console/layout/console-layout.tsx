@@ -30,7 +30,7 @@ export const ConsoleLayout = () => {
 
 	return (
 		<AppShell
-			header={{ height: 50 }}
+			header={{ height: { base: 50, sm: 0 } }}
 			navbar={{
 				width: 220,
 				breakpoint: "sm",
