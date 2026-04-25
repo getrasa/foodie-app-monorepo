@@ -8,6 +8,10 @@
   --fb-ink: #1F1A15;
   --fb-primary: #C86A3E;
   --fb-olive: #7E8B5C;
+  --fb-paper-2: #E8DFCB;
+  --fb-ink-soft: rgba(31,26,21,0.62);
+  --fb-ink-mute: rgba(31,26,21,0.45);
+  --fb-line: rgba(31,26,21,0.1);
   --fb-serif: 'Instrument Serif', Georgia, serif;
   --fb-sans: 'Instrument Sans', system-ui, sans-serif;
   --fb-mono: 'JetBrains Mono', monospace;
