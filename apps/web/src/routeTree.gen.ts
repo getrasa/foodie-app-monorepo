@@ -9,12 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsoleIndexRouteImport } from './routes/console/index'
+import { Route as ConsoleSettingsRouteImport } from './routes/console/settings'
+import { Route as ConsoleQrCodeRouteImport } from './routes/console/qr-code'
+import { Route as ConsoleOnboardingRouteImport } from './routes/console/onboarding'
+import { Route as ConsoleFeedbackRouteImport } from './routes/console/feedback'
+import { Route as ConsoleDiscountsRouteImport } from './routes/console/discounts'
+import { Route as ConsoleDashboardRouteImport } from './routes/console/dashboard'
+import { Route as ConsoleAnalyticsRouteImport } from './routes/console/analytics'
 import { Route as StoreIdReviewRouteImport } from './routes/store/$id/review'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -30,10 +45,55 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleSettingsRoute = ConsoleSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleQrCodeRoute = ConsoleQrCodeRouteImport.update({
+  id: '/qr-code',
+  path: '/qr-code',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleOnboardingRoute = ConsoleOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleFeedbackRoute = ConsoleFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDiscountsRoute = ConsoleDiscountsRouteImport.update({
+  id: '/discounts',
+  path: '/discounts',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDashboardRoute = ConsoleDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAnalyticsRoute = ConsoleAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => ConsoleRoute,
 } as any)
 const StoreIdReviewRoute = StoreIdReviewRouteImport.update({
   id: '/store/$id/review',
@@ -43,9 +103,19 @@ const StoreIdReviewRoute = StoreIdReviewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/console': typeof ConsoleRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/console/analytics': typeof ConsoleAnalyticsRoute
+  '/console/dashboard': typeof ConsoleDashboardRoute
+  '/console/discounts': typeof ConsoleDiscountsRoute
+  '/console/feedback': typeof ConsoleFeedbackRoute
+  '/console/onboarding': typeof ConsoleOnboardingRoute
+  '/console/qr-code': typeof ConsoleQrCodeRoute
+  '/console/settings': typeof ConsoleSettingsRoute
+  '/console/': typeof ConsoleIndexRoute
   '/store/$id/review': typeof StoreIdReviewRoute
 }
 export interface FileRoutesByTo {
@@ -53,23 +123,52 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/console/analytics': typeof ConsoleAnalyticsRoute
+  '/console/dashboard': typeof ConsoleDashboardRoute
+  '/console/discounts': typeof ConsoleDiscountsRoute
+  '/console/feedback': typeof ConsoleFeedbackRoute
+  '/console/onboarding': typeof ConsoleOnboardingRoute
+  '/console/qr-code': typeof ConsoleQrCodeRoute
+  '/console/settings': typeof ConsoleSettingsRoute
+  '/console': typeof ConsoleIndexRoute
   '/store/$id/review': typeof StoreIdReviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/console': typeof ConsoleRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/console/analytics': typeof ConsoleAnalyticsRoute
+  '/console/dashboard': typeof ConsoleDashboardRoute
+  '/console/discounts': typeof ConsoleDiscountsRoute
+  '/console/feedback': typeof ConsoleFeedbackRoute
+  '/console/onboarding': typeof ConsoleOnboardingRoute
+  '/console/qr-code': typeof ConsoleQrCodeRoute
+  '/console/settings': typeof ConsoleSettingsRoute
+  '/console/': typeof ConsoleIndexRoute
   '/store/$id/review': typeof StoreIdReviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/console'
     | '/forgot-password'
     | '/login'
     | '/reset-password'
+    | '/signup'
+    | '/console/analytics'
+    | '/console/dashboard'
+    | '/console/discounts'
+    | '/console/feedback'
+    | '/console/onboarding'
+    | '/console/qr-code'
+    | '/console/settings'
+    | '/console/'
     | '/store/$id/review'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -77,26 +176,54 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/reset-password'
+    | '/signup'
+    | '/console/analytics'
+    | '/console/dashboard'
+    | '/console/discounts'
+    | '/console/feedback'
+    | '/console/onboarding'
+    | '/console/qr-code'
+    | '/console/settings'
+    | '/console'
     | '/store/$id/review'
   id:
     | '__root__'
     | '/'
+    | '/console'
     | '/forgot-password'
     | '/login'
     | '/reset-password'
+    | '/signup'
+    | '/console/analytics'
+    | '/console/dashboard'
+    | '/console/discounts'
+    | '/console/feedback'
+    | '/console/onboarding'
+    | '/console/qr-code'
+    | '/console/settings'
+    | '/console/'
     | '/store/$id/review'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
   StoreIdReviewRoute: typeof StoreIdReviewRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -118,12 +245,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/console/': {
+      id: '/console/'
+      path: '/'
+      fullPath: '/console/'
+      preLoaderRoute: typeof ConsoleIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/settings': {
+      id: '/console/settings'
+      path: '/settings'
+      fullPath: '/console/settings'
+      preLoaderRoute: typeof ConsoleSettingsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/qr-code': {
+      id: '/console/qr-code'
+      path: '/qr-code'
+      fullPath: '/console/qr-code'
+      preLoaderRoute: typeof ConsoleQrCodeRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/onboarding': {
+      id: '/console/onboarding'
+      path: '/onboarding'
+      fullPath: '/console/onboarding'
+      preLoaderRoute: typeof ConsoleOnboardingRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/feedback': {
+      id: '/console/feedback'
+      path: '/feedback'
+      fullPath: '/console/feedback'
+      preLoaderRoute: typeof ConsoleFeedbackRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/discounts': {
+      id: '/console/discounts'
+      path: '/discounts'
+      fullPath: '/console/discounts'
+      preLoaderRoute: typeof ConsoleDiscountsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/dashboard': {
+      id: '/console/dashboard'
+      path: '/dashboard'
+      fullPath: '/console/dashboard'
+      preLoaderRoute: typeof ConsoleDashboardRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/analytics': {
+      id: '/console/analytics'
+      path: '/analytics'
+      fullPath: '/console/analytics'
+      preLoaderRoute: typeof ConsoleAnalyticsRouteImport
+      parentRoute: typeof ConsoleRoute
     }
     '/store/$id/review': {
       id: '/store/$id/review'
@@ -135,11 +325,38 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ConsoleRouteChildren {
+  ConsoleAnalyticsRoute: typeof ConsoleAnalyticsRoute
+  ConsoleDashboardRoute: typeof ConsoleDashboardRoute
+  ConsoleDiscountsRoute: typeof ConsoleDiscountsRoute
+  ConsoleFeedbackRoute: typeof ConsoleFeedbackRoute
+  ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
+  ConsoleQrCodeRoute: typeof ConsoleQrCodeRoute
+  ConsoleSettingsRoute: typeof ConsoleSettingsRoute
+  ConsoleIndexRoute: typeof ConsoleIndexRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleAnalyticsRoute: ConsoleAnalyticsRoute,
+  ConsoleDashboardRoute: ConsoleDashboardRoute,
+  ConsoleDiscountsRoute: ConsoleDiscountsRoute,
+  ConsoleFeedbackRoute: ConsoleFeedbackRoute,
+  ConsoleOnboardingRoute: ConsoleOnboardingRoute,
+  ConsoleQrCodeRoute: ConsoleQrCodeRoute,
+  ConsoleSettingsRoute: ConsoleSettingsRoute,
+  ConsoleIndexRoute: ConsoleIndexRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
   StoreIdReviewRoute: StoreIdReviewRoute,
 }
 export const routeTree = rootRouteImport

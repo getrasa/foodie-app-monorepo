@@ -1,4 +1,3 @@
-import { Container, Text, Title } from "@mantine/core";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { authClient } from "#/lib/auth-client";
@@ -8,27 +7,16 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!isPending && !session) {
-			void navigate({ to: "/login" });
+		if (!isPending) {
+			if (session) {
+				void navigate({ to: "/console/dashboard" });
+			} else {
+				void navigate({ to: "/login" });
+			}
 		}
 	}, [isPending, session, navigate]);
 
-	if (isPending) {
-		return null;
-	}
-
-	if (!session) {
-		return null;
-	}
-
-	return (
-		<Container size="sm" py="xl" px="md">
-			<Title order={2}>Welcome to FeedbackBite</Title>
-			<Text c="dimmed" mt="sm">
-				Hello, {session.user.name}. Your dashboard will be here.
-			</Text>
-		</Container>
-	);
+	return null;
 };
 
 export const Route = createFileRoute("/")({ component: Home });

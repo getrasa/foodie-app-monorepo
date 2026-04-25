@@ -15,46 +15,55 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { authClient } from "#/lib/auth-client";
 
-interface LoginFormValues {
+interface SignupFormValues {
+	name: string;
 	email: string;
 	password: string;
+	confirmPassword: string;
 }
 
-export const LoginPage = () => {
+export const SignupPage = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	const form = useForm<LoginFormValues>({
+	const form = useForm<SignupFormValues>({
 		initialValues: {
+			name: "",
 			email: "",
 			password: "",
+			confirmPassword: "",
 		},
 		validate: {
+			name: (value) =>
+				value.trim().length >= 2 ? null : "Name must be at least 2 characters",
 			email: (value) =>
 				/^\S+@\S+\.\S+$/.test(value) ? null : "Please enter a valid email",
 			password: (value) =>
 				value.length >= 8 ? null : "Password must be at least 8 characters",
+			confirmPassword: (value, values) =>
+				value === values.password ? null : "Passwords do not match",
 		},
 	});
 
-	const handleSubmit = async (values: LoginFormValues) => {
+	const handleSubmit = async (values: SignupFormValues) => {
 		setError(null);
 		setLoading(true);
 
-		const { error: signInError } = await authClient.signIn.email({
+		const { error: signUpError } = await authClient.signUp.email({
+			name: values.name,
 			email: values.email,
 			password: values.password,
 		});
 
 		setLoading(false);
 
-		if (signInError) {
-			setError(signInError.message ?? "Invalid email or password");
+		if (signUpError) {
+			setError(signUpError.message ?? "Something went wrong. Please try again.");
 			return;
 		}
 
-		void navigate({ to: "/console/dashboard" });
+		void navigate({ to: "/console/onboarding" });
 	};
 
 	return (
@@ -62,10 +71,10 @@ export const LoginPage = () => {
 			<Stack gap="lg">
 				<div>
 					<Title order={2} ta="center">
-						Welcome back
+						Get started with FeedbackBite
 					</Title>
 					<Text c="dimmed" ta="center" mt="xs">
-						Sign in to your FeedbackBite account
+						Create your account and set up your restaurant in minutes
 					</Text>
 				</div>
 
@@ -79,6 +88,13 @@ export const LoginPage = () => {
 							)}
 
 							<TextInput
+								label="Name"
+								placeholder="Your name"
+								required
+								{...form.getInputProps("name")}
+							/>
+
+							<TextInput
 								label="Email"
 								placeholder="you@example.com"
 								required
@@ -87,22 +103,25 @@ export const LoginPage = () => {
 
 							<PasswordInput
 								label="Password"
-								placeholder="Your password"
+								placeholder="At least 8 characters"
 								required
 								{...form.getInputProps("password")}
 							/>
 
+							<PasswordInput
+								label="Confirm password"
+								placeholder="Repeat your password"
+								required
+								{...form.getInputProps("confirmPassword")}
+							/>
+
 							<Button type="submit" fullWidth size="md" loading={loading}>
-								Sign in
+								Create account
 							</Button>
 
 							<Text ta="center" size="sm">
-								<Anchor href="/forgot-password">Forgot your password?</Anchor>
-							</Text>
-
-							<Text ta="center" size="sm">
-								Don&apos;t have an account?{" "}
-								<Anchor href="/signup">Sign up</Anchor>
+								Already have an account?{" "}
+								<Anchor href="/login">Sign in</Anchor>
 							</Text>
 						</Stack>
 					</form>
