@@ -1,17 +1,30 @@
 
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --fb-cream: #FBF7EF;
+  --fb-paper: #F1EADC;
+  --fb-ink: #1F1A15;
+  --fb-primary: #C86A3E;
+  --fb-olive: #7E8B5C;
+  --fb-serif: 'Instrument Serif', Georgia, serif;
+  --fb-sans: 'Instrument Sans', system-ui, sans-serif;
+  --fb-mono: 'JetBrains Mono', monospace;
+}
 
 * {
   box-sizing: border-box;
 }
 
-html,
-body,
-#app {
+html, body, #app {
   min-height: 100%;
 }
 
 body {
   margin: 0;
+  font-family: var(--fb-sans);
+  color: var(--fb-ink);
+  -webkit-font-smoothing: antialiased;
+  background: var(--fb-cream);
 }
-

@@ -1,68 +1,70 @@
-import { Group, Paper, RingProgress, Stack, Text, Title } from "@mantine/core";
-
-interface RedemptionRateCardProps {
-	totalIssued: number;
-	totalRedeemed: number;
-	totalExpired: number;
+interface MostMentionedTagsProps {
+	tags: readonly (readonly [string, number])[];
 }
 
-export const RedemptionRateCard = ({
-	totalIssued,
-	totalRedeemed,
-	totalExpired,
-}: RedemptionRateCardProps) => {
-	const rate = totalIssued > 0 ? (totalRedeemed / totalIssued) * 100 : 0;
-
+export const MostMentionedTags = ({ tags }: MostMentionedTagsProps) => {
 	return (
-		<Paper p="md" radius="md" withBorder>
-			<Title order={5} mb="md">
-				Discount Redemption
-			</Title>
-
-			{totalIssued === 0 ? (
-				<Text c="dimmed" ta="center" py="md">
-					No discount codes issued yet
-				</Text>
-			) : (
-				<Group align="center" gap="xl">
-					<RingProgress
-						size={140}
-						thickness={14}
-						roundCaps
-						sections={[{ value: rate, color: "orange" }]}
-						label={
-							<Text ta="center" fw={700} size="lg">
-								{Math.round(rate)}%
-							</Text>
-						}
-					/>
-
-					<Stack gap="xs">
-						<div>
-							<Text size="xs" c="dimmed" tt="uppercase">
-								Total Issued
-							</Text>
-							<Text fw={600}>{totalIssued}</Text>
-						</div>
-						<div>
-							<Text size="xs" c="dimmed" tt="uppercase">
-								Redeemed
-							</Text>
-							<Text fw={600} c="green">
-								{totalRedeemed}
-							</Text>
-						</div>
-						<div>
-							<Text size="xs" c="dimmed" tt="uppercase">
-								Expired
-							</Text>
-							<Text fw={600} c="red">
-								{totalExpired}
-							</Text>
-						</div>
-					</Stack>
-				</Group>
-			)}
-		</Paper>
+		<div
+			style={{
+				marginTop: 14,
+				padding: "20px 22px",
+				borderRadius: 14,
+				background: "#fff",
+				border: "0.5px solid rgba(31,26,21,0.08)",
+			}}
+		>
+			<div
+				style={{
+					fontFamily: "var(--fb-mono)",
+					fontSize: 10,
+					letterSpacing: "0.06em",
+					textTransform: "uppercase",
+					color: "rgba(31,26,21,0.5)",
+				}}
+			>
+				Most mentioned
+			</div>
+			<div
+				style={{
+					display: "flex",
+					gap: 8,
+					flexWrap: "wrap",
+					marginTop: 12,
+				}}
+			>
+				{tags.map(([tag, count]) => (
+					<div
+						key={tag}
+						style={{
+							display: "flex",
+							alignItems: "center",
+							gap: 7,
+							padding: "6px 12px",
+							borderRadius: 999,
+							background: "var(--fb-paper)",
+							border: "0.5px solid rgba(31,26,21,0.08)",
+						}}
+					>
+						<span
+							style={{
+								fontSize: 13,
+								color: "var(--fb-ink)",
+							}}
+						>
+							{tag}
+						</span>
+						<span
+							style={{
+								fontFamily: "var(--fb-mono)",
+								fontSize: 11,
+								color: "rgba(31,26,21,0.5)",
+							}}
+						>
+							{count}
+						</span>
+					</div>
+				))}
+			</div>
+		</div>
 	);
 };

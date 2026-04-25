@@ -1,50 +1,112 @@
-import { Group, Paper, Progress, Text, Title } from "@mantine/core";
+import { StaticStar } from "#/pages/console/shared/static-star";
+
+interface DistributionItem {
+	stars: number;
+	count: number;
+}
 
 interface RatingDistributionChartProps {
-	distribution: Record<number, number>;
-	total: number;
+	distribution: DistributionItem[];
 }
 
 export const RatingDistributionChart = ({
 	distribution,
-	total,
 }: RatingDistributionChartProps) => {
-	return (
-		<Paper p="md" radius="md" withBorder>
-			<Title order={5} mb="md">
-				Rating Distribution
-			</Title>
+	const maxCount = Math.max(...distribution.map((d) => d.count));
 
-			{total === 0 ? (
-				<Text c="dimmed" ta="center" py="md">
-					No reviews yet
-				</Text>
-			) : (
-				[5, 4, 3, 2, 1].map((star) => {
-					const count = distribution[star] ?? 0;
-					const pct = (count / total) * 100;
-					return (
-						<Group key={star} gap="xs" mb="xs" wrap="nowrap">
-							<Text size="sm" w={16} ta="right">
-								{star}
-							</Text>
-							<Text size="xs" c="dimmed">
-								&#9733;
-							</Text>
-							<Progress
-								value={pct}
-								color="orange"
-								size="lg"
-								radius="xl"
-								style={{ flex: 1 }}
+	return (
+		<div
+			style={{
+				padding: "20px 22px",
+				borderRadius: 14,
+				background: "#fff",
+				border: "0.5px solid rgba(31,26,21,0.08)",
+			}}
+		>
+			<div
+				style={{
+					fontFamily: "var(--fb-mono)",
+					fontSize: 10,
+					letterSpacing: "0.06em",
+					textTransform: "uppercase",
+					color: "rgba(31,26,21,0.5)",
+				}}
+			>
+				Distribution
+			</div>
+			<div
+				style={{
+					marginTop: 14,
+					display: "flex",
+					flexDirection: "column",
+					gap: 10,
+				}}
+			>
+				{distribution.map((d) => (
+					<div
+						key={d.stars}
+						style={{
+							display: "flex",
+							alignItems: "center",
+							gap: 10,
+						}}
+					>
+						<div
+							style={{
+								display: "flex",
+								gap: 1,
+								width: 14,
+								alignItems: "center",
+							}}
+						>
+							<span
+								style={{
+									fontFamily: "var(--fb-mono)",
+									fontSize: 11,
+									color: "rgba(31,26,21,0.6)",
+								}}
+							>
+								{d.stars}
+							</span>
+							<StaticStar size={10} />
+						</div>
+						<div
+							style={{
+								flex: 1,
+								height: 8,
+								borderRadius: 4,
+								background: "var(--fb-paper)",
+								overflow: "hidden",
+							}}
+						>
+							<div
+								style={{
+									width: `${(d.count / maxCount) * 100}%`,
+									height: "100%",
+									background:
+										d.stars >= 4
+											? "var(--fb-primary)"
+											: d.stars === 3
+												? "var(--fb-ink)"
+												: "rgba(31,26,21,0.3)",
+									borderRadius: 4,
+								}}
 							/>
-							<Text size="xs" c="dimmed" w={50} ta="right">
-								{count} ({Math.round(pct)}%)
-							</Text>
-						</Group>
-					);
-				})
-			)}
-		</Paper>
+						</div>
+						<div
+							style={{
+								fontFamily: "var(--fb-mono)",
+								fontSize: 11,
+								color: "rgba(31,26,21,0.6)",
+								width: 30,
+								textAlign: "right",
+							}}
+						>
+							{d.count}
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
 	);
 };

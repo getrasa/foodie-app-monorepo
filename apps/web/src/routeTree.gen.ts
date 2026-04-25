@@ -17,6 +17,7 @@ import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console/index'
 import { Route as ConsoleSettingsRouteImport } from './routes/console/settings'
+import { Route as ConsoleRedeemRouteImport } from './routes/console/redeem'
 import { Route as ConsoleQrCodeRouteImport } from './routes/console/qr-code'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console/onboarding'
 import { Route as ConsoleFeedbackRouteImport } from './routes/console/feedback'
@@ -63,6 +64,11 @@ const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
 const ConsoleSettingsRoute = ConsoleSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleRedeemRoute = ConsoleRedeemRouteImport.update({
+  id: '/redeem',
+  path: '/redeem',
   getParentRoute: () => ConsoleRoute,
 } as any)
 const ConsoleQrCodeRoute = ConsoleQrCodeRouteImport.update({
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/console/feedback': typeof ConsoleFeedbackRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/qr-code': typeof ConsoleQrCodeRoute
+  '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
   '/console/': typeof ConsoleIndexRoute
   '/store/$id/review': typeof StoreIdReviewRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/console/feedback': typeof ConsoleFeedbackRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/qr-code': typeof ConsoleQrCodeRoute
+  '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
   '/console': typeof ConsoleIndexRoute
   '/store/$id/review': typeof StoreIdReviewRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/console/feedback': typeof ConsoleFeedbackRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/qr-code': typeof ConsoleQrCodeRoute
+  '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
   '/console/': typeof ConsoleIndexRoute
   '/store/$id/review': typeof StoreIdReviewRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/console/feedback'
     | '/console/onboarding'
     | '/console/qr-code'
+    | '/console/redeem'
     | '/console/settings'
     | '/console/'
     | '/store/$id/review'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/console/feedback'
     | '/console/onboarding'
     | '/console/qr-code'
+    | '/console/redeem'
     | '/console/settings'
     | '/console'
     | '/store/$id/review'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/console/feedback'
     | '/console/onboarding'
     | '/console/qr-code'
+    | '/console/redeem'
     | '/console/settings'
     | '/console/'
     | '/store/$id/review'
@@ -273,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleSettingsRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/redeem': {
+      id: '/console/redeem'
+      path: '/redeem'
+      fullPath: '/console/redeem'
+      preLoaderRoute: typeof ConsoleRedeemRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/qr-code': {
       id: '/console/qr-code'
       path: '/qr-code'
@@ -332,6 +351,7 @@ interface ConsoleRouteChildren {
   ConsoleFeedbackRoute: typeof ConsoleFeedbackRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleQrCodeRoute: typeof ConsoleQrCodeRoute
+  ConsoleRedeemRoute: typeof ConsoleRedeemRoute
   ConsoleSettingsRoute: typeof ConsoleSettingsRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
 }
@@ -343,6 +363,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleFeedbackRoute: ConsoleFeedbackRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleQrCodeRoute: ConsoleQrCodeRoute,
+  ConsoleRedeemRoute: ConsoleRedeemRoute,
   ConsoleSettingsRoute: ConsoleSettingsRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
 }

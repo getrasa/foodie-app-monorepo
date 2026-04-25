@@ -1,68 +1,160 @@
-import { Pagination, Stack, Text, Title } from "@mantine/core";
 import { useState } from "react";
 import { FeedbackFilters } from "./components/feedback-filters";
-import { FeedbackCard } from "./components/feedback-card";
+import { FeedbackRow } from "./components/feedback-card";
+import { FeedbackDetail } from "./components/feedback-detail";
 
-// TODO: Replace mock data with API calls using React Query
-const mockFeedback: {
-	id: string;
-	rating: number;
-	comment?: string;
-	reviewerName: string;
-	createdAt: string;
-	discountStatus?: "active" | "redeemed" | "expired";
-}[] = [];
+const MOCK_FEEDBACK = [
+	{
+		id: 1,
+		rating: 5,
+		when: "12 min ago",
+		code: "LUCIA-4KX9",
+		status: "open" as const,
+		text: "The tagliatelle al ragù was unreal. Our server (Marco?) was wonderful with our kid. Back next month for sure.",
+		tags: ["The pasta", "Service"],
+		table: "T7",
+	},
+	{
+		id: 2,
+		rating: 5,
+		when: "47 min ago",
+		code: "LUCIA-8PQ2",
+		status: "redeemed" as const,
+		text: "Best tiramisù in the neighborhood, hands down.",
+		tags: ["Dessert"],
+		table: "T3",
+	},
+	{
+		id: 3,
+		rating: 4,
+		when: "1 hr ago",
+		code: "LUCIA-MN4V",
+		status: "open" as const,
+		text: "Lovely atmosphere, wine list was surprising in the best way. Pasta arrived a touch cold.",
+		tags: ["Wine list", "Atmosphere"],
+		table: "T12",
+	},
+	{
+		id: 4,
+		rating: 5,
+		when: "2 hr ago",
+		code: "LUCIA-ZX71",
+		status: "open" as const,
+		text: "",
+		tags: [],
+		table: "T5",
+	},
+	{
+		id: 5,
+		rating: 3,
+		when: "3 hr ago",
+		code: "LUCIA-RR09",
+		status: "open" as const,
+		text: "Food was good but we waited 40 minutes for the primo. Place was packed though — understandable.",
+		tags: ["Service"],
+		table: "T9",
+	},
+	{
+		id: 6,
+		rating: 5,
+		when: "Yesterday",
+		code: "LUCIA-K2LM",
+		status: "redeemed" as const,
+		text: "Felt like being in Bologna. The burrata with peaches is a revelation.",
+		tags: ["The pasta", "Atmosphere"],
+		table: "T2",
+	},
+	{
+		id: 7,
+		rating: 4,
+		when: "Yesterday",
+		code: "LUCIA-7YHT",
+		status: "expired" as const,
+		text: "Solid spot for a weeknight. Will bring the in-laws.",
+		tags: ["Atmosphere"],
+		table: "T11",
+	},
+	{
+		id: 8,
+		rating: 5,
+		when: "2 days ago",
+		code: "LUCIA-BB52",
+		status: "open" as const,
+		text: "Lucia came out to our table to check on us. That kind of care is rare.",
+		tags: ["Service"],
+		table: "T6",
+	},
+];
+
+export type FeedbackItem = (typeof MOCK_FEEDBACK)[number];
 
 export const FeedbackPage = () => {
-	const [ratingFilter, setRatingFilter] = useState("all");
-	const [dateRange, setDateRange] = useState("all");
-	const [search, setSearch] = useState("");
-	const [page, setPage] = useState(1);
+	const [selected, setSelected] = useState(MOCK_FEEDBACK[0].id);
+	const [filter, setFilter] = useState("all");
 
-	// TODO: Wire up filtering to API query params
-	const filtered = mockFeedback;
-	const totalPages = Math.max(1, Math.ceil(filtered.length / 10));
+	const list =
+		filter === "all"
+			? MOCK_FEEDBACK
+			: filter === "5"
+				? MOCK_FEEDBACK.filter((f) => f.rating === 5)
+				: filter === "low"
+					? MOCK_FEEDBACK.filter((f) => f.rating <= 3)
+					: MOCK_FEEDBACK;
+
+	const selectedItem = MOCK_FEEDBACK.find((f) => f.id === selected);
 
 	return (
-		<Stack gap="lg">
-			<Title order={3}>Feedback</Title>
-
-			<FeedbackFilters
-				ratingFilter={ratingFilter}
-				onRatingFilterChange={setRatingFilter}
-				dateRange={dateRange}
-				onDateRangeChange={(v) => setDateRange(v ?? "all")}
-				search={search}
-				onSearchChange={setSearch}
-			/>
-
-			{filtered.length === 0 ? (
-				<Text c="dimmed" ta="center" py="xl">
-					No feedback yet. Share your QR code to start collecting reviews!
-				</Text>
-			) : (
-				<Stack gap="sm">
-					{filtered.map((entry) => (
-						<FeedbackCard
-							key={entry.id}
-							rating={entry.rating}
-							comment={entry.comment}
-							reviewerName={entry.reviewerName}
-							createdAt={entry.createdAt}
-							discountStatus={entry.discountStatus}
+		<div style={{ display: "flex", height: "100%", minHeight: "calc(100vh - 50px)" }}>
+			{/* List panel */}
+			<div
+				style={{
+					width: 340,
+					borderRight: "0.5px solid rgba(31,26,21,0.08)",
+					display: "flex",
+					flexDirection: "column",
+					flexShrink: 0,
+				}}
+			>
+				<div style={{ padding: "18px 18px 12px" }}>
+					<div
+						style={{
+							fontFamily: "var(--fb-serif)",
+							fontSize: 24,
+							fontStyle: "italic",
+							letterSpacing: "-0.01em",
+							color: "var(--fb-ink)",
+						}}
+					>
+						Feedback
+					</div>
+					<div
+						style={{
+							fontFamily: "var(--fb-mono)",
+							fontSize: 11,
+							color: "rgba(31,26,21,0.5)",
+							marginTop: 3,
+						}}
+					>
+						{MOCK_FEEDBACK.length} entries · 12 unread
+					</div>
+					<FeedbackFilters filter={filter} onFilterChange={setFilter} />
+				</div>
+				<div style={{ flex: 1, overflowY: "auto" }}>
+					{list.map((item) => (
+						<FeedbackRow
+							key={item.id}
+							item={item}
+							selected={selected === item.id}
+							onClick={() => setSelected(item.id)}
 						/>
 					))}
-				</Stack>
-			)}
+				</div>
+			</div>
 
-			{filtered.length > 0 && (
-				<Pagination
-					total={totalPages}
-					value={page}
-					onChange={setPage}
-					mx="auto"
-				/>
-			)}
-		</Stack>
+			{/* Detail panel */}
+			<div style={{ flex: 1, background: "#fff" }}>
+				{selectedItem && <FeedbackDetail item={selectedItem} />}
+			</div>
+		</div>
 	);
 };

@@ -1,54 +1,120 @@
-import { Badge, Group, Paper, Rating, Text } from "@mantine/core";
+import { UnstyledButton } from "@mantine/core";
+import type { FeedbackItem } from "../feedback.page";
+import { StaticStar } from "#/pages/console/shared/static-star";
 
-interface FeedbackCardProps {
-	rating: number;
-	comment?: string;
-	reviewerName: string;
-	createdAt: string;
-	discountStatus?: "active" | "redeemed" | "expired";
+interface FeedbackRowProps {
+	item: FeedbackItem;
+	selected: boolean;
+	onClick: () => void;
 }
 
-const statusColors: Record<string, string> = {
-	active: "blue",
-	redeemed: "green",
-	expired: "gray",
-};
+export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
+	const statusColor =
+		item.status === "redeemed"
+			? "var(--fb-olive)"
+			: item.status === "expired"
+				? "rgba(31,26,21,0.35)"
+				: "var(--fb-primary)";
+	const statusLabel =
+		item.status === "redeemed"
+			? "Redeemed"
+			: item.status === "expired"
+				? "Expired"
+				: "Code open";
 
-const statusLabels: Record<string, string> = {
-	active: "Code issued",
-	redeemed: "Code redeemed",
-	expired: "Code expired",
-};
-
-export const FeedbackCard = ({
-	rating,
-	comment,
-	reviewerName,
-	createdAt,
-	discountStatus,
-}: FeedbackCardProps) => {
 	return (
-		<Paper p="md" radius="md" withBorder>
-			<Group justify="space-between" mb="xs">
-				<Rating value={rating} readOnly size="sm" />
-				{discountStatus && (
-					<Badge color={statusColors[discountStatus]} variant="light" size="sm">
-						{statusLabels[discountStatus]}
-					</Badge>
-				)}
-			</Group>
-
-			<Text size="sm">
-				{comment || (
-					<Text span c="dimmed" fs="italic">
-						No comment left
-					</Text>
-				)}
-			</Text>
-
-			<Text size="xs" c="dimmed" mt="xs">
-				{reviewerName} &middot; {createdAt}
-			</Text>
-		</Paper>
+		<UnstyledButton
+			onClick={onClick}
+			style={{
+				width: "100%",
+				textAlign: "left",
+				padding: "14px 18px",
+				background: selected ? "var(--fb-cream)" : "transparent",
+				borderBottom: "0.5px solid rgba(31,26,21,0.07)",
+				borderLeft: selected
+					? "2px solid var(--fb-primary)"
+					: "2px solid transparent",
+				fontFamily: "var(--fb-sans)",
+				display: "block",
+			}}
+		>
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					gap: 8,
+					marginBottom: 6,
+				}}
+			>
+				<div style={{ display: "flex", gap: 1.5 }}>
+					{[1, 2, 3, 4, 5].map((i) => (
+						<StaticStar key={i} size={11} filled={i <= item.rating} />
+					))}
+				</div>
+				<div style={{ flex: 1 }} />
+				<div
+					style={{
+						fontFamily: "var(--fb-mono)",
+						fontSize: 10,
+						color: "rgba(31,26,21,0.45)",
+					}}
+				>
+					{item.when}
+				</div>
+			</div>
+			<div
+				style={{
+					fontSize: 13.5,
+					lineHeight: 1.45,
+					color: item.text ? "var(--fb-ink)" : "rgba(31,26,21,0.4)",
+					fontStyle: item.text ? "normal" : "italic",
+					display: "-webkit-box",
+					WebkitLineClamp: 2,
+					WebkitBoxOrient: "vertical",
+					overflow: "hidden",
+				}}
+			>
+				{item.text || "(no written comment)"}
+			</div>
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					gap: 8,
+					marginTop: 8,
+				}}
+			>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						gap: 5,
+						fontSize: 10.5,
+						color: statusColor,
+						fontFamily: "var(--fb-mono)",
+						letterSpacing: "0.04em",
+					}}
+				>
+					<span
+						style={{
+							width: 5,
+							height: 5,
+							borderRadius: "50%",
+							background: statusColor,
+						}}
+					/>
+					{statusLabel}
+				</div>
+				<div
+					style={{
+						fontSize: 11,
+						color: "rgba(31,26,21,0.4)",
+						fontFamily: "var(--fb-mono)",
+					}}
+				>
+					· {item.code} · {item.table}
+				</div>
+			</div>
+		</UnstyledButton>
 	);
 };
