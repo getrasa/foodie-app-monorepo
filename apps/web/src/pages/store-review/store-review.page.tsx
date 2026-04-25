@@ -54,7 +54,7 @@ export const StoreReviewPage = ({ storeId }: StoreReviewPageProps) => {
 					/>
 				);
 			case "discount":
-				return <ScreenDiscount onNext={() => setScreen("nudge")} />;
+				return <ScreenDiscount onNext={() => setScreen(rating === 5 ? "nudge" : "thanks")} />;
 			case "nudge":
 				return (
 					<ScreenNudge

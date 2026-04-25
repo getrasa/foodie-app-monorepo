@@ -99,7 +99,9 @@ export const ScreenComment = ({
 						color: "rgba(31,26,21,0.6)",
 					}}
 				>
-					Optional — but we do read them all.
+					{rating === 5
+						? "Optional — but we do read them all."
+						: "Pick a tag or leave a note to unlock your discount."}
 				</div>
 			</div>
 
@@ -185,10 +187,15 @@ export const ScreenComment = ({
 			</div>
 
 			<div style={{ marginTop: 14 }}>
-				<PrimaryButton onClick={onNext}>
+				<PrimaryButton
+					onClick={onNext}
+					disabled={rating < 5 && !comment.trim() && !selectedChips.length}
+				>
 					{comment.trim() || selectedChips.length
 						? "Submit & get discount"
-						: "Skip & get discount"}
+						: rating === 5
+							? "Skip & get discount"
+							: "Leave a note to get your discount"}
 				</PrimaryButton>
 			</div>
 		</div>
