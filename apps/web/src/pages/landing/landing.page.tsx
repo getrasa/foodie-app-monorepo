@@ -42,19 +42,19 @@ export const LandingPage = () => {
 			<header style={{ position: "relative", padding: "32px 0 80px", overflow: "hidden", maxWidth: 1240, margin: "0 auto", paddingLeft: 32, paddingRight: 32 }}>
 				<div style={{ display: "grid", gridTemplateColumns: "1.05fr 0.95fr", gap: 60, alignItems: "center" }}>
 					<div>
-						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>For neighborhood restaurants</div>
-						<h1 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(52px, 6vw, 80px)", lineHeight: 1.02, letterSpacing: "-0.025em", margin: "18px 0 0", fontWeight: 400 }}>
-							Honest feedback.<br />Sweet little <em style={{ color: "var(--fb-primary)", fontFamily: "var(--fb-serif)", fontStyle: "italic" }}>discounts.</em>
+						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Google reviews, on autopilot</div>
+						<h1 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(48px, 5.6vw, 72px)", lineHeight: 1.08, letterSpacing: "-0.025em", margin: "18px 0 0", fontWeight: 400 }}>
+							Sweet treats at the table.<br /><em style={{ color: "var(--fb-primary)", fontFamily: "var(--fb-serif)", fontStyle: "italic" }}>Shining stars</em> on Google.
 						</h1>
 						<p style={{ marginTop: 36, fontSize: 18, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 520 }}>
-							FeedbackBite turns the moment after a meal into a private conversation between you and your guests — rewarded with a discount that brings them back. No app, no sign-up, 30 seconds.
+							FeedbackBite turns five‑star moments into Google reviews, and the rest into honest notes for your kitchen — every guest leaves with a discount that brings them back.
 						</p>
 						<div style={{ marginTop: 36, display: "flex", gap: 12, alignItems: "center" }}>
 							<button type="button" onClick={() => void navigate({ to: "/signup" })} style={{ padding: "14px 24px", borderRadius: 12, background: "var(--fb-ink)", color: "var(--fb-cream)", fontSize: 15, fontWeight: 500, cursor: "pointer", border: "none", whiteSpace: "nowrap" }}>Start free →</button>
 							<a href="#how" style={{ padding: "14px 24px", borderRadius: 12, fontSize: 15, color: "var(--fb-ink)", textDecoration: "none" }}>See how it works</a>
 						</div>
 						<div style={{ marginTop: 22, display: "flex", gap: 22, fontSize: 13, color: "var(--fb-ink-mute)" }}>
-							{["No credit card", "Setup in 8 minutes", "Cancel anytime"].map((t) => (
+							{["+0.4 stars on Google avg.", "Google‑policy compliant", "Free for 30 days"].map((t) => (
 								<span key={t} style={{ display: "flex", alignItems: "center", gap: 6 }}>
 									<span style={{ color: "var(--fb-olive)" }}><CheckIcon /></span>
 									{t}
@@ -67,13 +67,29 @@ export const LandingPage = () => {
 					<div style={{ position: "relative", height: 540, display: "flex", alignItems: "center", justifyContent: "center" }}>
 						<div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at 60% 40%, rgba(200,106,62,0.16), transparent 65%)", zIndex: 0 }} />
 
-						{/* Floating review note */}
-						<div style={{ position: "absolute", left: -10, top: 80, zIndex: 4, width: 200, padding: "14px 16px", background: "var(--fb-cream)", borderRadius: 14, border: "0.5px solid var(--fb-line)", boxShadow: "0 16px 30px -10px rgba(31,26,21,0.18)", transform: "rotate(-4deg)", fontSize: 12.5, lineHeight: 1.45, color: "var(--fb-ink-soft)" }}>
-							<div style={{ display: "flex", gap: 1, marginBottom: 6 }}>
-								{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={10} />)}
+						{/* Google rating lift card */}
+						<div style={{ position: "absolute", left: -10, top: 80, zIndex: 4, width: 220, padding: "14px 16px", background: "var(--fb-cream)", borderRadius: 14, border: "0.5px solid var(--fb-line)", boxShadow: "0 16px 30px -10px rgba(31,26,21,0.18)", transform: "rotate(-4deg)" }}>
+							<div style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
+								<svg width="14" height="14" viewBox="0 0 24 24">
+									<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+									<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+									<path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z" />
+									<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z" />
+								</svg>
+								<span>Google rating</span>
+								<span style={{ marginLeft: "auto", color: "#2F8F4E", fontWeight: 600, fontFamily: "var(--fb-mono)", fontSize: 10.5 }}>▲ +0.4</span>
 							</div>
-							"The tagliatelle al ragù was unreal. Marco was wonderful with our kid."
-							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9.5, letterSpacing: "0.08em", color: "var(--fb-ink-mute)", marginTop: 6, textTransform: "uppercase" }}>— TABLE 7 · 12 MIN AGO</div>
+							<div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 8 }}>
+								<span style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 36, lineHeight: 1, letterSpacing: "-0.02em", color: "var(--fb-ink)" }}>4.7</span>
+								<span style={{ display: "inline-flex", gap: 1 }}>
+									{[1, 2, 3, 4, 5].map((i) => <svg key={i} width="13" height="13" viewBox="0 0 44 44"><path d="M22 3.5L27.4 15.6L40.5 17.1L30.8 26.2L33.4 39.2L22 32.6L10.6 39.2L13.2 26.2L3.5 17.1L16.6 15.6L22 3.5Z" fill="#F59E0B" /></svg>)}
+								</span>
+							</div>
+							<svg style={{ display: "block", margin: "6px 0 4px" }} width="100%" height="36" viewBox="0 0 160 36" preserveAspectRatio="none">
+								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5 L158 36 L2 36 Z" fill="rgba(200,106,62,0.12)" />
+								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5" stroke="var(--fb-primary)" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+							</svg>
+							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9.5, letterSpacing: "0.08em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>PAST 60 DAYS · 198 NEW REVIEWS</div>
 						</div>
 
 						{/* Phone */}
@@ -124,8 +140,8 @@ export const LandingPage = () => {
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div style={{ maxWidth: 720, marginBottom: 48 }}>
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>How it works</div>
-						<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.02, margin: "12px 0 0", fontWeight: 400 }}>From scan to "see you next week," in under a minute.</h2>
-						<p style={{ marginTop: 18, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>Print one QR code, place it where guests linger. The rest is automatic — and it lands in your inbox before they've left the table.</p>
+						<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.08, margin: "12px 0 0", fontWeight: 400 }}>Happy guests → Google. Everything else → you.</h2>
+						<p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>One QR code at the table. The flow does the sorting — publicly raving guests are nudged to Google Maps, lukewarm ones land privately in your inbox, and everyone gets a discount that brings them back.</p>
 					</div>
 
 					<div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
@@ -157,22 +173,97 @@ export const LandingPage = () => {
 				</div>
 			</section>
 
+			{/* ─── FUNNEL ─── */}
+			<section style={{ padding: "96px 0", background: "var(--fb-paper)" }}>
+				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+					<div style={{ maxWidth: 720, marginBottom: 48 }}>
+						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>The funnel</div>
+						<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.08, margin: "12px 0 0", fontWeight: 400 }}>One scan in. Two outcomes out.</h2>
+						<p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>Every guest takes the same 30‑second flow. The rating decides what happens next — and that's the whole trick.</p>
+					</div>
+
+					<div style={{ display: "grid", gridTemplateColumns: "minmax(280px, 1fr) 100px minmax(320px, 1.2fr)", gap: 24, alignItems: "center", marginTop: 56 }}>
+						{/* Source */}
+						<div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 18, padding: 24 }}>
+							<div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", background: "var(--fb-paper)", borderRadius: 999, fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--fb-ink)" }}>
+								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4" /><rect x="4" y="4" width="2" height="2" fill="currentColor" /><rect x="8" y="4" width="2" height="2" fill="currentColor" /><rect x="4" y="8" width="2" height="2" fill="currentColor" /><rect x="8" y="8" width="2" height="2" fill="currentColor" /></svg>
+								QR scan
+							</div>
+							<div style={{ width: 60, color: "var(--fb-ink-mute)" }}>
+								<svg width="100%" height="24" viewBox="0 0 60 24" preserveAspectRatio="none"><path d="M2 12 H56 M50 6 L56 12 L50 18" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+							</div>
+							<div style={{ width: "100%", padding: 18, borderRadius: 14, background: "var(--fb-ink)", color: "var(--fb-cream)" }}>
+								<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 22, letterSpacing: "-0.01em", lineHeight: 1.1 }}>How was the meal?</div>
+								<div style={{ display: "flex", gap: 5, marginTop: 12 }}>
+									{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={20} />)}
+								</div>
+							</div>
+						</div>
+
+						{/* Split arrows */}
+						<div style={{ position: "relative", height: 240 }}>
+							<svg width="100%" height="100%" viewBox="0 0 100 200" preserveAspectRatio="none">
+								<path d="M0 100 C 50 100, 50 30, 100 30" stroke="var(--fb-olive)" strokeWidth="2" fill="none" />
+								<path d="M0 100 C 50 100, 50 170, 100 170" stroke="#8E3B3B" strokeWidth="2" fill="none" strokeDasharray="4 4" />
+							</svg>
+						</div>
+
+						{/* Outcomes */}
+						<div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+							{/* 5-star → Google */}
+							<div>
+								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)" }}>5 ★ rating</div>
+								<div style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid var(--fb-olive)" }}>
+									<div style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
+										<svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z" /><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z" /></svg>
+										Share on Google?
+									</div>
+									<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 19, lineHeight: 1.2, letterSpacing: "-0.005em", color: "var(--fb-ink)", marginTop: 8 }}>"Loved it — be back next week!"</div>
+									<div style={{ display: "inline-block", marginTop: 12, fontSize: 13, fontWeight: 500, color: "var(--fb-olive)" }}>Open Google Maps →</div>
+								</div>
+								<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-soft)", paddingLeft: 4, marginTop: 6 }}>→ Public review on Google Maps</div>
+							</div>
+
+							{/* 1-4 star → Private */}
+							<div>
+								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)" }}>1–4 ★ rating</div>
+								<div style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid #8E3B3B" }}>
+									<div style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
+										<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6l-3 2.5V12a2 2 0 01-1-2V4z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>
+										Just for the kitchen
+									</div>
+									<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 19, lineHeight: 1.2, letterSpacing: "-0.005em", color: "var(--fb-ink)", marginTop: 8 }}>"Pasta arrived a touch cold tonight."</div>
+									<div style={{ display: "inline-block", marginTop: 12, fontSize: 13, color: "var(--fb-ink-mute)" }}>Lands in your inbox</div>
+								</div>
+								<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-soft)", paddingLeft: 4, marginTop: 6 }}>→ Private feedback to you</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Shared outcome */}
+					<div style={{ marginTop: 40, padding: "18px 22px", border: "1px dashed rgba(31,26,21,0.2)", borderRadius: 14, background: "var(--fb-cream)", display: "flex", alignItems: "center", gap: 14, color: "var(--fb-ink-soft)", fontSize: 14.5, lineHeight: 1.45 }}>
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+						<div><strong style={{ color: "var(--fb-ink)", fontWeight: 500 }}>Both sides</strong> get a one-time discount code for their next visit. Even the unhappy ones — that's how you turn a bad night into a comeback.</div>
+					</div>
+				</div>
+			</section>
+
 			{/* ─── WHY FEEDBACKBITE ─── */}
 			<section id="why" style={{ padding: "96px 0" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div style={{ maxWidth: 720, marginBottom: 48 }}>
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Why FeedbackBite</div>
-						<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.02, margin: "12px 0 0", fontWeight: 400 }}>Yelp is for strangers. This is for your regulars.</h2>
-						<p style={{ marginTop: 18, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>Most feedback tools were built for chains. We built FeedbackBite for the kind of place where the owner still walks the dining room.</p>
+						<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.08, margin: "12px 0 0", fontWeight: 400 }}>Your Google rating, climbing on its own.</h2>
+						<p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>Most feedback tools were built for chains who already game the system. We built FeedbackBite for the kind of place where the owner still walks the dining room — and where every Google star matters.</p>
 					</div>
 
 					<div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 80, alignItems: "center" }}>
 						<div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
 							{[
-								{ h: "Private by default.", p: "Feedback comes to you, not to the internet. Honest critique without the public-shame loop — and your one-star nights stop being your worst nights." },
-								{ h: "The reward brings them back.", p: <>A small discount on their next visit — yours to set, yours to redeem. We've seen <strong>17% redemption rates</strong> in the wild. That's repeat business, not loyalty theater.</> },
-								{ h: "Google reviews, no arm-twisting.", p: <>Happy guests get gently invited to leave a public Google review — <strong>after</strong> they've already received their discount. Fully optional, fully Google-policy compliant.</> },
-								{ h: "Cashier-friendly redemption.", p: "Type the code, see the rating, mark redeemed. No POS integration to fight, no plugin to install. It works alongside whatever you already use." },
+								{ h: "Funnel 5‑stars to Google Maps.", p: <>Guests who tap five stars get a one‑tap nudge to your Google Maps listing — <strong>after</strong> their discount, fully optional, fully Google‑policy compliant. We've seen owners gain <strong>+0.4 stars in 60 days</strong>.</> },
+								{ h: "The 1- to 4-stars stay private.", p: "Guests with a complaint never see the Google prompt. Their feedback comes to your inbox — honest, actionable, and out of the public reputation loop." },
+								{ h: "A discount on every scan.", p: <>Whether they leave one star or five, every guest walks away with a code for their next visit. <strong>17% redemption</strong> in the wild — that's repeat business, not loyalty theater.</> },
+								{ h: "No POS to fight, no app to install.", p: "Type the code, see the rating, mark redeemed. Cashier mode runs on the host‑stand iPad next to whatever you already use." },
 							].map((item, idx) => (
 								<div key={idx} style={{ padding: "24px 0", borderTop: "0.5px solid var(--fb-line)", display: "grid", gridTemplateColumns: "32px 1fr", gap: 18, alignItems: "start", ...(idx === 3 ? { borderBottom: "0.5px solid var(--fb-line)" } : {}) }}>
 									<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", marginTop: 2 }}>
@@ -238,9 +329,9 @@ export const LandingPage = () => {
 
 					<div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24, marginTop: 48 }}>
 						{[
-							{ v: "4.7×", l: "More feedback received vs. paper comment cards or \"tell us how we did\" emails." },
+							{ v: "+0.4★", l: "Average lift in Google Maps star rating after 60 days. No fake reviews, no nudging unhappy guests." },
+							{ v: "4.7×", l: "More Google reviews per month vs. \"leave us a review\" emails or table cards." },
 							{ v: "17%", l: "Discount redemption rate — i.e. repeat visits directly attributable to FeedbackBite." },
-							{ v: "+0.4", l: "Average lift in Google star rating after 60 days, with no fake reviews and no nudging." },
 							{ v: "$23", l: "Average revenue per scan, after discount. (Average ticket $86, average discount 15%.)" },
 						].map((stat) => (
 							<div key={stat.v} style={{ borderTop: "0.5px solid rgba(251,247,239,0.15)", paddingTop: 18 }}>
