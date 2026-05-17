@@ -1,0 +1,90 @@
+/* Landing page responsive overrides — desktop styles live inline in landing.page.tsx */
+
+@media (max-width: 900px) {
+	.fb-hero-grid {
+		grid-template-columns: 1fr !important;
+		gap: 96px !important;
+	}
+
+	.fb-why-grid,
+	.fb-quote-grid,
+	.fb-faq-grid {
+		grid-template-columns: 1fr !important;
+		gap: 40px !important;
+	}
+
+	.fb-nav-signup {
+		display: none !important;
+	}
+
+	.fb-how-grid,
+	.fb-price-grid,
+	.fb-math-grid,
+	.fb-funnel-diagram {
+		grid-template-columns: 1fr !important;
+	}
+
+	.fb-funnel-diagram {
+		gap: 24px !important;
+	}
+
+	.fb-footer-grid {
+		grid-template-columns: 1fr !important;
+		gap: 32px !important;
+	}
+
+	.fb-nav-links {
+		display: none !important;
+	}
+
+	.fb-fnl-split {
+		display: none !important;
+	}
+
+	.fb-hero-visual {
+		height: 480px !important;
+	}
+
+	.fb-section {
+		padding: 64px 0 !important;
+	}
+
+	.fb-math {
+		padding: 56px 32px !important;
+		margin: 0 16px !important;
+	}
+
+	/* Slightly relax horizontal padding on small screens */
+	.fb-wrap {
+		padding-left: 20px !important;
+		padding-right: 20px !important;
+	}
+
+	/* Keep the hero coupon from overflowing on narrow screens */
+	.fb-hero-coupon {
+		right: 0 !important;
+		width: 220px !important;
+	}
+
+	.fb-hero-note {
+		left: 0 !important;
+	}
+
+	/* Footer bottom row stacks vertically */
+	.fb-footer-bottom {
+		flex-direction: column !important;
+		gap: 12px !important;
+		align-items: flex-start !important;
+	}
+
+	/* Hero meta wraps */
+	.fb-hero-meta {
+		flex-wrap: wrap !important;
+		gap: 12px 22px !important;
+	}
+
+	/* Logos row tightens */
+	.fb-logos-row {
+		gap: 24px 32px !important;
+	}
+}

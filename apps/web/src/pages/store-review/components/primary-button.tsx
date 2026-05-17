@@ -13,8 +13,7 @@ export const PrimaryButton = ({
 }: PrimaryButtonProps) => {
 	const bg = variant === "primary" ? "var(--fb-ink)" : "transparent";
 	const color = variant === "primary" ? "var(--fb-cream)" : "var(--fb-ink)";
-	const border =
-		variant === "ghost" ? "1px solid rgba(31,26,21,0.15)" : "none";
+	const border = variant === "ghost" ? "1px solid rgba(31,26,21,0.15)" : "none";
 
 	return (
 		<button

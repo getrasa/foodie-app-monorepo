@@ -1,16 +1,16 @@
-import { PrimaryButton } from "./primary-button";
-import { BackRow } from "./back-row";
 import { StaticStar } from "#/pages/console/shared/static-star";
+import { BackRow } from "./back-row";
+import { PrimaryButton } from "./primary-button";
 
 const RATING_WORDS: Record<number, string> = {
-	1: "Off night",
-	2: "Could be better",
-	3: "Solid",
-	4: "Really good",
-	5: "Delizioso",
+	1: "Słabo",
+	2: "Mogło być lepiej",
+	3: "W porządku",
+	4: "Bardzo dobrze",
+	5: "Wyśmienicie",
 };
 
-const PROMPT_CHIPS = ["The pasta", "Service", "Wine list", "Atmosphere", "Dessert"];
+const PROMPT_CHIPS = ["Jedzenie", "Obsługa", "Karta win", "Atmosfera", "Deser"];
 
 interface ScreenCommentProps {
 	rating: number;
@@ -31,6 +31,30 @@ export const ScreenComment = ({
 	onNext,
 	onBack,
 }: ScreenCommentProps) => {
+	const isLow = rating <= 4;
+	const isFour = rating === 4;
+	const isThreeOrLess = rating <= 3;
+	const hasContent = comment.trim().length > 0 || selectedChips.length > 0;
+	const canContinue = isLow ? hasContent : true;
+
+	const heading = isThreeOrLess
+		? "Co poszło nie tak?"
+		: isFour
+			? "Co możemy poprawić?"
+			: "Powiesz coś więcej?";
+
+	const subhead = isThreeOrLess
+		? "Wymagane — Helena czyta każdą opinię osobiście."
+		: isFour
+			? "Wymagane — pomóż nam dopracować szczegóły."
+			: "Opcjonalne — ale Helena czyta każdą opinię.";
+
+	const placeholder = isThreeOrLess
+		? "Opisz, co możemy poprawić…"
+		: isFour
+			? "Co mogłoby być jeszcze lepsze?"
+			: "Pierogi były wyśmienite…";
+
 	const toggleChip = (c: string) => {
 		setSelectedChips(
 			selectedChips.includes(c)
@@ -48,7 +72,7 @@ export const ScreenComment = ({
 				flex: 1,
 			}}
 		>
-			<BackRow onBack={onBack} step={2} />
+			<BackRow onBack={onBack} step={2} total={rating === 5 ? 4 : 3} />
 
 			<div style={{ marginTop: 24 }}>
 				{/* Rating pill */}
@@ -89,19 +113,17 @@ export const ScreenComment = ({
 						color: "var(--fb-ink)",
 					}}
 				>
-					Want to say more?
+					{heading}
 				</div>
 				<div
 					style={{
 						marginTop: 8,
 						fontFamily: "var(--fb-sans)",
 						fontSize: 14,
-						color: "rgba(31,26,21,0.6)",
+						color: isLow ? "var(--fb-primary)" : "rgba(31,26,21,0.6)",
 					}}
 				>
-					{rating === 5
-						? "Optional — but we do read them all."
-						: "Pick a tag or leave a note to unlock your discount."}
+					{subhead}
 				</div>
 			</div>
 
@@ -148,7 +170,10 @@ export const ScreenComment = ({
 					padding: 14,
 					background: "var(--fb-paper)",
 					borderRadius: 14,
-					border: "0.5px solid rgba(31,26,21,0.07)",
+					border:
+						isLow && !hasContent
+							? "1px solid rgba(200,106,62,0.45)"
+							: "0.5px solid rgba(31,26,21,0.07)",
 					flex: 1,
 					display: "flex",
 					flexDirection: "column",
@@ -157,7 +182,7 @@ export const ScreenComment = ({
 				<textarea
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
-					placeholder="The tagliatelle al ragù was unreal…"
+					placeholder={placeholder}
 					maxLength={240}
 					style={{
 						flex: 1,
@@ -187,16 +212,26 @@ export const ScreenComment = ({
 			</div>
 
 			<div style={{ marginTop: 14 }}>
-				<PrimaryButton
-					onClick={onNext}
-					disabled={rating < 5 && !comment.trim() && !selectedChips.length}
-				>
-					{comment.trim() || selectedChips.length
-						? "Submit & get discount"
-						: rating === 5
-							? "Skip & get discount"
-							: "Leave a note to get your discount"}
+				<PrimaryButton onClick={onNext} disabled={!canContinue}>
+					{isLow
+						? "Wyślij opinię"
+						: hasContent
+							? "Wyślij opinię"
+							: "Pomiń i kontynuuj"}
 				</PrimaryButton>
+				{isLow && !hasContent && (
+					<div
+						style={{
+							marginTop: 8,
+							fontFamily: "var(--fb-sans)",
+							fontSize: 12,
+							color: "rgba(31,26,21,0.5)",
+							textAlign: "center",
+						}}
+					>
+						Napisz kilka słów lub wybierz kategorię, by przejść dalej.
+					</div>
+				)}
 			</div>
 		</div>
 	);

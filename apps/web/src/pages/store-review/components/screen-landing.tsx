@@ -1,5 +1,5 @@
-import { PrimaryButton } from "./primary-button";
 import { Monogram } from "./monogram";
+import { PrimaryButton } from "./primary-button";
 
 interface ScreenLandingProps {
 	onStart: () => void;
@@ -42,7 +42,7 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 						color: "rgba(31,26,21,0.55)",
 					}}
 				>
-					Scanned · Table 7
+					Zeskanowano · Stolik 7
 				</div>
 			</div>
 
@@ -59,9 +59,7 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 						fontStyle: "italic",
 					}}
 				>
-					How was
-					<br />
-					the meal?
+					Jak wrażenia?
 				</div>
 				<div
 					style={{
@@ -73,8 +71,17 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 						maxWidth: 280,
 					}}
 				>
-					A quick note from your table. Takes about 30 seconds, and
-					lands you a little something for next time.
+					Krótka opinia ze stolika w{" "}
+					<em
+						style={{
+							fontFamily: "var(--fb-serif)",
+							fontStyle: "italic",
+						}}
+					>
+						Restauracji u Heleny
+					</em>
+					. Zajmie 30 sekund — a w zamian dostaniesz coś miłego na kolejną
+					wizytę.
 				</div>
 			</div>
 
@@ -121,7 +128,7 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 							color: "var(--fb-ink)",
 						}}
 					>
-						15% off your next visit
+						15% rabatu na następną wizytę
 					</div>
 					<div
 						style={{
@@ -131,14 +138,14 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 							marginTop: 2,
 						}}
 					>
-						Unlocked as soon as you leave a rating
+						Odblokowany po wystawieniu oceny
 					</div>
 				</div>
 			</div>
 
 			<div style={{ flex: 1 }} />
 
-			<PrimaryButton onClick={onStart}>Leave feedback →</PrimaryButton>
+			<PrimaryButton onClick={onStart}>Zostaw opinię →</PrimaryButton>
 			<div
 				style={{
 					marginTop: 12,
@@ -149,7 +156,7 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 					textAlign: "center",
 				}}
 			>
-				No sign-up · No app · 30 seconds
+				Bez rejestracji · Bez aplikacji · 30 sekund
 			</div>
 		</div>
 	);

@@ -62,7 +62,7 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "FeedbackBite",
+				title: "FeedbackBite — Szczera opinia. Słodki rabacik.",
 			},
 		],
 		links: [
@@ -91,7 +91,7 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: React.ReactNode }) {
 	const [queryClient] = useState(() => createQueryClient());
 	return (
-		<html lang="en">
+		<html lang="pl">
 			<head>
 				<HeadContent />
 			</head>

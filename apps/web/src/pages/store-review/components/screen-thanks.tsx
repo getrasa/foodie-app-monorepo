@@ -31,7 +31,7 @@ export const ScreenThanks = ({ onRestart }: ScreenThanksProps) => {
 					color: "var(--fb-ink)",
 				}}
 			>
-				Grazie.
+				Dziękujemy.
 			</div>
 			<div
 				style={{
@@ -43,9 +43,9 @@ export const ScreenThanks = ({ onRestart }: ScreenThanksProps) => {
 					maxWidth: 260,
 				}}
 			>
-				Your code is saved.
+				Kod czeka w Twojej skrzynce e-mail.
 				<br />
-				We'll see you soon — come hungry.
+				Do zobaczenia — przyjdź głodny.
 			</div>
 
 			<div style={{ flex: 1 }} />
@@ -64,7 +64,7 @@ export const ScreenThanks = ({ onRestart }: ScreenThanksProps) => {
 					color: "rgba(31,26,21,0.4)",
 				}}
 			>
-				Restart demo ↻
+				Uruchom demo od nowa ↻
 			</button>
 		</div>
 	);

@@ -22,7 +22,7 @@ export const Monogram = ({ size = 56 }: MonogramProps) => {
 				flexShrink: 0,
 			}}
 		>
-			L
+			H
 		</div>
 	);
 };

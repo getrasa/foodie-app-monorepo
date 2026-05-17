@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { PrimaryButton } from "./primary-button";
 import { BackRow } from "./back-row";
+import { PrimaryButton } from "./primary-button";
 
 const RATING_WORDS: Record<number, { word: string; color: string }> = {
 	0: { word: "—", color: "rgba(31,26,21,0.35)" },
-	1: { word: "Off night", color: "var(--fb-ink)" },
-	2: { word: "Could be better", color: "var(--fb-ink)" },
-	3: { word: "Solid", color: "var(--fb-ink)" },
-	4: { word: "Really good", color: "var(--fb-ink)" },
-	5: { word: "Delizioso", color: "var(--fb-primary)" },
+	1: { word: "Słabo", color: "var(--fb-ink)" },
+	2: { word: "Mogło być lepiej", color: "var(--fb-ink)" },
+	3: { word: "W porządku", color: "var(--fb-ink)" },
+	4: { word: "Bardzo dobrze", color: "var(--fb-ink)" },
+	5: { word: "Wyśmienicie", color: "var(--fb-primary)" },
 };
 
 const Star = ({
@@ -77,7 +77,7 @@ export const ScreenRating = ({
 				flex: 1,
 			}}
 		>
-			<BackRow onBack={onBack} step={1} />
+			<BackRow onBack={onBack} step={1} total={rating === 5 ? 4 : 3} />
 
 			<div style={{ marginTop: 28 }}>
 				<div
@@ -90,7 +90,7 @@ export const ScreenRating = ({
 						color: "var(--fb-ink)",
 					}}
 				>
-					How many stars?
+					Jak było?
 				</div>
 				<div
 					style={{
@@ -100,7 +100,7 @@ export const ScreenRating = ({
 						color: "rgba(31,26,21,0.6)",
 					}}
 				>
-					Tap to rate your experience.
+					Dotknij, aby ocenić swoje wrażenia.
 				</div>
 			</div>
 
@@ -144,7 +144,7 @@ export const ScreenRating = ({
 			<div style={{ flex: 1 }} />
 
 			<PrimaryButton onClick={onNext} disabled={!rating}>
-				Continue
+				Dalej
 			</PrimaryButton>
 		</div>
 	);

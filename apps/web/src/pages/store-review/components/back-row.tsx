@@ -1,9 +1,11 @@
 interface BackRowProps {
 	onBack: () => void;
 	step: number;
+	total?: number;
 }
 
-export const BackRow = ({ onBack, step }: BackRowProps) => {
+export const BackRow = ({ onBack, step, total = 3 }: BackRowProps) => {
+	const steps = Array.from({ length: total }, (_, i) => i + 1);
 	return (
 		<div
 			style={{
@@ -38,20 +40,17 @@ export const BackRow = ({ onBack, step }: BackRowProps) => {
 						strokeLinejoin="round"
 					/>
 				</svg>
-				Back
+				Wstecz
 			</button>
 			<div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-				{[1, 2, 3].map((s) => (
+				{steps.map((s) => (
 					<div
 						key={s}
 						style={{
 							width: s === step ? 18 : 6,
 							height: 6,
 							borderRadius: 3,
-							background:
-								s <= step
-									? "var(--fb-ink)"
-									: "rgba(31,26,21,0.15)",
+							background: s <= step ? "var(--fb-ink)" : "rgba(31,26,21,0.15)",
 							transition: "width 0.2s, background 0.2s",
 						}}
 					/>

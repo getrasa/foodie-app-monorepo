@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { PrimaryButton } from "./primary-button";
 
 interface ScreenDiscountProps {
+	email: string;
 	onNext: () => void;
 }
 
-export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
+export const ScreenDiscount = ({ email, onNext }: ScreenDiscountProps) => {
 	const [revealed, setRevealed] = useState(false);
 
 	useEffect(() => {
@@ -54,7 +55,7 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 						color: "rgba(31,26,21,0.6)",
 					}}
 				>
-					Feedback received · Grazie
+					Opinia przyjęta · Dziękujemy
 				</div>
 			</div>
 
@@ -69,9 +70,9 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 						color: "var(--fb-ink)",
 					}}
 				>
-					Here's your
+					Twój kod
 					<br />
-					little something.
+					rabatowy.
 				</div>
 			</div>
 
@@ -139,7 +140,7 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 									opacity: 0.55,
 								}}
 							>
-								Your restaurant
+								Restauracja u Heleny
 							</div>
 							<div
 								style={{
@@ -151,7 +152,7 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 									letterSpacing: "-0.02em",
 								}}
 							>
-								15% off
+								15% rabatu
 							</div>
 							<div
 								style={{
@@ -161,7 +162,7 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 									marginTop: 2,
 								}}
 							>
-								next visit · dine-in
+								następna wizyta · na miejscu
 							</div>
 						</div>
 						{/* Sparkle */}
@@ -190,7 +191,7 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 								opacity: 0.5,
 							}}
 						>
-							Code
+							Kod
 						</div>
 						<div
 							style={{
@@ -200,7 +201,7 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 								marginTop: 4,
 							}}
 						>
-							BITE-4KX9
+							HELENA-4KX9
 						</div>
 						<div
 							style={{
@@ -210,29 +211,78 @@ export const ScreenDiscount = ({ onNext }: ScreenDiscountProps) => {
 								marginTop: 6,
 							}}
 						>
-							Show this screen to your server.
+							Pokaż ten ekran kelnerowi.
 							<br />
-							Valid for 30 days.
+							Ważny przez 30 dni.
 						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Email + screenshot note */}
+			<div
+				style={{
+					marginTop: 16,
+					padding: "12px 14px",
+					borderRadius: 12,
+					background: "var(--fb-paper)",
+					border: "0.5px solid rgba(31,26,21,0.08)",
+					display: "flex",
+					gap: 10,
+					alignItems: "flex-start",
+				}}
+			>
+				<div
+					style={{
+						width: 28,
+						height: 28,
+						borderRadius: 8,
+						background: "#fff",
+						border: "0.5px solid rgba(31,26,21,0.08)",
+						display: "grid",
+						placeItems: "center",
+						flexShrink: 0,
+					}}
+				>
+					<svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+						<path
+							d="M2 4.5h14v9H2zM2 4.5l7 5 7-5"
+							stroke="var(--fb-ink)"
+							strokeWidth="1.4"
+							strokeLinejoin="round"
+						/>
+					</svg>
+				</div>
+				<div style={{ flex: 1, minWidth: 0 }}>
+					<div
+						style={{
+							fontFamily: "var(--fb-sans)",
+							fontSize: 12.5,
+							color: "var(--fb-ink)",
+							fontWeight: 500,
+							wordBreak: "break-word",
+						}}
+					>
+						Kod wysłany na {email || "Twój adres e-mail"}
+					</div>
+					<div
+						style={{
+							fontFamily: "var(--fb-sans)",
+							fontSize: 11.5,
+							color: "rgba(31,26,21,0.6)",
+							marginTop: 2,
+							lineHeight: 1.45,
+						}}
+					>
+						Sprawdź skrzynkę (i folder spam). Dla pewności — zrób też zrzut
+						ekranu tego kodu.
 					</div>
 				</div>
 			</div>
 
 			<div style={{ flex: 1 }} />
 
-			<PrimaryButton onClick={onNext}>Done</PrimaryButton>
-
-			<div
-				style={{
-					marginTop: 10,
-					fontFamily: "var(--fb-sans)",
-					fontSize: 12,
-					color: "rgba(31,26,21,0.45)",
-					textAlign: "center",
-				}}
-			>
-				Screenshot saved? You can also close this tab.
-			</div>
+			<PrimaryButton onClick={onNext}>Gotowe</PrimaryButton>
 		</div>
 	);
 };
