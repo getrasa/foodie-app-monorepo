@@ -24,8 +24,8 @@ export const LandingPage = () => {
 			{/* ─── NAV ─── */}
 			<nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 32px", maxWidth: 1240, margin: "0 auto" }}>
 				<div style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 500, fontSize: 15 }}>
-					<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16 }}>F</div>
-					<span>FeedbackBite</span>
+					<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16 }}>J</div>
+					<span>Jak Było</span>
 				</div>
 				<div className="fb-nav-links" style={{ display: "flex", gap: 28, fontSize: 14, color: "var(--fb-ink-soft)" }}>
 					<a href="#how" style={{ color: "inherit", textDecoration: "none" }}>Jak to działa</a>
@@ -48,7 +48,7 @@ export const LandingPage = () => {
 							Zamień miłe wieczory w <em style={{ color: "var(--fb-primary)", fontFamily: "var(--fb-serif)", fontStyle: "italic" }}>gwiazdki</em> na Google Maps.
 						</h1>
 						<p style={{ marginTop: 36, fontSize: 18, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 520 }}>
-							FeedbackBite zamienia najlepsze wieczory w recenzje na Google, a te gorsze — w szczerą uwagę prosto do kuchni. Każdy gość wychodzi z rabatem, który przyprowadza go z powrotem.
+							Jak Było zamienia najlepsze wieczory w recenzje na Google, a te gorsze — w szczerą uwagę prosto do kuchni. Każdy gość wychodzi z rabatem, który przyprowadza go z powrotem.
 						</p>
 						<div style={{ marginTop: 36, display: "flex", gap: 12, alignItems: "center" }}>
 							<button type="button" onClick={() => void navigate({ to: "/signup" })} style={{ padding: "14px 24px", borderRadius: 12, background: "var(--fb-ink)", color: "var(--fb-cream)", fontSize: 15, fontWeight: 500, cursor: "pointer", border: "none", whiteSpace: "nowrap" }}>Wypróbuj za darmo →</button>
@@ -249,13 +249,13 @@ export const LandingPage = () => {
 				</div>
 			</section>
 
-			{/* ─── WHY FEEDBACKBITE ─── */}
+			{/* ─── WHY JAK BYŁO ─── */}
 			<section id="why" className="fb-section" style={{ padding: "96px 0" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div style={{ maxWidth: 720, marginBottom: 48 }}>
-						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Dlaczego FeedbackBite</div>
+						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Dlaczego Jak Było</div>
 						<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.08, margin: "12px 0 0", fontWeight: 400 }}>Twoja ocena na Google rośnie sama.</h2>
-						<p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>Większość „narzędzi do opinii” zbudowano dla sieciówek, które i tak kombinują z systemem. My zbudowaliśmy FeedbackBite dla lokali, gdzie szef sali wciąż sam wita gości — i gdzie każda gwiazdka na Google ma znaczenie.</p>
+						<p style={{ marginTop: 22, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)", maxWidth: 580 }}>Większość „narzędzi do opinii” zbudowano dla sieciówek, które i tak kombinują z systemem. My zbudowaliśmy Jak Było dla lokali, gdzie szef sali wciąż sam wita gości — i gdzie każda gwiazdka na Google ma znaczenie.</p>
 					</div>
 
 					<div className="fb-why-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 80, alignItems: "center" }}>
@@ -284,7 +284,7 @@ export const LandingPage = () => {
 								<div style={{ width: 9, height: 9, borderRadius: "50%", background: "#ff5f57" }} />
 								<div style={{ width: 9, height: 9, borderRadius: "50%", background: "#febc2e" }} />
 								<div style={{ width: 9, height: 9, borderRadius: "50%", background: "#28c840" }} />
-								<div style={{ marginLeft: 14, fontFamily: "var(--fb-mono)", fontSize: 10.5, color: "var(--fb-ink-mute)" }}>app.feedbackbite.pl/podlipa</div>
+								<div style={{ marginLeft: 14, fontFamily: "var(--fb-mono)", fontSize: 10.5, color: "var(--fb-ink-mute)" }}>app.jakbylo.pl/podlipa</div>
 							</div>
 							<div style={{ display: "flex", minHeight: 360 }}>
 								<div style={{ width: 130, padding: "14px 10px", background: "var(--fb-paper)", display: "flex", flexDirection: "column", gap: 4, borderRight: "0.5px solid var(--fb-line)" }}>
@@ -332,7 +332,7 @@ export const LandingPage = () => {
 						{[
 							{ v: "+0,4★", l: "Średni wzrost oceny w Google Maps po 60 dniach. Bez fałszywek, bez naciągania niezadowolonych." },
 							{ v: "4,7×", l: "Więcej opinii Google miesięcznie niż przy mailach „zostaw opinię” czy ulotkach na stoliku." },
-							{ v: "17%", l: "Wykorzystanych rabatów — czyli powrotów, które bezpośrednio możesz przypisać FeedbackBite." },
+							{ v: "17%", l: "Wykorzystanych rabatów — czyli powrotów, które bezpośrednio możesz przypisać Jak Było." },
 							{ v: "92 zł", l: "Średni przychód na jedno skanowanie, po rabacie. (Średni rachunek 340 zł, średni rabat 15%.)" },
 						].map((stat) => (
 							<div key={stat.v} style={{ borderTop: "0.5px solid rgba(251,247,239,0.15)", paddingTop: 18 }}>
@@ -354,7 +354,7 @@ export const LandingPage = () => {
 						<div>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Historia właściciela</div>
 							<blockquote style={{ margin: 0, marginTop: 18, fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(28px, 3.4vw, 44px)", lineHeight: 1.18, letterSpacing: "-0.015em", color: "var(--fb-ink)" }}>
-								„Sprawdziliśmy wcześniej cztery „narzędzia do opinii”. Każde zrobione pod sieciówki, każde chciało nas wpychać w kombinowanie. FeedbackBite to pierwsze, które po prostu działa jak rozmowa z gościem przy stoliku — a nasi stali bywalcy naprawdę wykorzystują kody."
+								„Sprawdziliśmy wcześniej cztery „narzędzia do opinii”. Każde zrobione pod sieciówki, każde chciało nas wpychać w kombinowanie. Jak Było to pierwsze, które po prostu działa jak rozmowa z gościem przy stoliku — a nasi stali bywalcy naprawdę wykorzystują kody."
 							</blockquote>
 							<div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 12, fontSize: 14, color: "var(--fb-ink-soft)" }}>
 								<span style={{ display: "block", height: 1, width: 40, background: "var(--fb-ink)", opacity: 0.4 }} />
@@ -392,7 +392,7 @@ export const LandingPage = () => {
 						<div>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>FAQ</div>
 							<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.02, margin: "12px 0 0", fontWeight: 400 }}>Pytania, które padają przy stole</h2>
-							<p style={{ marginTop: 18, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)" }}>Coś jeszcze? Napisz na <span style={{ color: "var(--fb-primary)" }}>hej@feedbackbite.pl</span> — czytamy każdą wiadomość.</p>
+							<p style={{ marginTop: 18, fontSize: 17, lineHeight: 1.55, color: "var(--fb-ink-soft)" }}>Coś jeszcze? Napisz na <span style={{ color: "var(--fb-primary)" }}>hej@jakbylo.pl</span> — czytamy każdą wiadomość.</p>
 						</div>
 
 						<div style={{ display: "flex", flexDirection: "column" }}>
@@ -422,8 +422,8 @@ export const LandingPage = () => {
 					<div className="fb-footer-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr", gap: 40, marginBottom: 48 }}>
 						<div>
 							<div style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 500, fontSize: 16, marginBottom: 12, color: "var(--fb-ink)" }}>
-								<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16 }}>F</div>
-								FeedbackBite
+								<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16 }}>J</div>
+								Jak Było
 							</div>
 							<div style={{ fontSize: 13, color: "var(--fb-ink-soft)", maxWidth: 280, lineHeight: 1.55 }}>Szczere opinie i słodkie rabaciki — dla lokali, w których właściciel wciąż sam wita gości przy drzwiach.</div>
 						</div>
@@ -441,7 +441,7 @@ export const LandingPage = () => {
 						))}
 					</div>
 					<div className="fb-footer-bottom" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 24, borderTop: "0.5px solid var(--fb-line)" }}>
-						<div>© 2026 FeedbackBite Sp. z o.o. · Zrobione z sercem we Wrocławiu i Krakowie.</div>
+						<div>© 2026 Jak Było Sp. z o.o. · Zrobione z sercem we Wrocławiu i Krakowie.</div>
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.06em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>wer. 0.7 · Beta</div>
 					</div>
 				</div>

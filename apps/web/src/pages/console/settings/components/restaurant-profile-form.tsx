@@ -22,7 +22,7 @@ export const RestaurantProfileForm = () => {
 			name: (value) =>
 				value.trim().length >= 2
 					? null
-					: "Restaurant name must be at least 2 characters",
+					: "Nazwa restauracji musi mieć co najmniej 2 znaki",
 		},
 	});
 
@@ -38,33 +38,33 @@ export const RestaurantProfileForm = () => {
 			<Stack gap="md">
 				{saved && (
 					<Alert color="green" variant="light">
-						Restaurant profile saved
+						Profil restauracji zapisany
 					</Alert>
 				)}
 
 				<TextInput
-					label="Restaurant name"
-					placeholder="e.g. Mario's Trattoria"
+					label="Nazwa restauracji"
+					placeholder="np. Trattoria u Mario"
 					required
 					{...form.getInputProps("name")}
 				/>
 
 				<Textarea
-					label="Address"
-					placeholder="123 Main St, City"
+					label="Adres"
+					placeholder="ul. Główna 123, Miasto"
 					minRows={2}
 					{...form.getInputProps("address")}
 				/>
 
 				<TextInput
-					label="Google Maps link"
-					placeholder="Paste your Google Maps restaurant URL"
-					description="Used to direct happy diners to leave you a Google review"
+					label="Link do Google Maps"
+					placeholder="Wklej link Google Maps do swojej restauracji"
+					description="Wykorzystywany, żeby kierować zadowolonych gości do wystawienia opinii w Google"
 					{...form.getInputProps("googleMapsUrl")}
 				/>
 
 				<Button type="submit" size="md">
-					Save profile
+					Zapisz profil
 				</Button>
 			</Stack>
 		</form>

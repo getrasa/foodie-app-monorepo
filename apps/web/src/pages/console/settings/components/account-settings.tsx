@@ -17,11 +17,11 @@ export const AccountSettings = () => {
 		},
 		validate: {
 			currentPassword: (value) =>
-				value.length >= 8 ? null : "Password must be at least 8 characters",
+				value.length >= 8 ? null : "Hasło musi mieć co najmniej 8 znaków",
 			newPassword: (value) =>
-				value.length >= 8 ? null : "Password must be at least 8 characters",
+				value.length >= 8 ? null : "Hasło musi mieć co najmniej 8 znaków",
 			confirmPassword: (value, values) =>
-				value === values.newPassword ? null : "Passwords do not match",
+				value === values.newPassword ? null : "Hasła nie pasują do siebie",
 		},
 	});
 
@@ -44,42 +44,42 @@ export const AccountSettings = () => {
 				label="Email"
 				value={session?.user.email ?? ""}
 				disabled
-				description="Contact support to change your email"
+				description="Skontaktuj się z pomocą, żeby zmienić adres email"
 			/>
 
-			<Divider my="sm" label="Change password" labelPosition="center" />
+			<Divider my="sm" label="Zmień hasło" labelPosition="center" />
 
 			{saved && (
 				<Alert color="green" variant="light">
-					Password updated successfully
+					Hasło zostało zmienione
 				</Alert>
 			)}
 
 			<form onSubmit={form.onSubmit(handleChangePassword)}>
 				<Stack gap="md">
 					<PasswordInput
-						label="Current password"
-						placeholder="Your current password"
+						label="Aktualne hasło"
+						placeholder="Twoje aktualne hasło"
 						required
 						{...form.getInputProps("currentPassword")}
 					/>
 
 					<PasswordInput
-						label="New password"
-						placeholder="At least 8 characters"
+						label="Nowe hasło"
+						placeholder="Co najmniej 8 znaków"
 						required
 						{...form.getInputProps("newPassword")}
 					/>
 
 					<PasswordInput
-						label="Confirm new password"
-						placeholder="Repeat new password"
+						label="Potwierdź nowe hasło"
+						placeholder="Powtórz nowe hasło"
 						required
 						{...form.getInputProps("confirmPassword")}
 					/>
 
 					<Button type="submit" size="md">
-						Update password
+						Zaktualizuj hasło
 					</Button>
 				</Stack>
 			</form>
@@ -91,7 +91,7 @@ export const AccountSettings = () => {
 				color="red"
 				onClick={() => void handleSignOut()}
 			>
-				Sign out
+				Wyloguj
 			</Button>
 		</Stack>
 	);

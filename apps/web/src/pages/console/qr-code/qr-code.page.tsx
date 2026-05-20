@@ -13,17 +13,17 @@ export const QrCodePage = () => {
 		const svgString = serializer.serializeToString(svg);
 		const blob = new Blob([svgString], { type: "image/svg+xml" });
 		const link = document.createElement("a");
-		link.download = "feedbackbite-qr-code.svg";
+		link.download = "jakbylo-qr-code.svg";
 		link.href = URL.createObjectURL(blob);
 		link.click();
 		URL.revokeObjectURL(link.href);
 	}, []);
 
 	const downloadOptions = [
-		{ label: "Table tent", sub: "4×6 in, print-ready PDF" },
-		{ label: "Receipt sticker", sub: "2×2 in, 8 per sheet" },
-		{ label: "Window decal", sub: "5×5 in, single PDF" },
-		{ label: "Raw QR (SVG)", sub: "For custom layouts", onClick: handleDownloadSvg },
+		{ label: "Tabliczka na stolik", sub: "4×6 cala, PDF gotowy do druku" },
+		{ label: "Naklejka na paragon", sub: "2×2 cala, 8 sztuk na arkuszu" },
+		{ label: "Naklejka na okno", sub: "5×5 cala, pojedynczy PDF" },
+		{ label: "Surowy kod QR (SVG)", sub: "Do własnych projektów", onClick: handleDownloadSvg },
 	];
 
 	return (
@@ -46,7 +46,7 @@ export const QrCodePage = () => {
 					color: "var(--fb-ink)",
 				}}
 			>
-				QR code
+				Kod QR
 			</div>
 			<div
 				style={{
@@ -55,7 +55,7 @@ export const QrCodePage = () => {
 					marginTop: 4,
 				}}
 			>
-				Print this and place it on tables, receipts, or a wall near the door.
+				Wydrukuj i umieść na stolikach, paragonach albo przy wejściu.
 			</div>
 
 			{/* Hidden SVG for download */}
@@ -91,7 +91,7 @@ export const QrCodePage = () => {
 								color: "rgba(31,26,21,0.5)",
 							}}
 						>
-							YOUR RESTAURANT
+							TWOJA RESTAURACJA
 						</div>
 						<div
 							style={{
@@ -103,7 +103,7 @@ export const QrCodePage = () => {
 								color: "var(--fb-ink)",
 							}}
 						>
-							How was the meal?
+							Jak smakowało?
 						</div>
 						<div
 							style={{
@@ -131,9 +131,9 @@ export const QrCodePage = () => {
 								lineHeight: 1.5,
 							}}
 						>
-							Scan to leave a note.
+							Zeskanuj, zostaw kilka słów.
 							<br />
-							Get a discount on your next visit.
+							Odbierz rabat na następną wizytę.
 						</div>
 						<div
 							style={{
@@ -144,7 +144,7 @@ export const QrCodePage = () => {
 								marginTop: 16,
 							}}
 						>
-							FEEDBACKBITE.CO
+							JAKBYLO.PL
 						</div>
 					</div>
 				</div>
@@ -161,7 +161,7 @@ export const QrCodePage = () => {
 							marginBottom: 10,
 						}}
 					>
-						Download
+						Pobierz
 					</div>
 					<div
 						style={{
@@ -268,7 +268,7 @@ export const QrCodePage = () => {
 									fontWeight: 500,
 								}}
 							>
-								One code for the whole restaurant.
+								Jeden kod dla całej restauracji.
 							</div>
 							<div
 								style={{
@@ -278,8 +278,8 @@ export const QrCodePage = () => {
 									lineHeight: 1.4,
 								}}
 							>
-								Table numbers are captured automatically — diners type
-								theirs on the feedback page.
+								Numery stolików zbieramy automatycznie — goście
+								wpisują je na stronie opinii.
 							</div>
 						</div>
 					</div>

@@ -16,12 +16,12 @@ export const RecentFeedbackList = ({ feedback }: RecentFeedbackListProps) => {
 	return (
 		<Paper p="md" radius="md" withBorder>
 			<Title order={5} mb="md">
-				Recent Feedback
+				Ostatnie opinie
 			</Title>
 
 			{feedback.length === 0 ? (
 				<Text c="dimmed" ta="center" py="lg">
-					No feedback yet. Share your QR code to start collecting reviews!
+					Brak opinii. Udostępnij swój kod QR, żeby zacząć je zbierać!
 				</Text>
 			) : (
 				<Stack gap="sm">
@@ -31,7 +31,7 @@ export const RecentFeedbackList = ({ feedback }: RecentFeedbackListProps) => {
 							<Text size="sm" mt={4} lineClamp={2}>
 								{entry.comment || (
 									<Text span c="dimmed" fs="italic">
-										No comment left
+										Brak komentarza
 									</Text>
 								)}
 							</Text>
@@ -42,7 +42,7 @@ export const RecentFeedbackList = ({ feedback }: RecentFeedbackListProps) => {
 					))}
 
 					<Anchor href="/console/feedback" size="sm" ta="center">
-						View all feedback
+						Zobacz wszystkie opinie
 					</Anchor>
 				</Stack>
 			)}

@@ -14,20 +14,20 @@ export const RecentRedemptions = ({ redemptions }: RecentRedemptionsProps) => {
 	return (
 		<Paper p="md" radius="md" withBorder>
 			<Title order={5} mb="md">
-				Recent Redemptions
+				Ostatnie realizacje
 			</Title>
 
 			{redemptions.length === 0 ? (
 				<Text c="dimmed" ta="center" py="md">
-					No codes redeemed yet
+					Żaden kod nie został jeszcze zrealizowany
 				</Text>
 			) : (
 				<Table>
 					<Table.Thead>
 						<Table.Tr>
-							<Table.Th>Code</Table.Th>
-							<Table.Th>Discount</Table.Th>
-							<Table.Th>Redeemed</Table.Th>
+							<Table.Th>Kod</Table.Th>
+							<Table.Th>Rabat</Table.Th>
+							<Table.Th>Zrealizowano</Table.Th>
 						</Table.Tr>
 					</Table.Thead>
 					<Table.Tbody>

@@ -6,20 +6,20 @@ const DEMO_CODES: Record<
 > = {
 	"4KX9": {
 		rating: 5,
-		when: "12 min ago",
-		text: "The tagliatelle al ragù was unreal. Our server (Marco?) was wonderful with our kid.",
+		when: "12 min temu",
+		text: "Tagliatelle al ragù było obłędne. Nasz kelner (Marco?) świetnie poradził sobie z naszym dzieckiem.",
 		status: "open",
 	},
 	"8PQ2": {
 		rating: 5,
-		when: "47 min ago",
-		text: "Best tiramisù in the neighborhood, hands down.",
+		when: "47 min temu",
+		text: "Najlepsze tiramisù w okolicy, bez dwóch zdań.",
 		status: "redeemed",
 	},
 	K2LM: {
 		rating: 5,
-		when: "Yesterday",
-		text: "Felt like being in Bologna. The burrata with peaches is a revelation.",
+		when: "Wczoraj",
+		text: "Czułam się jak w Bolonii. Burrata z brzoskwiniami to objawienie.",
 		status: "redeemed",
 	},
 };
@@ -129,7 +129,7 @@ export const RedeemPage = () => {
 					color: "var(--fb-ink)",
 				}}
 			>
-				Redeem a code
+				Zrealizuj kod
 			</div>
 			<div
 				style={{
@@ -138,7 +138,7 @@ export const RedeemPage = () => {
 					marginTop: 4,
 				}}
 			>
-				Cashier mode · Keep this tab open at the till.
+				Tryb kasjera · Trzymaj tę kartę otwartą przy kasie.
 			</div>
 
 			<div style={{ marginTop: 28, maxWidth: 480 }}>
@@ -160,7 +160,7 @@ export const RedeemPage = () => {
 							marginBottom: 8,
 						}}
 					>
-						Enter code from diner's phone
+						Wpisz kod z telefonu gościa
 					</div>
 					<div
 						style={{
@@ -214,7 +214,7 @@ export const RedeemPage = () => {
 								fontWeight: 500,
 							}}
 						>
-							Check
+							Sprawdź
 						</button>
 					</div>
 
@@ -223,22 +223,22 @@ export const RedeemPage = () => {
 							{result.kind === "invalid" && (
 								<ResultBox
 									color="#A63D2A"
-									title="Code not found"
-									body={`We don't have a record of ${result.code}. Double-check the spelling.`}
+									title="Nie znaleziono kodu"
+									body={`Nie mamy w bazie kodu ${result.code}. Sprawdź pisownię.`}
 								/>
 							)}
 							{result.kind === "used" && (
 								<ResultBox
 									color="rgba(31,26,21,0.55)"
-									title="Already redeemed"
-									body={`This code was marked used. Rating was ${result.rating}/5 · ${result.when}.`}
+									title="Już zrealizowany"
+									body={`Ten kod jest już oznaczony jako wykorzystany. Ocena: ${result.rating}/5 · ${result.when}.`}
 								/>
 							)}
 							{result.kind === "expired" && (
 								<ResultBox
 									color="rgba(31,26,21,0.55)"
-									title="Expired"
-									body={`This code expired. Rating was ${result.rating}/5 · ${result.when}.`}
+									title="Wygasł"
+									body={`Ten kod wygasł. Ocena: ${result.rating}/5 · ${result.when}.`}
 								/>
 							)}
 							{result.kind === "valid" && (
@@ -292,7 +292,7 @@ export const RedeemPage = () => {
 												color: "var(--fb-olive)",
 											}}
 										>
-											Valid · 15% off
+											Ważny · 15% rabatu
 										</div>
 									</div>
 									<div
@@ -303,8 +303,8 @@ export const RedeemPage = () => {
 											lineHeight: 1.5,
 										}}
 									>
-										Issued {result.when.toLowerCase()} ·{" "}
-										{result.rating}/5 stars
+										Wystawiony {result.when.toLowerCase()} ·{" "}
+										{result.rating}/5 gwiazdek
 										{result.text &&
 											` · "${result.text.slice(0, 60)}${result.text.length > 60 ? "…" : ""}"`}
 									</div>
@@ -329,7 +329,7 @@ export const RedeemPage = () => {
 												fontWeight: 500,
 											}}
 										>
-											Mark as redeemed
+											Oznacz jako zrealizowany
 										</button>
 										<button
 											type="button"
@@ -344,7 +344,7 @@ export const RedeemPage = () => {
 												fontSize: 13,
 											}}
 										>
-											Cancel
+											Anuluj
 										</button>
 									</div>
 								</div>
@@ -352,8 +352,8 @@ export const RedeemPage = () => {
 							{result.kind === "justRedeemed" && (
 								<ResultBox
 									color="var(--fb-olive)"
-									title="Redeemed"
-									body="Discount applied. Diner's feedback has been marked complete."
+									title="Zrealizowany"
+									body="Rabat naliczony. Opinia gościa została zamknięta."
 								>
 									<button
 										type="button"
@@ -369,7 +369,7 @@ export const RedeemPage = () => {
 											fontSize: 12.5,
 										}}
 									>
-										Next code
+										Następny kod
 									</button>
 								</ResultBox>
 							)}
@@ -394,7 +394,7 @@ export const RedeemPage = () => {
 							color: "rgba(31,26,21,0.55)",
 						}}
 					>
-						TRY THESE · demo codes
+						WYPRÓBUJ · kody demo
 					</div>
 					<div
 						style={{

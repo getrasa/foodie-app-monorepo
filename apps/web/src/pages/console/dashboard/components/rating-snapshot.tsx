@@ -9,7 +9,7 @@ export const RatingSnapshot = ({ distribution, total }: RatingSnapshotProps) => 
 	return (
 		<Paper p="md" radius="md" withBorder>
 			<Title order={5} mb="md">
-				Rating Distribution
+				Rozkład ocen
 			</Title>
 			{[5, 4, 3, 2, 1].map((star) => {
 				const count = distribution[star] ?? 0;

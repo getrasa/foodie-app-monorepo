@@ -62,7 +62,7 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "FeedbackBite — Szczera opinia. Słodki rabacik.",
+				title: "Jak Było — Szczera opinia. Słodki rabacik.",
 			},
 		],
 		links: [

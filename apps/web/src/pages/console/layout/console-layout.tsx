@@ -66,7 +66,7 @@ export const ConsoleLayout = () => {
 						fs="italic"
 						c="var(--fb-ink)"
 					>
-						FeedbackBite
+						Jak Było
 					</Text>
 					<div style={{ width: 28 }} />
 				</Group>

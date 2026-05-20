@@ -66,10 +66,10 @@ export const DiscountsPage = () => {
           color: "var(--fb-ink)",
         }}
       >
-        Discount offer
+        Rabaty
       </div>
       <div style={{ fontSize: 13, color: "rgba(31,26,21,0.55)", marginTop: 4 }}>
-        What every diner receives after leaving feedback.
+        To, co dostaje każdy gość po wystawieniu opinii.
       </div>
 
       <div
@@ -88,7 +88,7 @@ export const DiscountsPage = () => {
             gap: 22,
           }}
         >
-          <FormLabel label="Reward type">
+          <FormLabel label="Rodzaj nagrody">
             <div
               style={{
                 display: "grid",
@@ -98,9 +98,9 @@ export const DiscountsPage = () => {
             >
               {(
                 [
-                  { k: "percent", l: "Percent off", s: "% of bill" },
-                  { k: "fixed", l: "Fixed amount", s: "$ off bill" },
-                  { k: "item", l: "Free item", s: "e.g. dessert" },
+                  { k: "percent", l: "Procent zniżki", s: "% od rachunku" },
+                  { k: "fixed", l: "Kwota stała", s: "zł od rachunku" },
+                  { k: "item", l: "Darmowy produkt", s: "np. deser" },
                 ] as const
               ).map((o) => (
                 <UnstyledButton
@@ -141,10 +141,10 @@ export const DiscountsPage = () => {
             </div>
           </FormLabel>
 
-          <FormLabel label={type === "item" ? "Item description" : "Amount"}>
+          <FormLabel label={type === "item" ? "Opis produktu" : "Wartość"}>
             {type === "item" ? (
               <input
-                defaultValue="Free dessert of your choice"
+                defaultValue="Darmowy deser do wyboru"
                 style={{
                   width: "100%",
                   padding: "10px 14px",
@@ -177,16 +177,6 @@ export const DiscountsPage = () => {
                     width: 160,
                   }}
                 >
-                  {type === "fixed" && (
-                    <span
-                      style={{
-                        fontSize: 18,
-                        color: "rgba(31,26,21,0.55)",
-                      }}
-                    >
-                      $
-                    </span>
-                  )}
                   <input
                     value={value}
                     onChange={(e) => setValue(Number(e.target.value) || 0)}
@@ -201,14 +191,14 @@ export const DiscountsPage = () => {
                       color: "var(--fb-ink)",
                     }}
                   />
-                  {type === "percent" && (
+                  {(type === "percent" || type === "fixed") && (
                     <span
                       style={{
                         fontSize: 18,
                         color: "rgba(31,26,21,0.55)",
                       }}
                     >
-                      %
+                      {type === "percent" ? "%" : "zł"}
                     </span>
                   )}
                 </div>
@@ -228,7 +218,7 @@ export const DiscountsPage = () => {
             )}
           </FormLabel>
 
-          <FormLabel label="Expires">
+          <FormLabel label="Wygasa po">
             <div style={{ display: "flex", gap: 8 }}>
               {[14, 30, 60, 90].map((d) => (
                 <UnstyledButton
@@ -245,13 +235,13 @@ export const DiscountsPage = () => {
                     fontFamily: "var(--fb-sans)",
                   }}
                 >
-                  {d} days
+                  {d} dni
                 </UnstyledButton>
               ))}
             </div>
           </FormLabel>
 
-          <FormLabel label="Daily cap per diner" hint="Prevents farming.">
+          <FormLabel label="Dzienny limit na gościa" hint="Zapobiega nadużyciom.">
             <div
               style={{
                 display: "flex",
@@ -318,7 +308,7 @@ export const DiscountsPage = () => {
                   color: "rgba(31,26,21,0.55)",
                 }}
               >
-                codes per device per day
+                kodów na urządzenie dziennie
               </div>
             </div>
           </FormLabel>
@@ -364,7 +354,7 @@ export const DiscountsPage = () => {
                   }}
                 />
               </div>
-              {active ? "Accepting feedback" : "Paused"}
+              {active ? "Zbieramy opinie" : "Wstrzymane"}
             </UnstyledButton>
           </FormLabel>
 
@@ -389,7 +379,7 @@ export const DiscountsPage = () => {
                 fontWeight: 500,
               }}
             >
-              Save changes
+              Zapisz zmiany
             </button>
             <button
               type="button"
@@ -404,7 +394,7 @@ export const DiscountsPage = () => {
                 fontFamily: "var(--fb-sans)",
               }}
             >
-              Reset
+              Resetuj
             </button>
           </div>
         </div>
@@ -421,7 +411,7 @@ export const DiscountsPage = () => {
               marginBottom: 10,
             }}
           >
-            Diner sees
+            Gość widzi
           </div>
           <div
             style={{
@@ -442,7 +432,7 @@ export const DiscountsPage = () => {
                 opacity: 0.55,
               }}
             >
-              Your restaurant
+              Twoja restauracja
             </div>
             <div
               style={{
@@ -455,10 +445,10 @@ export const DiscountsPage = () => {
               }}
             >
               {type === "percent"
-                ? `${value}% off`
+                ? `${value}% rabatu`
                 : type === "fixed"
-                  ? `$${value} off`
-                  : "Free item"}
+                  ? `${value} zł rabatu`
+                  : "Darmowy produkt"}
             </div>
             <div
               style={{
@@ -468,7 +458,7 @@ export const DiscountsPage = () => {
                 marginTop: 2,
               }}
             >
-              next visit · dine-in
+              następna wizyta · na miejscu
             </div>
             <div
               style={{
@@ -485,7 +475,7 @@ export const DiscountsPage = () => {
                   letterSpacing: "0.06em",
                 }}
               >
-                CODE
+                KOD
               </div>
               <div
                 style={{
@@ -504,7 +494,7 @@ export const DiscountsPage = () => {
                   marginTop: 6,
                 }}
               >
-                Valid {expiry} days after issue
+                Ważny {expiry} dni od wydania
               </div>
             </div>
           </div>

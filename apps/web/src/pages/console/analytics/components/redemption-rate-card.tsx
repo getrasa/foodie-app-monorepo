@@ -22,7 +22,7 @@ export const MostMentionedTags = ({ tags }: MostMentionedTagsProps) => {
 					color: "rgba(31,26,21,0.5)",
 				}}
 			>
-				Most mentioned
+				Najczęściej wspominane
 			</div>
 			<div
 				style={{

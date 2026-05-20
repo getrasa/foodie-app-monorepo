@@ -17,11 +17,11 @@ const navItems: {
 	to: string;
 	badge?: number;
 }[] = [
-	{ id: "feedback", label: "Feedback", icon: MessageSquare, to: "/console/feedback", badge: 12 },
-	{ id: "analytics", label: "Analytics", icon: BarChart3, to: "/console/analytics" },
-	{ id: "discount", label: "Discount offer", icon: Gift, to: "/console/discounts" },
-	{ id: "qr", label: "QR code", icon: QrCode, to: "/console/qr-code" },
-	{ id: "redeem", label: "Redeem code", icon: Ticket, to: "/console/redeem" },
+	{ id: "feedback", label: "Opinie", icon: MessageSquare, to: "/console/feedback", badge: 12 },
+	{ id: "analytics", label: "Analityka", icon: BarChart3, to: "/console/analytics" },
+	{ id: "discount", label: "Rabaty", icon: Gift, to: "/console/discounts" },
+	{ id: "qr", label: "Kod QR", icon: QrCode, to: "/console/qr-code" },
+	{ id: "redeem", label: "Zrealizuj kod", icon: Ticket, to: "/console/redeem" },
 ];
 
 interface ConsoleNavbarProps {
@@ -71,10 +71,10 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 				</div>
 				<div style={{ minWidth: 0 }}>
 					<Text fz={13} fw={500} c="var(--fb-ink)" lineClamp={1} lh={1.1}>
-						{session.user.name ?? "My Restaurant"}
+						{session.user.name ?? "Moja restauracja"}
 					</Text>
 					<Text fz={10.5} c="rgba(31,26,21,0.5)" mt={2}>
-						FeedbackBite · Beta
+						Jak Było · Beta
 					</Text>
 				</div>
 			</div>
@@ -159,7 +159,7 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 							letterSpacing: "0.04em",
 						}}
 					>
-						ACCEPTING FEEDBACK
+						ZBIERAMY OPINIE
 					</div>
 				</div>
 				<div
@@ -170,7 +170,7 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 						lineHeight: 1.45,
 					}}
 				>
-					Cap: 3/diner/day
+					Limit: 3 / gość / dzień
 				</div>
 			</div>
 
@@ -202,7 +202,7 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 							{userInitial}
 						</div>
 						<Text fz={12} c="rgba(31,26,21,0.55)">
-							{session.user.name ?? "Account"}
+							{session.user.name ?? "Konto"}
 						</Text>
 					</UnstyledButton>
 				</Menu.Target>
@@ -211,7 +211,7 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 						leftSection={<LogOut size={14} />}
 						onClick={() => void handleSignOut()}
 					>
-						Sign out
+						Wyloguj
 					</Menu.Item>
 				</Menu.Dropdown>
 			</Menu>

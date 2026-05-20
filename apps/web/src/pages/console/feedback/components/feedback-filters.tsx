@@ -1,9 +1,9 @@
 import { UnstyledButton } from "@mantine/core";
 
 const FILTERS = [
-	{ key: "all", label: "All" },
-	{ key: "5", label: "5 star" },
-	{ key: "low", label: "≤3 star" },
+	{ key: "all", label: "Wszystkie" },
+	{ key: "5", label: "5 gwiazdek" },
+	{ key: "low", label: "≤3 gwiazdki" },
 ];
 
 interface FeedbackFiltersProps {

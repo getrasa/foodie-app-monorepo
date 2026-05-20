@@ -17,7 +17,7 @@ export const QrDownloadOptions = ({
 		if (!canvas) return;
 
 		const link = document.createElement("a");
-		link.download = "feedbackbite-qr-code.png";
+		link.download = "jakbylo-qr-code.png";
 		link.href = canvas.toDataURL("image/png");
 		link.click();
 	}, [canvasContainerRef]);
@@ -30,7 +30,7 @@ export const QrDownloadOptions = ({
 		const svgString = serializer.serializeToString(svg);
 		const blob = new Blob([svgString], { type: "image/svg+xml" });
 		const link = document.createElement("a");
-		link.download = "feedbackbite-qr-code.svg";
+		link.download = "jakbylo-qr-code.svg";
 		link.href = URL.createObjectURL(blob);
 		link.click();
 		URL.revokeObjectURL(link.href);
@@ -49,14 +49,14 @@ export const QrDownloadOptions = ({
 					variant="default"
 					onClick={handleDownloadPng}
 				>
-					Download PNG
+					Pobierz PNG
 				</Button>
 				<Button
 					leftSection={<Download size={16} />}
 					variant="default"
 					onClick={handleDownloadSvg}
 				>
-					Download SVG
+					Pobierz SVG
 				</Button>
 			</Group>
 		</>

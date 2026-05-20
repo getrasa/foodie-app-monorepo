@@ -82,7 +82,7 @@ export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
 							color: "rgba(31,26,21,0.5)",
 						}}
 					>
-						Rating trend
+						Trend ocen
 					</div>
 					<div
 						style={{
@@ -93,7 +93,7 @@ export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
 							letterSpacing: "-0.01em",
 						}}
 					>
-						Holding steady, trending up
+						Stabilnie, z lekką górką
 					</div>
 				</div>
 				<div
@@ -119,9 +119,9 @@ export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
 					color: "rgba(31,26,21,0.45)",
 				}}
 			>
-				<span>Apr 10</span>
-				<span>Apr 17</span>
-				<span>Apr 24</span>
+				<span>10 kwi</span>
+				<span>17 kwi</span>
+				<span>24 kwi</span>
 			</div>
 		</div>
 	);

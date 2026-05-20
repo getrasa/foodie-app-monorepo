@@ -71,7 +71,7 @@ export const SignupPage = () => {
 			<Stack gap="lg">
 				<div>
 					<Title order={2} ta="center">
-						Get started with FeedbackBite
+						Get started with Jak Było
 					</Title>
 					<Text c="dimmed" ta="center" mt="xs">
 						Create your account and set up your restaurant in minutes

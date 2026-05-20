@@ -19,7 +19,7 @@ export const StepQrDownload = ({ restaurantId }: StepQrDownloadProps) => {
 		if (!canvas) return;
 
 		const link = document.createElement("a");
-		link.download = "feedbackbite-qr-code.png";
+		link.download = "jakbylo-qr-code.png";
 		link.href = canvas.toDataURL("image/png");
 		link.click();
 	}, []);
@@ -32,7 +32,7 @@ export const StepQrDownload = ({ restaurantId }: StepQrDownloadProps) => {
 		const svgString = serializer.serializeToString(svg);
 		const blob = new Blob([svgString], { type: "image/svg+xml" });
 		const link = document.createElement("a");
-		link.download = "feedbackbite-qr-code.svg";
+		link.download = "jakbylo-qr-code.svg";
 		link.href = URL.createObjectURL(blob);
 		link.click();
 		URL.revokeObjectURL(link.href);
@@ -41,10 +41,10 @@ export const StepQrDownload = ({ restaurantId }: StepQrDownloadProps) => {
 	return (
 		<Stack gap="lg" align="center">
 			<Title order={3} ta="center">
-				Your QR code is ready!
+				Twój kod QR jest gotowy!
 			</Title>
 			<Text c="dimmed" ta="center">
-				Print this and place it on your tables, receipts, or counter
+				Wydrukuj i umieść na stolikach, paragonach albo przy ladzie
 			</Text>
 
 			<Paper p="xl" radius="md" withBorder>
@@ -68,14 +68,14 @@ export const StepQrDownload = ({ restaurantId }: StepQrDownloadProps) => {
 					variant="default"
 					onClick={handleDownloadPng}
 				>
-					Download PNG
+					Pobierz PNG
 				</Button>
 				<Button
 					leftSection={<Download size={16} />}
 					variant="default"
 					onClick={handleDownloadSvg}
 				>
-					Download SVG
+					Pobierz SVG
 				</Button>
 			</Group>
 
@@ -85,7 +85,7 @@ export const StepQrDownload = ({ restaurantId }: StepQrDownloadProps) => {
 				mt="md"
 				onClick={() => void navigate({ to: "/console/dashboard" })}
 			>
-				Go to Dashboard
+				Przejdź do panelu
 			</Button>
 		</Stack>
 	);

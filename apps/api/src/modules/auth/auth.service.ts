@@ -75,6 +75,15 @@ function createBetterAuth(
         enabled: !!process.env.COOKIE_DOMAIN,
         domain: process.env.COOKIE_DOMAIN,
       },
+      // TODO: temporary cross-site cookie config — web (vercel.app) and api (railway.app) are different sites,
+      // so SameSite=None+Secure is required. Fix properly by putting api + web behind the same root domain
+      // (e.g. api.foodie.app + foodie.app) so cookies become same-site again.
+      ...(process.env.NODE_ENV === 'production' && {
+        defaultCookieAttributes: {
+          sameSite: 'none' as const,
+          secure: true,
+        },
+      }),
     },
   });
 }

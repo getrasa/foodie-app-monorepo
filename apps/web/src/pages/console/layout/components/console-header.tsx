@@ -33,7 +33,7 @@ export const ConsoleHeader = ({
 					size="sm"
 				/>
 				<Title order={4} c="orange">
-					FeedbackBite
+					Jak Było
 				</Title>
 			</Group>
 
@@ -54,7 +54,7 @@ export const ConsoleHeader = ({
 						leftSection={<LogOut size={16} />}
 						onClick={() => void handleSignOut()}
 					>
-						Sign out
+						Wyloguj
 					</Menu.Item>
 				</Menu.Dropdown>
 			</Menu>

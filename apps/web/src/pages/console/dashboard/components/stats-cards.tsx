@@ -10,19 +10,19 @@ interface StatsCardsProps {
 const statConfig = [
 	{
 		key: "totalReviews",
-		label: "Total Reviews",
+		label: "Wszystkie opinie",
 		icon: MessageSquare,
 		format: (v: number) => v.toString(),
 	},
 	{
 		key: "averageRating",
-		label: "Average Rating",
+		label: "Średnia ocena",
 		icon: Star,
 		format: (v: number) => `${v.toFixed(1)} / 5`,
 	},
 	{
 		key: "redemptionRate",
-		label: "Redemption Rate",
+		label: "Wskaźnik realizacji",
 		icon: Ticket,
 		format: (v: number) => `${Math.round(v)}%`,
 	},

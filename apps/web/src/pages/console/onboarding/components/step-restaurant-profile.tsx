@@ -26,7 +26,7 @@ export const StepRestaurantProfile = ({
 			name: (value) =>
 				value.trim().length >= 2
 					? null
-					: "Restaurant name must be at least 2 characters",
+					: "Nazwa restauracji musi mieć co najmniej 2 znaki",
 		},
 	});
 
@@ -34,28 +34,28 @@ export const StepRestaurantProfile = ({
 		<form onSubmit={form.onSubmit(onNext)}>
 			<Stack gap="md">
 				<TextInput
-					label="Restaurant name"
-					placeholder="e.g. Mario's Trattoria"
+					label="Nazwa restauracji"
+					placeholder="np. Trattoria u Mario"
 					required
 					{...form.getInputProps("name")}
 				/>
 
 				<Textarea
-					label="Address"
-					placeholder="123 Main St, City"
+					label="Adres"
+					placeholder="ul. Główna 123, Miasto"
 					minRows={2}
 					{...form.getInputProps("address")}
 				/>
 
 				<TextInput
-					label="Google Maps link"
-					placeholder="Paste your Google Maps restaurant URL"
-					description="This lets us direct happy diners to leave you a Google review"
+					label="Link do Google Maps"
+					placeholder="Wklej link Google Maps do swojej restauracji"
+					description="Dzięki temu możemy kierować zadowolonych gości do wystawienia opinii w Google"
 					{...form.getInputProps("googleMapsUrl")}
 				/>
 
 				<Button type="submit" fullWidth size="md" mt="sm">
-					Next
+					Dalej
 				</Button>
 			</Stack>
 		</form>

@@ -32,7 +32,7 @@ export const RatingDistributionChart = ({
 					color: "rgba(31,26,21,0.5)",
 				}}
 			>
-				Distribution
+				Rozkład
 			</div>
 			<div
 				style={{

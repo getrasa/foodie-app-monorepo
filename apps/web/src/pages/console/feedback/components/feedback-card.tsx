@@ -17,10 +17,10 @@ export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
 				: "var(--fb-primary)";
 	const statusLabel =
 		item.status === "redeemed"
-			? "Redeemed"
+			? "Zrealizowany"
 			: item.status === "expired"
-				? "Expired"
-				: "Code open";
+				? "Wygasł"
+				: "Kod aktywny";
 
 	return (
 		<UnstyledButton
@@ -74,7 +74,7 @@ export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
 					overflow: "hidden",
 				}}
 			>
-				{item.text || "(no written comment)"}
+				{item.text || "(brak komentarza)"}
 			</div>
 			<div
 				style={{

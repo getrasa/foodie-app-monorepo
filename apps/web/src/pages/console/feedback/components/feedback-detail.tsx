@@ -50,7 +50,7 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 					color: "var(--fb-ink)",
 				}}
 			>
-				{item.text ? `"${item.text}"` : "Rating only — no comment left."}
+				{item.text ? `"${item.text}"` : "Sama ocena — bez komentarza."}
 			</div>
 
 			{item.tags.length > 0 && (
@@ -99,7 +99,7 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 						color: "rgba(31,26,21,0.5)",
 					}}
 				>
-					Discount code issued
+					Wydany kod rabatowy
 				</div>
 				<div
 					style={{
@@ -121,7 +121,7 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 						{item.code}
 					</div>
 					<div style={{ fontSize: 12, color: "rgba(31,26,21,0.55)" }}>
-						15% off · exp May 24
+						15% rabatu · ważny do 24 maja
 					</div>
 				</div>
 			</div>
@@ -140,7 +140,7 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 						fontWeight: 500,
 					}}
 				>
-					Mark redeemed
+					Oznacz jako zrealizowany
 				</Button>
 				<Button
 					variant="default"
@@ -154,7 +154,7 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 						fontFamily: "var(--fb-sans)",
 					}}
 				>
-					Reply privately
+					Odpowiedz prywatnie
 				</Button>
 			</div>
 		</div>

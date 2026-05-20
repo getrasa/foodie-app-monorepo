@@ -7,37 +7,37 @@ const MOCK_FEEDBACK = [
 	{
 		id: 1,
 		rating: 5,
-		when: "12 min ago",
+		when: "12 min temu",
 		code: "LUCIA-4KX9",
 		status: "open" as const,
-		text: "The tagliatelle al ragù was unreal. Our server (Marco?) was wonderful with our kid. Back next month for sure.",
-		tags: ["The pasta", "Service"],
+		text: "Tagliatelle al ragù było obłędne. Nasz kelner (Marco?) świetnie poradził sobie z naszym dzieckiem. Na pewno wrócimy w przyszłym miesiącu.",
+		tags: ["Makaron", "Obsługa"],
 		table: "T7",
 	},
 	{
 		id: 2,
 		rating: 5,
-		when: "47 min ago",
+		when: "47 min temu",
 		code: "LUCIA-8PQ2",
 		status: "redeemed" as const,
-		text: "Best tiramisù in the neighborhood, hands down.",
-		tags: ["Dessert"],
+		text: "Najlepsze tiramisù w okolicy, bez dwóch zdań.",
+		tags: ["Deser"],
 		table: "T3",
 	},
 	{
 		id: 3,
 		rating: 4,
-		when: "1 hr ago",
+		when: "1 godz. temu",
 		code: "LUCIA-MN4V",
 		status: "open" as const,
-		text: "Lovely atmosphere, wine list was surprising in the best way. Pasta arrived a touch cold.",
-		tags: ["Wine list", "Atmosphere"],
+		text: "Świetna atmosfera, karta win mile zaskoczyła. Makaron przyszedł lekko wystygnięty.",
+		tags: ["Karta win", "Atmosfera"],
 		table: "T12",
 	},
 	{
 		id: 4,
 		rating: 5,
-		when: "2 hr ago",
+		when: "2 godz. temu",
 		code: "LUCIA-ZX71",
 		status: "open" as const,
 		text: "",
@@ -47,41 +47,41 @@ const MOCK_FEEDBACK = [
 	{
 		id: 5,
 		rating: 3,
-		when: "3 hr ago",
+		when: "3 godz. temu",
 		code: "LUCIA-RR09",
 		status: "open" as const,
-		text: "Food was good but we waited 40 minutes for the primo. Place was packed though — understandable.",
-		tags: ["Service"],
+		text: "Jedzenie było dobre, ale na primo czekaliśmy 40 minut. Lokal był jednak zapchany — rozumiem.",
+		tags: ["Obsługa"],
 		table: "T9",
 	},
 	{
 		id: 6,
 		rating: 5,
-		when: "Yesterday",
+		when: "Wczoraj",
 		code: "LUCIA-K2LM",
 		status: "redeemed" as const,
-		text: "Felt like being in Bologna. The burrata with peaches is a revelation.",
-		tags: ["The pasta", "Atmosphere"],
+		text: "Czułam się jak w Bolonii. Burrata z brzoskwiniami to objawienie.",
+		tags: ["Makaron", "Atmosfera"],
 		table: "T2",
 	},
 	{
 		id: 7,
 		rating: 4,
-		when: "Yesterday",
+		when: "Wczoraj",
 		code: "LUCIA-7YHT",
 		status: "expired" as const,
-		text: "Solid spot for a weeknight. Will bring the in-laws.",
-		tags: ["Atmosphere"],
+		text: "Solidne miejsce na wieczór w tygodniu. Wpadnę tu z teściami.",
+		tags: ["Atmosfera"],
 		table: "T11",
 	},
 	{
 		id: 8,
 		rating: 5,
-		when: "2 days ago",
+		when: "2 dni temu",
 		code: "LUCIA-BB52",
 		status: "open" as const,
-		text: "Lucia came out to our table to check on us. That kind of care is rare.",
-		tags: ["Service"],
+		text: "Lucia podeszła osobiście do naszego stolika, żeby zapytać, jak się czujemy. Taka troska to rzadkość.",
+		tags: ["Obsługa"],
 		table: "T6",
 	},
 ];
@@ -125,7 +125,7 @@ export const FeedbackPage = () => {
 							color: "var(--fb-ink)",
 						}}
 					>
-						Feedback
+						Opinie
 					</div>
 					<div
 						style={{
@@ -135,7 +135,7 @@ export const FeedbackPage = () => {
 							marginTop: 3,
 						}}
 					>
-						{MOCK_FEEDBACK.length} entries · 12 unread
+						{MOCK_FEEDBACK.length} wpisów · 12 nieprzeczytanych
 					</div>
 					<FeedbackFilters filter={filter} onFilterChange={setFilter} />
 				</div>

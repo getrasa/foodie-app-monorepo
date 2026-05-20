@@ -35,18 +35,18 @@ export const OnboardingPage = () => {
 	return (
 		<Container size="sm" py="xl">
 			<Title order={2} mb="xl">
-				Set up your restaurant
+				Skonfiguruj swoją restaurację
 			</Title>
 
 			<Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>
-				<Stepper.Step label="Restaurant" description="Your profile">
+				<Stepper.Step label="Restauracja" description="Twój profil">
 					<StepRestaurantProfile
 						initialValues={restaurantProfile ?? undefined}
 						onNext={handleRestaurantNext}
 					/>
 				</Stepper.Step>
 
-				<Stepper.Step label="Discount" description="Configure offer">
+				<Stepper.Step label="Rabat" description="Skonfiguruj ofertę">
 					<StepDiscountConfig
 						initialValues={discountConfig ?? undefined}
 						onNext={handleDiscountNext}
@@ -54,7 +54,7 @@ export const OnboardingPage = () => {
 					/>
 				</Stepper.Step>
 
-				<Stepper.Step label="QR Code" description="Download & share">
+				<Stepper.Step label="Kod QR" description="Pobierz i udostępnij">
 					<StepQrDownload restaurantId={restaurantId} />
 				</Stepper.Step>
 			</Stepper>

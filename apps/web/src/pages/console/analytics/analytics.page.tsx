@@ -23,12 +23,12 @@ const DISTRIBUTION = [
 ];
 
 const TAGS = [
-	["The pasta", 142],
-	["Service", 98],
-	["Atmosphere", 71],
-	["Wine list", 42],
-	["Dessert", 38],
-	["Bread", 12],
+	["Makaron", 142],
+	["Obsługa", 98],
+	["Atmosfera", 71],
+	["Karta win", 42],
+	["Deser", 38],
+	["Pieczywo", 12],
 ] as const;
 
 export const AnalyticsPage = () => {
@@ -50,7 +50,7 @@ export const AnalyticsPage = () => {
 					color: "var(--fb-ink)",
 				}}
 			>
-				Analytics
+				Analityka
 			</div>
 			<div
 				style={{
@@ -59,7 +59,7 @@ export const AnalyticsPage = () => {
 					marginTop: 4,
 				}}
 			>
-				Last 14 days · updates in real time
+				Ostatnie 14 dni · aktualizacja na żywo
 			</div>
 
 			{/* Stat tiles */}
@@ -72,25 +72,25 @@ export const AnalyticsPage = () => {
 				}}
 			>
 				<StatTile
-					label="Total feedback"
+					label="Wszystkie opinie"
 					value={STATS.total}
-					sub={`+${STATS.weekDelta} this week`}
+					sub={`+${STATS.weekDelta} w tym tygodniu`}
 					deltaUp
 				/>
 				<StatTile
-					label="Average rating"
+					label="Średnia ocena"
 					value={STATS.avg}
-					sub="out of 5.0"
+					sub="na 5,0"
 				/>
 				<StatTile
-					label="This week"
+					label="W tym tygodniu"
 					value={STATS.thisWeek}
-					sub="new entries"
+					sub="nowych wpisów"
 				/>
 				<StatTile
-					label="Redemption"
+					label="Realizacja"
 					value={`${Math.round(STATS.redemptionRate * 100)}%`}
-					sub={`${STATS.redeemed} of ${STATS.total} redeemed`}
+					sub={`${STATS.redeemed} z ${STATS.total} zrealizowanych`}
 				/>
 			</div>
 

@@ -36,15 +36,15 @@ export const RedeemCodeForm = () => {
 		<Stack gap="md">
 			<Group gap="sm" align="flex-end">
 				<TextInput
-					label="Enter discount code"
-					placeholder="e.g. ABCD1234"
+					label="Wpisz kod rabatowy"
+					placeholder="np. ABCD1234"
 					value={code}
 					onChange={(e) => setCode(e.currentTarget.value)}
 					style={{ flex: 1 }}
 					styles={{ input: { fontFamily: "monospace", letterSpacing: "0.1em" } }}
 				/>
 				<Button onClick={() => void handleVerify()} loading={loading}>
-					Verify
+					Sprawdź
 				</Button>
 			</Group>
 
@@ -52,17 +52,17 @@ export const RedeemCodeForm = () => {
 				<Alert color="green" variant="light">
 					<Stack gap="xs">
 						<Text size="sm" fw={500}>
-							Valid code: {result.description}
+							Kod ważny: {result.description}
 						</Text>
 						<Text size="xs" c="dimmed">
-							Issued: {result.issuedAt}
+							Wydany: {result.issuedAt}
 						</Text>
 						<Button
 							size="sm"
 							color="green"
 							onClick={() => void handleConfirmRedeem()}
 						>
-							Confirm Redemption
+							Potwierdź realizację
 						</Button>
 					</Stack>
 				</Alert>
@@ -70,19 +70,19 @@ export const RedeemCodeForm = () => {
 
 			{result?.status === "redeemed" && (
 				<Alert color="yellow" variant="light">
-					This code was already redeemed on {result.redeemedAt}
+					Ten kod został już zrealizowany {result.redeemedAt}
 				</Alert>
 			)}
 
 			{result?.status === "expired" && (
 				<Alert color="red" variant="light">
-					This code expired on {result.expiredAt}
+					Ten kod wygasł {result.expiredAt}
 				</Alert>
 			)}
 
 			{result?.status === "not_found" && (
 				<Alert color="red" variant="light">
-					Code not found
+					Nie znaleziono kodu
 				</Alert>
 			)}
 		</Stack>

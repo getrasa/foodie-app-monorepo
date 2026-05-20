@@ -22,9 +22,9 @@ interface DiscountConfigFormValues {
 }
 
 const discountTypeLabels = [
-	{ label: "Percentage off", value: "percentage" },
-	{ label: "Fixed amount", value: "fixed_amount" },
-	{ label: "Free item", value: "free_item" },
+	{ label: "Procent zniżki", value: "percentage" },
+	{ label: "Kwota stała", value: "fixed_amount" },
+	{ label: "Darmowy produkt", value: "free_item" },
 ];
 
 export const DiscountConfigForm = () => {
@@ -41,7 +41,7 @@ export const DiscountConfigForm = () => {
 		},
 		validate: {
 			value: (value) =>
-				value.trim().length > 0 ? null : "Please enter a discount value",
+				value.trim().length > 0 ? null : "Podaj wartość rabatu",
 		},
 	});
 
@@ -55,22 +55,22 @@ export const DiscountConfigForm = () => {
 	const valuePlaceholder = () => {
 		switch (form.values.type) {
 			case "percentage":
-				return "e.g. 10";
+				return "np. 10";
 			case "fixed_amount":
-				return "e.g. 5.00";
+				return "np. 5,00";
 			case "free_item":
-				return "e.g. Free dessert";
+				return "np. Darmowy deser";
 		}
 	};
 
 	const valueLabel = () => {
 		switch (form.values.type) {
 			case "percentage":
-				return "Discount percentage";
+				return "Procent rabatu";
 			case "fixed_amount":
-				return "Discount amount";
+				return "Kwota rabatu";
 			case "free_item":
-				return "Free item description";
+				return "Opis darmowego produktu";
 		}
 	};
 
@@ -79,13 +79,13 @@ export const DiscountConfigForm = () => {
 			<Stack gap="md">
 				{saved && (
 					<Alert color="green" variant="light">
-						Discount configuration saved
+						Konfiguracja rabatu zapisana
 					</Alert>
 				)}
 
 				<div>
 					<Text size="sm" fw={500} mb={4}>
-						Discount type
+						Rodzaj rabatu
 					</Text>
 					<SegmentedControl
 						fullWidth
@@ -102,29 +102,29 @@ export const DiscountConfigForm = () => {
 				/>
 
 				<NumberInput
-					label="Code expires after (days)"
+					label="Kod wygasa po (dni)"
 					placeholder="30"
-					description="Leave blank for no expiry"
+					description="Zostaw puste, żeby nie wygasał"
 					min={1}
 					{...form.getInputProps("expiresInDays")}
 				/>
 
 				<NumberInput
-					label="Daily cap"
-					placeholder="Unlimited"
-					description="Max discount codes per day. Leave blank for unlimited"
+					label="Dzienny limit"
+					placeholder="Bez limitu"
+					description="Maks. kodów rabatowych dziennie. Zostaw puste, żeby bez limitu"
 					min={1}
 					{...form.getInputProps("dailyCap")}
 				/>
 
 				<Switch
-					label="Discounts active"
-					description="Pause discounts temporarily without deleting your configuration"
+					label="Rabaty aktywne"
+					description="Wstrzymaj rabaty tymczasowo bez usuwania konfiguracji"
 					{...form.getInputProps("active", { type: "checkbox" })}
 				/>
 
 				<Button type="submit" size="md">
-					Save configuration
+					Zapisz konfigurację
 				</Button>
 			</Stack>
 		</form>
