@@ -2,6 +2,7 @@ import { Alert } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { BrandLogo } from "#/components/brand-logo";
 import { authClient } from "#/lib/auth-client";
 
 export const LoginPage = () => {
@@ -39,9 +40,8 @@ export const LoginPage = () => {
 			<div style={{ display: "flex", flexDirection: "column", padding: isMobile ? "24px 20px" : "32px 48px", minHeight: "100vh" }}>
 				{/* Top row */}
 				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-					<a href="/" style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 500, fontSize: 15, color: "inherit", textDecoration: "none" }}>
-						<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16, letterSpacing: "-0.02em" }}>J</div>
-						<span>Jak Było</span>
+					<a href="/" style={{ color: "inherit", textDecoration: "none" }}>
+						<BrandLogo size={32} wordmarkSize={20} />
 					</a>
 					<div style={{ fontSize: isMobile ? 12.5 : 13.5, color: "var(--fb-ink-soft)", textAlign: "right" }}>
 						{!isMobile && "Pierwszy raz tutaj?"}

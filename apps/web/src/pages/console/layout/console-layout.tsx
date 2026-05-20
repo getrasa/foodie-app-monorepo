@@ -1,7 +1,8 @@
-import { AppShell, Burger, Center, Group, Loader, Text } from "@mantine/core";
+import { AppShell, Burger, Center, Group, Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { BrandLogo } from "#/components/brand-logo";
 import { authClient } from "#/lib/auth-client";
 import { ConsoleNavbar } from "./components/console-navbar";
 
@@ -59,15 +60,7 @@ export const ConsoleLayout = () => {
 						size="sm"
 						color="var(--fb-ink)"
 					/>
-					<Text
-						ff="var(--fb-serif)"
-						fz={18}
-						fw={400}
-						fs="italic"
-						c="var(--fb-ink)"
-					>
-						Jak Było
-					</Text>
+					<BrandLogo size={26} wordmarkSize={18} />
 					<div style={{ width: 28 }} />
 				</Group>
 			</AppShell.Header>

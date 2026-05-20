@@ -1,5 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { BrandLogo } from "#/components/brand-logo";
 import { StaticStar } from "#/pages/console/shared/static-star";
 import "./landing.css";
 
@@ -23,10 +24,7 @@ export const LandingPage = () => {
 		<div style={{ background: "var(--fb-cream)", color: "var(--fb-ink)", fontFamily: "var(--fb-sans)", lineHeight: 1.5 }}>
 			{/* ─── NAV ─── */}
 			<nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 32px", maxWidth: 1240, margin: "0 auto" }}>
-				<div style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 500, fontSize: 15 }}>
-					<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16 }}>J</div>
-					<span>Jak Było</span>
-				</div>
+				<BrandLogo size={32} wordmarkSize={20} />
 				<div className="fb-nav-links" style={{ display: "flex", gap: 28, fontSize: 14, color: "var(--fb-ink-soft)" }}>
 					<a href="#how" style={{ color: "inherit", textDecoration: "none" }}>Jak to działa</a>
 					<a href="#why" style={{ color: "inherit", textDecoration: "none" }}>Dlaczego my</a>
@@ -421,9 +419,8 @@ export const LandingPage = () => {
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div className="fb-footer-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr", gap: 40, marginBottom: 48 }}>
 						<div>
-							<div style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 500, fontSize: 16, marginBottom: 12, color: "var(--fb-ink)" }}>
-								<div style={{ width: 28, height: 28, borderRadius: 8, background: "var(--fb-ink)", color: "var(--fb-cream)", display: "grid", placeItems: "center", fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 16 }}>J</div>
-								Jak Było
+							<div style={{ marginBottom: 12 }}>
+								<BrandLogo size={32} wordmarkSize={22} />
 							</div>
 							<div style={{ fontSize: 13, color: "var(--fb-ink-soft)", maxWidth: 280, lineHeight: 1.55 }}>Szczere opinie i słodkie rabaciki — dla lokali, w których właściciel wciąż sam wita gości przy drzwiach.</div>
 						</div>
