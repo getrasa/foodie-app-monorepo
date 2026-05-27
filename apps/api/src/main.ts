@@ -11,6 +11,12 @@ async function bootstrap() {
   // socket address for direct connections. Without it, any client could spoof
   // `X-Forwarded-For` and bypass the IP-keyed predicates in AbuseStackService.
   // Raise the trust count if more proxies are ever added in front of Node.
+  // TODO: revisit if the deployment topology changes — `trust proxy = 1` is
+  // only safe while Node is exclusively reachable through Railway's LB. If we
+  // ever expose a direct route to the container, a client could send one XFF
+  // hop and have it accepted as `req.ip`. Tighter alternatives: pin to a CIDR
+  // (Railway doesn't publish stable ranges today) or require a shared-secret
+  // header injected by the LB.
   app.set('trust proxy', 1);
   app.enableCors({
     origin: [
