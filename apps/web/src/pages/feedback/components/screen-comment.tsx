@@ -51,7 +51,10 @@ export const ScreenComment = ({
 
 	const trimmedEmail = email.trim();
 	const emailValid = trimmedEmail.length === 0 || EMAIL_RE.test(trimmedEmail);
-	const canSubmit = !submitting && emailValid;
+	const commentRequired = rating < 5;
+	const commentFilled = comment.trim().length > 0;
+	const canSubmit =
+		!submitting && emailValid && (!commentRequired || commentFilled);
 
 	return (
 		<div
@@ -109,10 +112,14 @@ export const ScreenComment = ({
 						marginTop: 8,
 						fontFamily: "var(--fb-sans)",
 						fontSize: 13.5,
-						color: "rgba(31,26,21,0.55)",
+						color: commentRequired
+							? "var(--fb-primary)"
+							: "rgba(31,26,21,0.55)",
 					}}
 				>
-					Opcjonalne — można pominąć i przejść dalej.
+					{commentRequired
+						? "Wymagane — opisz, co możemy poprawić."
+						: "Opcjonalne — można pominąć i przejść dalej."}
 				</div>
 			</div>
 
@@ -122,7 +129,10 @@ export const ScreenComment = ({
 					padding: 14,
 					background: "var(--fb-paper)",
 					borderRadius: 14,
-					border: "0.5px solid rgba(31,26,21,0.07)",
+					border:
+						commentRequired && !commentFilled
+							? "1px solid rgba(200,106,62,0.45)"
+							: "0.5px solid rgba(31,26,21,0.07)",
 					display: "flex",
 					flexDirection: "column",
 				}}
@@ -267,6 +277,19 @@ export const ScreenComment = ({
 				<PrimaryButton onClick={onSubmit} disabled={!canSubmit}>
 					{submitting ? "Wysyłanie…" : "Wyślij opinię i odbierz kod"}
 				</PrimaryButton>
+				{commentRequired && !commentFilled && (
+					<div
+						style={{
+							marginTop: 8,
+							fontFamily: "var(--fb-sans)",
+							fontSize: 12,
+							color: "rgba(31,26,21,0.5)",
+							textAlign: "center",
+						}}
+					>
+						Napisz kilka słów, by przejść dalej.
+					</div>
+				)}
 			</div>
 		</div>
 	);

@@ -8,12 +8,13 @@ import {
 } from "#/lib/api/feedback-api";
 import { useCustomerIdentity } from "#/lib/feedback/use-customer-identity";
 import { ScreenComment } from "./components/screen-comment";
+import { ScreenGoogleMaps } from "./components/screen-google-maps";
 import { ScreenLanding } from "./components/screen-landing";
 import { ScreenRating } from "./components/screen-rating";
 import { ScreenResult } from "./components/screen-result";
 import { ScreenStatus } from "./components/screen-status";
 
-type Phase = "landing" | "rating" | "comment" | "result";
+type Phase = "landing" | "rating" | "comment" | "google_maps" | "result";
 type ResolveState =
 	| { status: "loading" }
 	| { status: "ok"; data: ResolvedQrCode }
@@ -84,7 +85,11 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 			});
 			setResult(submission);
 			setEmailedTo(email.trim());
-			setPhase("result");
+			// A 5-star Maps nudge is the only step we slot in front of the
+			// voucher reveal — every other rating goes straight to the result.
+			const shouldNudge =
+				rating === 5 && Boolean(resolveState.data.venue.googleMapsUrl);
+			setPhase(shouldNudge ? "google_maps" : "result");
 		} catch (err) {
 			setSubmitError(messageFromError(err));
 		} finally {
@@ -167,11 +172,18 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 						submitError={submitError}
 					/>
 				);
+			case "google_maps":
+				return data.venue.googleMapsUrl ? (
+					<ScreenGoogleMaps
+						venueName={data.venue.name}
+						googleMapsUrl={data.venue.googleMapsUrl}
+						comment={comment}
+						onContinue={() => setPhase("result")}
+					/>
+				) : null;
 			case "result":
 				return result ? (
 					<ScreenResult
-						rating={rating}
-						comment={comment}
 						venue={data.venue}
 						result={result}
 						emailedTo={emailedTo}

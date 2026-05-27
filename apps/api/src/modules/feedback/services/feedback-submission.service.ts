@@ -75,6 +75,11 @@ export class FeedbackSubmissionService {
     }
     const comment = normalizeComment(ctx.body.comment);
     const customerEmail = normalizeEmail(ctx.body.customerEmail);
+    // A 1-4 star rating must come with an explanation — that's where the
+    // actionable signal lives for the owner. Only a perfect 5 may be silent.
+    if (rating < 5 && !comment) {
+      throw new BadRequestException('Komentarz jest wymagany przy ocenie 1–4 gwiazdek');
+    }
 
     const { qrCode, offer } = await this.resolveQr(ctx.qrCodeId);
     const venue = qrCode.venue;

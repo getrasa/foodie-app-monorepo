@@ -2,7 +2,6 @@ import type {
 	FeedbackSubmissionResult,
 	ResolvedVenue,
 } from "#/lib/api/feedback-api";
-import { GoogleMapsNudge } from "./google-maps-nudge";
 import { VoucherCard } from "./voucher-card";
 
 const NO_VOUCHER_COPY: Record<string, { title: string; body: string }> = {
@@ -21,22 +20,17 @@ const NO_VOUCHER_COPY: Record<string, { title: string; body: string }> = {
 };
 
 interface ScreenResultProps {
-	rating: number;
-	comment: string;
 	venue: ResolvedVenue;
 	result: FeedbackSubmissionResult;
 	emailedTo: string;
 }
 
 export const ScreenResult = ({
-	rating,
-	comment,
 	venue,
 	result,
 	emailedTo,
 }: ScreenResultProps) => {
 	const { voucher, voucherUnavailableReason } = result;
-	const showNudge = rating === 5 && Boolean(venue.googleMapsUrl);
 	const fallback = voucherUnavailableReason
 		? NO_VOUCHER_COPY[voucherUnavailableReason]
 		: null;
@@ -157,13 +151,6 @@ export const ScreenResult = ({
 				</div>
 			)}
 
-			{showNudge && venue.googleMapsUrl && (
-				<GoogleMapsNudge
-					venueName={venue.name}
-					googleMapsUrl={venue.googleMapsUrl}
-					comment={comment}
-				/>
-			)}
 		</div>
 	);
 };
