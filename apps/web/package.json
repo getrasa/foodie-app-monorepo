@@ -17,6 +17,7 @@
     "start": "node .output/server/index.mjs"
   },
   "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^5.2.0",
     "@mantine/core": "^9.1.0",
     "@mantine/form": "^9.1.0",
     "@mantine/hooks": "^9.1.0",
