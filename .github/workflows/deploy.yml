@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [main, staging]
+    branches: [production, staging]
   workflow_dispatch:
     inputs:
       environment:
@@ -11,15 +11,15 @@ on:
         type: choice
         options: [production, staging]
 
-# Map trigger → environment: `main` branch deploys to production, `staging` branch
-# (or anything else listed in on.push.branches) deploys to staging. workflow_dispatch
-# input takes precedence so we can manually re-deploy either env.
+# Branches are named after the environment they deploy to, so the branch name maps
+# directly: push to `production` → production env, push to `staging` → staging env.
+# workflow_dispatch input wins if present (lets us manually re-deploy either env).
 #
 # Production and staging deploys live in separate concurrency groups so they don't
 # block each other. `cancel-in-progress: false` means a second push waits rather
 # than killing the first deploy mid-flight.
 concurrency:
-  group: deploy-${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}
+  group: deploy-${{ inputs.environment || github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
     name: Deploy API to Railway
     needs: checks
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}
+    environment: ${{ inputs.environment || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Railway CLI
@@ -63,7 +63,7 @@ jobs:
         run: railway up --service "$RAILWAY_SERVICE" --ci
       - name: Verify API health
         run: |
-          if [ "${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}" = "production" ]; then
+          if [ "${{ inputs.environment || github.ref_name }}" = "production" ]; then
             API_URL="https://api.jakbylo.pl"
           else
             API_URL="https://api.staging.jakbylo.pl"
@@ -83,7 +83,7 @@ jobs:
     name: Deploy web to Vercel
     needs: deploy-api
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}
+    environment: ${{ inputs.environment || github.ref_name }}
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
