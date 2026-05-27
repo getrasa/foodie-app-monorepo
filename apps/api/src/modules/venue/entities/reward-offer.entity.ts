@@ -6,27 +6,27 @@ import {
   Property,
 } from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { Restaurant } from '../../restaurant/entities/restaurant.entity';
+import { Venue } from './venue.entity';
 
-export enum DiscountType {
+export enum RewardType {
   PERCENTAGE = 'percentage',
   FIXED_AMOUNT = 'fixed_amount',
   FREE_ITEM = 'free_item',
 }
 
-@Entity({ tableName: 'discountConfig' })
-export class DiscountConfig {
+@Entity({ tableName: 'rewardOffer' })
+export class RewardOffer {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
 
-  @OneToOne(() => Restaurant, (r) => r.discountConfig, {
-    fieldName: 'restaurantId',
+  @OneToOne(() => Venue, (v) => v.rewardOffer, {
+    fieldName: 'venueId',
     owner: true,
   })
-  restaurant!: Restaurant;
+  venue!: Venue;
 
-  @Enum(() => DiscountType)
-  type!: DiscountType;
+  @Enum(() => RewardType)
+  type!: RewardType;
 
   @Property({ type: 'string' })
   value!: string;
