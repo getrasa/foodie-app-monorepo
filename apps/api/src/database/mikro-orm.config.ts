@@ -14,7 +14,7 @@ class CamelCaseNamingStrategy extends UnderscoreNamingStrategy {
 const config = defineConfig({
   dbName: process.env.DATABASE_NAME ?? 'feedbackbite',
   host: process.env.DATABASE_HOST ?? 'localhost',
-  port: Number(process.env.DATABASE_PORT ?? 5432),
+  port: Number(process.env.DATABASE_PORT ?? 5434),
   user: process.env.DATABASE_USER ?? 'postgres',
   password: process.env.DATABASE_PASSWORD ?? 'postgres',
   debug: process.env.NODE_ENV === 'development',

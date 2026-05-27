@@ -18,7 +18,7 @@ function createBetterAuth(
   return betterAuth({
     basePath: "/api/auth",
     trustedOrigins: [
-      "http://localhost:3000",
+      "http://localhost:5000",
       "https://localhost:3002",
       webAppUrl,
       railwayFrontendUrl,
