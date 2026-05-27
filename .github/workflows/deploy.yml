@@ -1,0 +1,102 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Prevent two production deploys from running concurrently.
+# `cancel-in-progress: false` means a second push waits rather than killing the first.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    name: Pre-deploy checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # pnpm version is pinned via `packageManager` in package.json — the action
+      # picks it up automatically. Specifying `version:` here would conflict.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Type-check
+        run: pnpm typecheck
+      - name: Build all apps
+        run: pnpm build
+
+  deploy-api:
+    name: Deploy API to Railway
+    needs: checks
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Railway CLI
+        run: |
+          # Pipe to bash, not sh — the install script uses bash-only
+          # parameter substitutions that dash (Ubuntu's /bin/sh) rejects.
+          curl -fsSL https://railway.com/install.sh | bash
+          echo "$HOME/.railway/bin" >> $GITHUB_PATH
+      - name: Deploy backend service
+        working-directory: apps/api
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_SERVICE: ${{ vars.RAILWAY_SERVICE }}
+        run: railway up --service "$RAILWAY_SERVICE" --ci
+      - name: Verify API health
+        env:
+          API_URL: ${{ vars.API_URL }}
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS "$API_URL/health" >/dev/null; then
+              echo "API healthy at $API_URL"
+              exit 0
+            fi
+            echo "Attempt $i: not healthy yet, retrying in 5s..."
+            sleep 5
+          done
+          echo "API never became healthy at $API_URL"
+          exit 1
+
+  deploy-web:
+    name: Deploy web to Vercel
+    needs: deploy-api
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      # `vercel build` shells out to pnpm install for dependency resolution,
+      # so pnpm has to be on PATH even though this job doesn't run pnpm directly.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull project config
+        working-directory: apps/web
+        run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      - name: Build
+        # NITRO_PRESET tells TanStack Start's Nitro plugin to emit the Vercel
+        # Build Output API v3 format at .vercel/output/ — what `vercel deploy
+        # --prebuilt` expects. Without it Nitro emits a generic Node bundle at
+        # .output/server/ and Vercel rejects the build.
+        working-directory: apps/web
+        env:
+          NITRO_PRESET: vercel
+        run: vercel build --prod --token=$VERCEL_TOKEN
+      - name: Deploy
+        working-directory: apps/web
+        run: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
