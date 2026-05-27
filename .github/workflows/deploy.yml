@@ -62,9 +62,12 @@ jobs:
           RAILWAY_SERVICE: ${{ vars.RAILWAY_SERVICE }}
         run: railway up --service "$RAILWAY_SERVICE" --ci
       - name: Verify API health
-        env:
-          API_URL: ${{ vars.API_URL }}
         run: |
+          if [ "${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}" = "production" ]; then
+            API_URL="https://api.jakbylo.pl"
+          else
+            API_URL="https://api.staging.jakbylo.pl"
+          fi
           for i in $(seq 1 30); do
             if curl -fsS "$API_URL/health" >/dev/null; then
               echo "API healthy at $API_URL"
