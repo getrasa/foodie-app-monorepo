@@ -1,8 +1,15 @@
 interface MonogramProps {
 	size?: number;
+	letter?: string;
 }
 
-export const Monogram = ({ size = 56 }: MonogramProps) => {
+const initial = (letter: string | undefined): string => {
+	const trimmed = (letter ?? "").trim();
+	if (!trimmed) return "•";
+	return trimmed[0].toUpperCase();
+};
+
+export const Monogram = ({ size = 56, letter }: MonogramProps) => {
 	return (
 		<div
 			style={{
@@ -22,7 +29,7 @@ export const Monogram = ({ size = 56 }: MonogramProps) => {
 				flexShrink: 0,
 			}}
 		>
-			H
+			{initial(letter)}
 		</div>
 	);
 };

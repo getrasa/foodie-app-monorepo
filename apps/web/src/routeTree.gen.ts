@@ -16,6 +16,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console/index'
+import { Route as QQrCodeIdRouteImport } from './routes/q/$qrCodeId'
 import { Route as ConsoleSettingsRouteImport } from './routes/console/settings'
 import { Route as ConsoleRedeemRouteImport } from './routes/console/redeem'
 import { Route as ConsoleQrCodeRouteImport } from './routes/console/qr-code'
@@ -24,7 +25,6 @@ import { Route as ConsoleFeedbackRouteImport } from './routes/console/feedback'
 import { Route as ConsoleDiscountsRouteImport } from './routes/console/discounts'
 import { Route as ConsoleDashboardRouteImport } from './routes/console/dashboard'
 import { Route as ConsoleAnalyticsRouteImport } from './routes/console/analytics'
-import { Route as StoreIdReviewRouteImport } from './routes/store/$id/review'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -60,6 +60,11 @@ const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ConsoleRoute,
+} as any)
+const QQrCodeIdRoute = QQrCodeIdRouteImport.update({
+  id: '/q/$qrCodeId',
+  path: '/q/$qrCodeId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ConsoleSettingsRoute = ConsoleSettingsRouteImport.update({
   id: '/settings',
@@ -101,11 +106,6 @@ const ConsoleAnalyticsRoute = ConsoleAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => ConsoleRoute,
 } as any)
-const StoreIdReviewRoute = StoreIdReviewRouteImport.update({
-  id: '/store/$id/review',
-  path: '/store/$id/review',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -122,8 +122,8 @@ export interface FileRoutesByFullPath {
   '/console/qr-code': typeof ConsoleQrCodeRoute
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
+  '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console/': typeof ConsoleIndexRoute
-  '/store/$id/review': typeof StoreIdReviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -139,8 +139,8 @@ export interface FileRoutesByTo {
   '/console/qr-code': typeof ConsoleQrCodeRoute
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
+  '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console': typeof ConsoleIndexRoute
-  '/store/$id/review': typeof StoreIdReviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -158,8 +158,8 @@ export interface FileRoutesById {
   '/console/qr-code': typeof ConsoleQrCodeRoute
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
+  '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console/': typeof ConsoleIndexRoute
-  '/store/$id/review': typeof StoreIdReviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,8 +178,8 @@ export interface FileRouteTypes {
     | '/console/qr-code'
     | '/console/redeem'
     | '/console/settings'
+    | '/q/$qrCodeId'
     | '/console/'
-    | '/store/$id/review'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,8 +195,8 @@ export interface FileRouteTypes {
     | '/console/qr-code'
     | '/console/redeem'
     | '/console/settings'
+    | '/q/$qrCodeId'
     | '/console'
-    | '/store/$id/review'
   id:
     | '__root__'
     | '/'
@@ -213,8 +213,8 @@ export interface FileRouteTypes {
     | '/console/qr-code'
     | '/console/redeem'
     | '/console/settings'
+    | '/q/$qrCodeId'
     | '/console/'
-    | '/store/$id/review'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -224,7 +224,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
-  StoreIdReviewRoute: typeof StoreIdReviewRoute
+  QQrCodeIdRoute: typeof QQrCodeIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -277,6 +277,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/console/'
       preLoaderRoute: typeof ConsoleIndexRouteImport
       parentRoute: typeof ConsoleRoute
+    }
+    '/q/$qrCodeId': {
+      id: '/q/$qrCodeId'
+      path: '/q/$qrCodeId'
+      fullPath: '/q/$qrCodeId'
+      preLoaderRoute: typeof QQrCodeIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/console/settings': {
       id: '/console/settings'
@@ -334,13 +341,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleAnalyticsRouteImport
       parentRoute: typeof ConsoleRoute
     }
-    '/store/$id/review': {
-      id: '/store/$id/review'
-      path: '/store/$id/review'
-      fullPath: '/store/$id/review'
-      preLoaderRoute: typeof StoreIdReviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -378,7 +378,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
-  StoreIdReviewRoute: StoreIdReviewRoute,
+  QQrCodeIdRoute: QQrCodeIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

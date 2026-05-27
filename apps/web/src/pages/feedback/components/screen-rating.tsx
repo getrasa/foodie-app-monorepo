@@ -77,7 +77,7 @@ export const ScreenRating = ({
 				flex: 1,
 			}}
 		>
-			<BackRow onBack={onBack} step={1} total={rating === 5 ? 4 : 3} />
+			<BackRow onBack={onBack} step={1} total={2} />
 
 			<div style={{ marginTop: 28 }}>
 				<div

@@ -2,10 +2,16 @@ import { Monogram } from "./monogram";
 import { PrimaryButton } from "./primary-button";
 
 interface ScreenLandingProps {
+	venueName: string;
+	rewardDescription: string | null;
 	onStart: () => void;
 }
 
-export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
+export const ScreenLanding = ({
+	venueName,
+	rewardDescription,
+	onStart,
+}: ScreenLandingProps) => {
 	return (
 		<div
 			style={{
@@ -15,7 +21,6 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 				flex: 1,
 			}}
 		>
-			{/* Header chip */}
 			<div
 				style={{
 					display: "flex",
@@ -42,11 +47,11 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 						color: "rgba(31,26,21,0.55)",
 					}}
 				>
-					Zeskanowano · Stolik 7
+					Zeskanowano
 				</div>
 			</div>
 
-			<Monogram size={64} />
+			<Monogram size={64} letter={venueName} />
 
 			<div style={{ marginTop: 28 }}>
 				<div
@@ -71,77 +76,78 @@ export const ScreenLanding = ({ onStart }: ScreenLandingProps) => {
 						maxWidth: 280,
 					}}
 				>
-					Krótka opinia ze stolika w{" "}
+					Krótka opinia w lokalu{" "}
 					<em
 						style={{
 							fontFamily: "var(--fb-serif)",
 							fontStyle: "italic",
 						}}
 					>
-						Restauracji u Heleny
+						{venueName}
 					</em>
 					. Zajmie 30 sekund — a w zamian dostaniesz coś miłego na kolejną
 					wizytę.
 				</div>
 			</div>
 
-			{/* Gift row */}
-			<div
-				style={{
-					marginTop: 32,
-					padding: "14px 16px",
-					background: "var(--fb-paper)",
-					borderRadius: 14,
-					display: "flex",
-					alignItems: "center",
-					gap: 14,
-					border: "0.5px solid rgba(31,26,21,0.07)",
-				}}
-			>
+			{rewardDescription && (
 				<div
 					style={{
-						width: 38,
-						height: 38,
-						borderRadius: 10,
-						background: "var(--fb-ink)",
-						color: "var(--fb-cream)",
-						display: "grid",
-						placeItems: "center",
-						flexShrink: 0,
+						marginTop: 32,
+						padding: "14px 16px",
+						background: "var(--fb-paper)",
+						borderRadius: 14,
+						display: "flex",
+						alignItems: "center",
+						gap: 14,
+						border: "0.5px solid rgba(31,26,21,0.07)",
 					}}
 				>
-					<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-						<path
-							d="M2.5 6.5h13v9h-13z M1 4.5h16v3H1z M9 4.5v11 M5.5 4.5c-1.4 0-2.5-1-2.5-2s1.1-2 2.5-2c2 0 3.5 3 3.5 4 M12.5 4.5c1.4 0 2.5-1 2.5-2s-1.1-2-2.5-2c-2 0-3.5 3-3.5 4"
-							stroke="currentColor"
-							strokeWidth="1.2"
-							strokeLinejoin="round"
-						/>
-					</svg>
-				</div>
-				<div style={{ flex: 1, minWidth: 0 }}>
 					<div
 						style={{
-							fontFamily: "var(--fb-sans)",
-							fontSize: 14,
-							fontWeight: 500,
-							color: "var(--fb-ink)",
+							width: 38,
+							height: 38,
+							borderRadius: 10,
+							background: "var(--fb-ink)",
+							color: "var(--fb-cream)",
+							display: "grid",
+							placeItems: "center",
+							flexShrink: 0,
 						}}
 					>
-						15% rabatu na następną wizytę
+						<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+							<path
+								d="M2.5 6.5h13v9h-13z M1 4.5h16v3H1z M9 4.5v11 M5.5 4.5c-1.4 0-2.5-1-2.5-2s1.1-2 2.5-2c2 0 3.5 3 3.5 4 M12.5 4.5c1.4 0 2.5-1 2.5-2s-1.1-2-2.5-2c-2 0-3.5 3-3.5 4"
+								stroke="currentColor"
+								strokeWidth="1.2"
+								strokeLinejoin="round"
+							/>
+						</svg>
 					</div>
-					<div
-						style={{
-							fontFamily: "var(--fb-sans)",
-							fontSize: 12.5,
-							color: "rgba(31,26,21,0.55)",
-							marginTop: 2,
-						}}
-					>
-						Odblokowany po wystawieniu oceny
+					<div style={{ flex: 1, minWidth: 0 }}>
+						<div
+							style={{
+								fontFamily: "var(--fb-sans)",
+								fontSize: 14,
+								fontWeight: 500,
+								color: "var(--fb-ink)",
+							}}
+						>
+							{rewardDescription}
+						</div>
+						<div
+							style={{
+								fontFamily: "var(--fb-sans)",
+								fontSize: 12.5,
+								color: "rgba(31,26,21,0.55)",
+								marginTop: 2,
+							}}
+						>
+							Odblokowywany po wystawieniu oceny
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
 
 			<div style={{ flex: 1 }} />
 

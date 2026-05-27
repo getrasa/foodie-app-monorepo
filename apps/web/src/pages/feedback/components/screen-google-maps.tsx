@@ -1,39 +1,29 @@
 import { useState } from "react";
-import { StaticStar } from "#/pages/console/shared/static-star";
-import { BackRow } from "./back-row";
 import { PrimaryButton } from "./primary-button";
 
-interface ScreenNudgeProps {
+interface ScreenGoogleMapsProps {
+	venueName: string;
 	googleMapsUrl: string;
 	comment: string;
-	chips: string[];
-	onShare: () => void;
-	onSkip: () => void;
-	onBack: () => void;
+	onContinue: () => void;
 }
 
-export const ScreenNudge = ({
+export const ScreenGoogleMaps = ({
+	venueName,
 	googleMapsUrl,
 	comment,
-	chips,
-	onShare,
-	onSkip,
-	onBack,
-}: ScreenNudgeProps) => {
+	onContinue,
+}: ScreenGoogleMapsProps) => {
 	const [copied, setCopied] = useState(false);
-
 	const trimmed = comment.trim();
-	const hasReview = trimmed.length > 0 || chips.length > 0;
-	const reviewText = [trimmed, chips.length ? `(${chips.join(", ")})` : null]
-		.filter(Boolean)
-		.join(" ");
 
-	const copyReview = async () => {
+	const copyComment = async () => {
+		if (!trimmed) return;
 		try {
-			await navigator.clipboard.writeText(reviewText);
+			await navigator.clipboard.writeText(trimmed);
 		} catch {
 			const ta = document.createElement("textarea");
-			ta.value = reviewText;
+			ta.value = trimmed;
 			document.body.appendChild(ta);
 			ta.select();
 			try {
@@ -44,12 +34,12 @@ export const ScreenNudge = ({
 			document.body.removeChild(ta);
 		}
 		setCopied(true);
-		setTimeout(() => setCopied(false), 1800);
+		window.setTimeout(() => setCopied(false), 1800);
 	};
 
-	const handleShare = () => {
+	const handleOpen = () => {
 		window.open(googleMapsUrl, "_blank", "noopener,noreferrer");
-		onShare();
+		onContinue();
 	};
 
 	return (
@@ -61,52 +51,48 @@ export const ScreenNudge = ({
 				flex: 1,
 			}}
 		>
-			<BackRow onBack={onBack} step={3} total={4} />
-
-			<div style={{ marginTop: 24 }}>
-				<div
-					style={{
-						fontFamily: "var(--fb-mono)",
-						fontSize: 11,
-						letterSpacing: "0.08em",
-						textTransform: "uppercase",
-						color: "rgba(31,26,21,0.5)",
-					}}
-				>
-					Krok 3 z 4 — opcjonalne
-				</div>
-
-				<div
-					style={{
-						marginTop: 14,
-						fontFamily: "var(--fb-serif)",
-						fontSize: 32,
-						lineHeight: 1.08,
-						letterSpacing: "-0.02em",
-						fontStyle: "italic",
-						color: "var(--fb-ink)",
-					}}
-				>
-					Skoro było wyśmienicie —
-					<br />
-					podziel się ze światem.
-				</div>
-				<div
-					style={{
-						marginTop: 10,
-						fontFamily: "var(--fb-sans)",
-						fontSize: 14.5,
-						lineHeight: 1.5,
-						color: "rgba(31,26,21,0.62)",
-					}}
-				>
-					Publiczna opinia w Mapach Google pomoże nowym gościom znaleźć
-					Helenę — w ten sposób realnie wspierasz naszą restaurację. Rabat
-					dostaniesz tak czy inaczej, bez zobowiązań.
-				</div>
+			<div
+				style={{
+					fontFamily: "var(--fb-mono)",
+					fontSize: 11,
+					letterSpacing: "0.08em",
+					textTransform: "uppercase",
+					color: "rgba(31,26,21,0.5)",
+				}}
+			>
+				Krok dodatkowy · opcjonalny
 			</div>
 
-			{/* Google map card */}
+			<div
+				style={{
+					marginTop: 14,
+					fontFamily: "var(--fb-serif)",
+					fontSize: 34,
+					lineHeight: 1.05,
+					letterSpacing: "-0.02em",
+					fontStyle: "italic",
+					color: "var(--fb-ink)",
+				}}
+			>
+				Skoro było wyśmienicie —
+				<br />
+				podziel się ze światem.
+			</div>
+			<div
+				style={{
+					marginTop: 10,
+					fontFamily: "var(--fb-sans)",
+					fontSize: 14.5,
+					lineHeight: 1.5,
+					color: "rgba(31,26,21,0.62)",
+				}}
+			>
+				Krótka opinia w Mapach Google daje{" "}
+				<em style={{ fontStyle: "italic" }}>{venueName}</em> realny zasięg.
+				Kod rabatowy zobaczysz zaraz po — niezależnie od tego, czy zostawisz
+				opinię w Google, czy nie.
+			</div>
+
 			<div
 				style={{
 					marginTop: 20,
@@ -149,7 +135,7 @@ export const ScreenNudge = ({
 								color: "var(--fb-ink)",
 							}}
 						>
-							Restauracja u Heleny
+							{venueName}
 						</div>
 						<div
 							style={{
@@ -157,13 +143,9 @@ export const ScreenNudge = ({
 								fontSize: 12.5,
 								color: "rgba(31,26,21,0.55)",
 								marginTop: 2,
-								display: "flex",
-								alignItems: "center",
-								gap: 5,
 							}}
 						>
-							<StaticStar size={11} />
-							<span>4,7 · 248 opinii w Google</span>
+							Mapy Google
 						</div>
 					</div>
 				</div>
@@ -171,25 +153,19 @@ export const ScreenNudge = ({
 					style={{
 						borderTop: "0.5px solid rgba(31,26,21,0.08)",
 						paddingTop: 12,
+						fontFamily: "var(--fb-sans)",
+						fontSize: 12.5,
+						color: "rgba(31,26,21,0.55)",
+						lineHeight: 1.5,
 					}}
 				>
-					<div
-						style={{
-							fontFamily: "var(--fb-sans)",
-							fontSize: 12.5,
-							color: "rgba(31,26,21,0.55)",
-							lineHeight: 1.5,
-						}}
-					>
-						Otworzymy Mapy Google w nowej karcie — wystarczy, że wkleisz
-						lub napiszesz kilka słów.
-					</div>
+					Otworzymy Mapy Google w nowej karcie — wystarczy, że napiszesz kilka
+					słów lub wkleisz swój komentarz.
 				</div>
 
-				{hasReview && (
+				{trimmed && (
 					<div
 						style={{
-							marginTop: 2,
 							padding: 12,
 							borderRadius: 10,
 							background: "var(--fb-cream)",
@@ -219,11 +195,11 @@ export const ScreenNudge = ({
 								overflow: "hidden",
 							}}
 						>
-							{reviewText}
+							{trimmed}
 						</div>
 						<button
 							type="button"
-							onClick={copyReview}
+							onClick={copyComment}
 							style={{
 								marginTop: 10,
 								display: "inline-flex",
@@ -241,52 +217,8 @@ export const ScreenNudge = ({
 								transition: "background 0.2s",
 							}}
 						>
-							{copied ? (
-								<>
-									<svg width="11" height="11" viewBox="0 0 10 10">
-										<path
-											d="M2 5.2L4 7.2L8 2.8"
-											stroke="currentColor"
-											strokeWidth="1.8"
-											fill="none"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										/>
-									</svg>
-									Skopiowane
-								</>
-							) : (
-								<>
-									<svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-										<rect
-											x="3.5"
-											y="3.5"
-											width="6"
-											height="7"
-											rx="1"
-											stroke="currentColor"
-											strokeWidth="1.2"
-										/>
-										<path
-											d="M5.5 3.5V2.5a1 1 0 011-1h2a1 1 0 011 1v6"
-											stroke="currentColor"
-											strokeWidth="1.2"
-											fill="none"
-										/>
-									</svg>
-									Skopiuj opinię do schowka
-								</>
-							)}
+							{copied ? "Skopiowane" : "Skopiuj opinię do schowka"}
 						</button>
-						<div
-							style={{
-								marginTop: 6,
-								fontSize: 11,
-								color: "rgba(31,26,21,0.5)",
-							}}
-						>
-							Wklej w Mapach Google jednym ruchem.
-						</div>
 					</div>
 				)}
 			</div>
@@ -294,7 +226,7 @@ export const ScreenNudge = ({
 			<div style={{ flex: 1 }} />
 
 			<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-				<PrimaryButton onClick={handleShare}>
+				<PrimaryButton onClick={handleOpen}>
 					<svg width="16" height="16" viewBox="0 0 24 24">
 						<path
 							fill="#fff"
@@ -310,7 +242,7 @@ export const ScreenNudge = ({
 				</PrimaryButton>
 				<button
 					type="button"
-					onClick={onSkip}
+					onClick={onContinue}
 					style={{
 						background: "transparent",
 						border: "none",
@@ -321,7 +253,7 @@ export const ScreenNudge = ({
 						padding: 12,
 					}}
 				>
-					Nie, dziękuję — pomiń
+					Pomiń — pokaż mi kod
 				</button>
 			</div>
 		</div>
