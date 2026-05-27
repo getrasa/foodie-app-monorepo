@@ -134,7 +134,7 @@ export const DiscountsPage = () => {
 		setBannerMessage(null);
 	};
 
-	if (businessQuery.isPending || offerQuery.isPending) {
+	if (businessQuery.isPending) {
 		return (
 			<Center h="50vh">
 				<Loader color="var(--fb-primary)" />
@@ -149,6 +149,14 @@ export const DiscountsPage = () => {
 					Najpierw przejdź przez konfigurację swojej restauracji.
 				</Alert>
 			</div>
+		);
+	}
+
+	if (offerQuery.isPending) {
+		return (
+			<Center h="50vh">
+				<Loader color="var(--fb-primary)" />
+			</Center>
 		);
 	}
 

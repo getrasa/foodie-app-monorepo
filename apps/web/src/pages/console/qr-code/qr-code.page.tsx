@@ -93,7 +93,7 @@ export const QrCodePage = () => {
 		downloadBlob(blob, "feedbackbite-qr.pdf");
 	}, [scanUrl, venue]);
 
-	if (businessQuery.isPending || qrCodesQuery.isPending) {
+	if (businessQuery.isPending) {
 		return (
 			<Center h="50vh">
 				<Loader color="var(--fb-primary)" />
@@ -101,11 +101,29 @@ export const QrCodePage = () => {
 		);
 	}
 
-	if (!venue || !qrCode) {
+	if (!venue) {
 		return (
 			<div style={{ padding: "28px 32px" }}>
 				<Alert color="yellow" variant="light">
 					Najpierw przejdź przez konfigurację swojej restauracji.
+				</Alert>
+			</div>
+		);
+	}
+
+	if (qrCodesQuery.isPending) {
+		return (
+			<Center h="50vh">
+				<Loader color="var(--fb-primary)" />
+			</Center>
+		);
+	}
+
+	if (!qrCode) {
+		return (
+			<div style={{ padding: "28px 32px" }}>
+				<Alert color="yellow" variant="light">
+					Brak aktywnego kodu QR — skontaktuj się z pomocą.
 				</Alert>
 			</div>
 		);
