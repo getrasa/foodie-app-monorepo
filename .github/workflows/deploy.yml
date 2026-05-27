@@ -2,13 +2,24 @@ name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy
+        required: true
+        type: choice
+        options: [production, staging]
 
-# Prevent two production deploys from running concurrently.
-# `cancel-in-progress: false` means a second push waits rather than killing the first.
+# Map trigger → environment: `main` branch deploys to production, `staging` branch
+# (or anything else listed in on.push.branches) deploys to staging. workflow_dispatch
+# input takes precedence so we can manually re-deploy either env.
+#
+# Production and staging deploys live in separate concurrency groups so they don't
+# block each other. `cancel-in-progress: false` means a second push waits rather
+# than killing the first deploy mid-flight.
 concurrency:
-  group: deploy-production
+  group: deploy-${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}
   cancel-in-progress: false
 
 jobs:
@@ -35,7 +46,7 @@ jobs:
     name: Deploy API to Railway
     needs: checks
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Railway CLI
@@ -69,7 +80,7 @@ jobs:
     name: Deploy web to Vercel
     needs: deploy-api
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ inputs.environment || (github.ref_name == 'main' && 'production') || 'staging' }}
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
