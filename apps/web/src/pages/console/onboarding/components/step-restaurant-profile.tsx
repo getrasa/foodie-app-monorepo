@@ -1,4 +1,4 @@
-import { Button, Stack, TextInput, Textarea } from "@mantine/core";
+import { Alert, Button, Stack, TextInput, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
 export interface RestaurantProfileValues {
@@ -9,11 +9,15 @@ export interface RestaurantProfileValues {
 
 interface StepRestaurantProfileProps {
 	initialValues?: RestaurantProfileValues;
+	submitting?: boolean;
+	error?: string | null;
 	onNext: (values: RestaurantProfileValues) => void;
 }
 
 export const StepRestaurantProfile = ({
 	initialValues,
+	submitting,
+	error,
 	onNext,
 }: StepRestaurantProfileProps) => {
 	const form = useForm<RestaurantProfileValues>({
@@ -33,6 +37,11 @@ export const StepRestaurantProfile = ({
 	return (
 		<form onSubmit={form.onSubmit(onNext)}>
 			<Stack gap="md">
+				{error && (
+					<Alert color="red" variant="light">
+						{error}
+					</Alert>
+				)}
 				<TextInput
 					label="Nazwa restauracji"
 					placeholder="np. Trattoria u Mario"
@@ -54,7 +63,7 @@ export const StepRestaurantProfile = ({
 					{...form.getInputProps("googleMapsUrl")}
 				/>
 
-				<Button type="submit" fullWidth size="md" mt="sm">
+				<Button type="submit" fullWidth size="md" mt="sm" loading={submitting}>
 					Dalej
 				</Button>
 			</Stack>

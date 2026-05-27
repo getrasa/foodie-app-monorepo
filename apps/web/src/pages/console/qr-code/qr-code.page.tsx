@@ -1,29 +1,153 @@
-import { QRCodeSVG } from "qrcode.react";
-import { useCallback } from "react";
+import { Alert, Center, Loader } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+import { jsPDF } from "jspdf";
+import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
+import { useCallback, useMemo, useRef } from "react";
+
+import { PUBLIC_BASE_URL } from "#/lib/api-client";
+import { useMyBusiness } from "#/lib/api/use-my-business";
+import { venueApi } from "#/lib/api/venue-api";
+
+const downloadBlob = (blob: Blob, filename: string) => {
+	const link = document.createElement("a");
+	link.href = URL.createObjectURL(blob);
+	link.download = filename;
+	link.click();
+	URL.revokeObjectURL(link.href);
+};
+
+const buildPdf = (
+	pngDataUrl: string,
+	venueName: string,
+	scanUrl: string,
+): Blob => {
+	const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+	const pageWidth = pdf.internal.pageSize.getWidth();
+
+	pdf.setFont("helvetica", "italic");
+	pdf.setFontSize(28);
+	pdf.text("Jak smakowało?", pageWidth / 2, 35, { align: "center" });
+
+	pdf.setFont("helvetica", "normal");
+	pdf.setFontSize(13);
+	pdf.text(venueName, pageWidth / 2, 48, { align: "center" });
+
+	const qrSizeMm = 110;
+	const qrX = (pageWidth - qrSizeMm) / 2;
+	pdf.addImage(pngDataUrl, "PNG", qrX, 60, qrSizeMm, qrSizeMm);
+
+	pdf.setFontSize(11);
+	pdf.text(
+		"Zeskanuj, zostaw kilka słów. Odbierz rabat na następną wizytę.",
+		pageWidth / 2,
+		185,
+		{ align: "center" },
+	);
+
+	pdf.setFontSize(9);
+	pdf.setTextColor(120, 120, 120);
+	pdf.text(scanUrl, pageWidth / 2, 200, { align: "center" });
+
+	return pdf.output("blob");
+};
 
 export const QrCodePage = () => {
-	// TODO: Get actual restaurant ID from API/context
-	const restaurantId = "demo-restaurant-id";
-	const reviewUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/store/${restaurantId}/review`;
+	const businessQuery = useMyBusiness();
+	const venue = businessQuery.data?.venues?.[0];
 
-	const handleDownloadSvg = useCallback(() => {
-		const svg = document.getElementById("qr-download-svg");
-		if (!svg) return;
-		const serializer = new XMLSerializer();
-		const svgString = serializer.serializeToString(svg);
-		const blob = new Blob([svgString], { type: "image/svg+xml" });
-		const link = document.createElement("a");
-		link.download = "jakbylo-qr-code.svg";
-		link.href = URL.createObjectURL(blob);
-		link.click();
-		URL.revokeObjectURL(link.href);
+	const qrCodesQuery = useQuery({
+		queryKey: ["qr-codes", venue?.id ?? null],
+		queryFn: () => venueApi.listQrCodes(venue!.id),
+		enabled: !!venue?.id,
+	});
+
+	const qrCode = qrCodesQuery.data?.find((q) => q.active) ?? qrCodesQuery.data?.[0];
+	const scanUrl = useMemo(
+		() => (qrCode ? `${PUBLIC_BASE_URL}/q/${qrCode.id}` : ""),
+		[qrCode],
+	);
+
+	// Hidden full-res canvas for high-quality PNG/PDF export.
+	const exportRef = useRef<HTMLDivElement>(null);
+
+	const handleDownloadPng = useCallback(() => {
+		const canvas = exportRef.current?.querySelector("canvas");
+		if (!canvas) return;
+		canvas.toBlob((blob) => {
+			if (blob) downloadBlob(blob, "feedbackbite-qr.png");
+		}, "image/png");
 	}, []);
 
+	const handleDownloadSvg = useCallback(() => {
+		const svg = document.getElementById("qr-export-svg");
+		if (!svg) return;
+		const svgString = new XMLSerializer().serializeToString(svg);
+		downloadBlob(new Blob([svgString], { type: "image/svg+xml" }), "feedbackbite-qr.svg");
+	}, []);
+
+	const handleDownloadPdf = useCallback(() => {
+		const canvas = exportRef.current?.querySelector("canvas");
+		if (!canvas || !venue) return;
+		const dataUrl = canvas.toDataURL("image/png");
+		const blob = buildPdf(dataUrl, venue.name, scanUrl);
+		downloadBlob(blob, "feedbackbite-qr.pdf");
+	}, [scanUrl, venue]);
+
+	if (businessQuery.isPending) {
+		return (
+			<Center h="50vh">
+				<Loader color="var(--fb-primary)" />
+			</Center>
+		);
+	}
+
+	if (!venue) {
+		return (
+			<div style={{ padding: "28px 32px" }}>
+				<Alert color="yellow" variant="light">
+					Najpierw przejdź przez konfigurację swojej restauracji.
+				</Alert>
+			</div>
+		);
+	}
+
+	if (qrCodesQuery.isPending) {
+		return (
+			<Center h="50vh">
+				<Loader color="var(--fb-primary)" />
+			</Center>
+		);
+	}
+
+	if (!qrCode) {
+		return (
+			<div style={{ padding: "28px 32px" }}>
+				<Alert color="yellow" variant="light">
+					Brak aktywnego kodu QR — skontaktuj się z pomocą.
+				</Alert>
+			</div>
+		);
+	}
+
 	const downloadOptions = [
-		{ label: "Tabliczka na stolik", sub: "4×6 cala, PDF gotowy do druku" },
-		{ label: "Naklejka na paragon", sub: "2×2 cala, 8 sztuk na arkuszu" },
-		{ label: "Naklejka na okno", sub: "5×5 cala, pojedynczy PDF" },
-		{ label: "Surowy kod QR (SVG)", sub: "Do własnych projektów", onClick: handleDownloadSvg },
+		{
+			label: "Plakat A4 (PDF)",
+			sub: "Gotowy do druku",
+			format: "PDF",
+			onClick: handleDownloadPdf,
+		},
+		{
+			label: "PNG (wysoka rozdzielczość)",
+			sub: "1024×1024 px",
+			format: "PNG",
+			onClick: handleDownloadPng,
+		},
+		{
+			label: "Surowy kod QR (SVG)",
+			sub: "Do własnych projektów",
+			format: "SVG",
+			onClick: handleDownloadSvg,
+		},
 	];
 
 	return (
@@ -58,9 +182,12 @@ export const QrCodePage = () => {
 				Wydrukuj i umieść na stolikach, paragonach albo przy wejściu.
 			</div>
 
-			{/* Hidden SVG for download */}
+			{/* Hidden full-res exports */}
+			<div style={{ position: "absolute", left: -9999, top: -9999 }} ref={exportRef}>
+				<QRCodeCanvas value={scanUrl} size={1024} level="H" />
+			</div>
 			<div style={{ display: "none" }}>
-				<QRCodeSVG id="qr-download-svg" value={reviewUrl} size={1024} level="H" />
+				<QRCodeSVG id="qr-export-svg" value={scanUrl} size={1024} level="H" />
 			</div>
 
 			<div
@@ -89,9 +216,10 @@ export const QrCodePage = () => {
 								fontSize: 10,
 								letterSpacing: "0.08em",
 								color: "rgba(31,26,21,0.5)",
+								textTransform: "uppercase",
 							}}
 						>
-							TWOJA RESTAURACJA
+							{venue.name}
 						</div>
 						<div
 							style={{
@@ -116,7 +244,7 @@ export const QrCodePage = () => {
 							}}
 						>
 							<QRCodeSVG
-								value={reviewUrl}
+								value={scanUrl}
 								size={189}
 								level="H"
 								fgColor="var(--fb-ink)"
@@ -144,8 +272,19 @@ export const QrCodePage = () => {
 								marginTop: 16,
 							}}
 						>
-							JAKBYLO.PL
+							FEEDBACKBITE.PL
 						</div>
+					</div>
+					<div
+						style={{
+							marginTop: 12,
+							textAlign: "center",
+							fontFamily: "var(--fb-mono)",
+							fontSize: 11,
+							color: "rgba(31,26,21,0.5)",
+						}}
+					>
+						{scanUrl}
 					</div>
 				</div>
 
@@ -241,7 +380,7 @@ export const QrCodePage = () => {
 										color: "rgba(31,26,21,0.5)",
 									}}
 								>
-									PDF
+									{o.format}
 								</div>
 							</button>
 						))}
@@ -278,8 +417,8 @@ export const QrCodePage = () => {
 									lineHeight: 1.4,
 								}}
 							>
-								Numery stolików zbieramy automatycznie — goście
-								wpisują je na stronie opinii.
+								Goście skanują ten sam kod przy każdym stoliku — kod
+								prowadzi do strony, na której zostawiają opinię.
 							</div>
 						</div>
 					</div>

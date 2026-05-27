@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Button,
 	Group,
 	NumberInput,
@@ -8,18 +9,20 @@ import {
 	TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-
-export type DiscountType = "percentage" | "fixed_amount" | "free_item";
+import type { RewardType } from "#/lib/api/venue-api";
 
 export interface DiscountConfigValues {
-	type: DiscountType;
+	type: RewardType;
 	value: string;
 	expiresInDays: number | "";
 	dailyCap: number | "";
+	active: boolean;
 }
 
 interface StepDiscountConfigProps {
 	initialValues?: DiscountConfigValues;
+	submitting?: boolean;
+	error?: string | null;
 	onNext: (values: DiscountConfigValues) => void;
 	onBack: () => void;
 }
@@ -32,6 +35,8 @@ const discountTypeLabels = [
 
 export const StepDiscountConfig = ({
 	initialValues,
+	submitting,
+	error,
 	onNext,
 	onBack,
 }: StepDiscountConfigProps) => {
@@ -41,6 +46,7 @@ export const StepDiscountConfig = ({
 			value: "",
 			expiresInDays: 30,
 			dailyCap: "",
+			active: true,
 		},
 		validate: {
 			value: (value) =>
@@ -73,6 +79,11 @@ export const StepDiscountConfig = ({
 	return (
 		<form onSubmit={form.onSubmit(onNext)}>
 			<Stack gap="md">
+				{error && (
+					<Alert color="red" variant="light">
+						{error}
+					</Alert>
+				)}
 				<div>
 					<Text size="sm" fw={500} mb={4}>
 						Rodzaj rabatu
@@ -108,10 +119,12 @@ export const StepDiscountConfig = ({
 				/>
 
 				<Group grow mt="sm">
-					<Button variant="default" onClick={onBack}>
+					<Button variant="default" onClick={onBack} disabled={submitting}>
 						Wstecz
 					</Button>
-					<Button type="submit">Dalej</Button>
+					<Button type="submit" loading={submitting}>
+						Dalej
+					</Button>
 				</Group>
 			</Stack>
 		</form>
