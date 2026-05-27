@@ -20,15 +20,6 @@ const firstString = (value: string | string[] | undefined): string | null => {
   return value.trim() || null;
 };
 
-const clientIp = (req: Request): string | null => {
-  const forwarded = req.headers['x-forwarded-for'];
-  const fwd = Array.isArray(forwarded) ? forwarded[0] : forwarded;
-  if (typeof fwd === 'string' && fwd.length > 0) {
-    return fwd.split(',')[0].trim();
-  }
-  return req.ip ?? req.socket?.remoteAddress ?? null;
-};
-
 @Controller('q')
 export class PublicFeedbackController {
   constructor(private readonly submission: FeedbackSubmissionService) {}
@@ -48,7 +39,7 @@ export class PublicFeedbackController {
     const deviceFingerprint = firstString(req.headers[FINGERPRINT_HEADER]);
     const localStorageToken = firstString(req.headers[LOCAL_STORAGE_HEADER]);
     const userAgent = firstString(req.headers['user-agent']);
-    const ipAddress = clientIp(req);
+    const ipAddress = req.ip ?? null;
 
     const outcome = await this.submission.submit({
       qrCodeId,
