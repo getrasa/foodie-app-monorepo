@@ -119,10 +119,12 @@ export class FeedbackSubmissionService {
         rating,
         comment,
         customerEmail,
-        deviceFingerprint: ctx.deviceFingerprint ?? undefined,
-        localStorageToken: ctx.localStorageToken ?? undefined,
-        ipAddress: ctx.ipAddress ?? undefined,
-        userAgent: ctx.userAgent ?? undefined,
+        // Every value below is client-controlled; cap each to the schema width
+        // so an oversized header can't fail the flush.
+        deviceFingerprint: cap(ctx.deviceFingerprint),
+        localStorageToken: cap(ctx.localStorageToken),
+        ipAddress: cap(ctx.ipAddress),
+        userAgent: cap(ctx.userAgent),
       },
       { partial: true },
     );
@@ -176,6 +178,16 @@ export class FeedbackSubmissionService {
     );
   }
 }
+
+// Hard cap on every client-controlled string we persist into a varchar(255)
+// column. Headers like user-agent are untrusted and can be arbitrarily long;
+// truncating here keeps the row writable without raising a 4xx for a header
+// the diner didn't pick.
+const PERSISTED_FIELD_MAX = 255;
+const cap = (raw: string | null | undefined): string | undefined => {
+  if (raw == null) return undefined;
+  return raw.length > PERSISTED_FIELD_MAX ? raw.slice(0, PERSISTED_FIELD_MAX) : raw;
+};
 
 const normalizeComment = (raw: string | null | undefined): string | undefined => {
   if (raw == null) return undefined;

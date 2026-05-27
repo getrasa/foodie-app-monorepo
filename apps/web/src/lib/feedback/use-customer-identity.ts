@@ -55,15 +55,22 @@ const loadFingerprint = (): Promise<string> => {
 };
 
 export const useCustomerIdentity = (): CustomerIdentity => {
-	const [identity, setIdentity] = useState<CustomerIdentity>({
+	// The localStorage token is allocated synchronously on first render so the
+	// per-device cap has a working signal even if the diner submits before
+	// FingerprintJS has finished computing. SSR returns null here; the first
+	// client render upgrades the value before any submission can fire.
+	const [identity, setIdentity] = useState<CustomerIdentity>(() => ({
 		deviceFingerprint: null,
-		localStorageToken: null,
+		localStorageToken: typeof window === "undefined" ? null : ensureToken(),
 		ready: false,
-	});
+	}));
 
 	useEffect(() => {
 		let cancelled = false;
-		const token = ensureToken();
+		const token = identity.localStorageToken ?? ensureToken();
+		if (!identity.localStorageToken) {
+			setIdentity((prev) => ({ ...prev, localStorageToken: token }));
+		}
 		loadFingerprint()
 			.then((deviceFingerprint) => {
 				if (cancelled) return;
@@ -71,13 +78,14 @@ export const useCustomerIdentity = (): CustomerIdentity => {
 			})
 			.catch(() => {
 				if (cancelled) return;
-				// Fingerprinting failures must not block submission — we still send the
-				// localStorage token and let the server-side IP signal carry the load.
+				// Fingerprinting failures must not block submission — the localStorage
+				// token alone still anchors the per-device cap; IP signals carry the rest.
 				setIdentity({ deviceFingerprint: null, localStorageToken: token, ready: true });
 			});
 		return () => {
 			cancelled = true;
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return identity;
