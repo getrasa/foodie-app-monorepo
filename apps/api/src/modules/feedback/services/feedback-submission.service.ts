@@ -7,7 +7,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { EntityManager } from '@mikro-orm/core';
+import { EntityManager, IsolationLevel } from '@mikro-orm/core';
 import { QrCode } from '../../venue/entities/qr-code.entity';
 import { RewardOffer } from '../../venue/entities/reward-offer.entity';
 import { Voucher } from '../../voucher/entities/voucher.entity';
@@ -36,9 +36,9 @@ export interface SubmitOutcome {
 }
 
 const VOUCHER_CODE_RETRY_LIMIT = 5;
-// Both bounds match the persisted `varchar(255)` columns in
-// Migration20260527093131; over-long input is rejected with a controlled
-// 400 instead of bubbling up as a Postgres length error during flush.
+// Retries on Postgres 40001 (serialization_failure) from the submit tx.
+const SUBMIT_TRANSACTION_RETRY_LIMIT = 3;
+// Match `varchar(255)` in Migration20260527093131; over-long input → 400.
 const MAX_COMMENT_LENGTH = 255;
 const MAX_EMAIL_LENGTH = 255;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,64 +84,88 @@ export class FeedbackSubmissionService {
       throw new BadRequestException('Komentarz jest wymagany przy ocenie 1–4 gwiazdek');
     }
 
+    // Cap up front so the cap check and the stored row see the same string —
+    // otherwise an oversized header silently bypasses isDailyCapReached.
+    const deviceFingerprint = cap(ctx.deviceFingerprint);
+    const localStorageToken = cap(ctx.localStorageToken);
+    const ipAddress = cap(ctx.ipAddress);
+    const userAgent = cap(ctx.userAgent);
+
     const { qrCode, offer } = await this.resolveQr(ctx.qrCodeId);
     const venue = qrCode.venue;
 
-    if (await this.abuseStack.checkIpHardBlock(venue.id, ctx.ipAddress)) {
+    if (await this.abuseStack.checkIpHardBlock(venue.id, ipAddress)) {
       this.logger.warn(
-        `IP hard-block fired: venue=${venue.id} ip=${ctx.ipAddress} qrCode=${qrCode.id}`,
+        `IP hard-block fired: venue=${venue.id} ip=${ipAddress} qrCode=${qrCode.id}`,
       );
       throw new HttpException('Too Many Requests', HttpStatus.TOO_MANY_REQUESTS);
     }
-    await this.abuseStack.checkIpSoftAlarm(venue.id, ctx.ipAddress);
+    await this.abuseStack.checkIpSoftAlarm(venue.id, ipAddress);
 
-    let voucherUnavailableReason: VoucherUnavailableReason | null = null;
-    if (!offer) {
-      voucherUnavailableReason = 'no_offer';
-    } else if (!offer.active) {
-      voucherUnavailableReason = 'offer_paused';
-    } else if (
-      await this.abuseStack.isDailyCapReached(
-        venue.id,
-        ctx.deviceFingerprint,
-        ctx.localStorageToken,
-        offer.dailyCap,
-      )
-    ) {
-      voucherUnavailableReason = 'daily_cap_reached';
+    // SERIALIZABLE closes the cap-check ↔ voucher-INSERT race; the 40001
+    // retry turns a losing tx into a clean daily_cap_reached.
+    let lastError: unknown;
+    for (let attempt = 0; attempt < SUBMIT_TRANSACTION_RETRY_LIMIT; attempt += 1) {
+      try {
+        return await this.em.transactional(
+          async (em) => {
+            let voucherUnavailableReason: VoucherUnavailableReason | null = null;
+            if (!offer) {
+              voucherUnavailableReason = 'no_offer';
+            } else if (!offer.active) {
+              voucherUnavailableReason = 'offer_paused';
+            } else if (
+              await this.abuseStack.isDailyCapReached(
+                em,
+                venue.id,
+                deviceFingerprint,
+                localStorageToken,
+                offer.dailyCap,
+              )
+            ) {
+              voucherUnavailableReason = 'daily_cap_reached';
+            }
+
+            const feedback = em.create(
+              Feedback,
+              {
+                venue,
+                qrCode,
+                rating,
+                comment,
+                customerEmail,
+                deviceFingerprint,
+                localStorageToken,
+                ipAddress,
+                userAgent,
+              },
+              { partial: true },
+            );
+
+            let voucher: Voucher | null = null;
+            if (!voucherUnavailableReason && offer) {
+              voucher = await this.createVoucher(em, venue.name, qrCode, feedback, offer);
+            }
+
+            await em.persistAndFlush(voucher ? [feedback, voucher] : [feedback]);
+            // TODO(PR-5): send the voucher code to `customerEmail` via Resend.
+            return { feedback, voucher, voucherUnavailableReason };
+          },
+          { isolationLevel: IsolationLevel.SERIALIZABLE },
+        );
+      } catch (err) {
+        lastError = err;
+        if (!isSerializationFailure(err)) throw err;
+        this.logger.warn(
+          `Serialization conflict on feedback submission (attempt ${attempt + 1}/${SUBMIT_TRANSACTION_RETRY_LIMIT})`,
+        );
+      }
     }
-
-    const feedback = this.em.create(
-      Feedback,
-      {
-        venue,
-        qrCode,
-        rating,
-        comment,
-        customerEmail,
-        // Every value below is client-controlled; cap each to the schema width
-        // so an oversized header can't fail the flush.
-        deviceFingerprint: cap(ctx.deviceFingerprint),
-        localStorageToken: cap(ctx.localStorageToken),
-        ipAddress: cap(ctx.ipAddress),
-        userAgent: cap(ctx.userAgent),
-      },
-      { partial: true },
-    );
-
-    let voucher: Voucher | null = null;
-    if (!voucherUnavailableReason && offer) {
-      voucher = await this.createVoucher(venue.name, qrCode, feedback, offer);
-    }
-
-    // A single flush wraps both inserts in one DB transaction, matching the
-    // commitment in PR-3's brief: "Voucher issuance happens in the same
-    // transaction as Feedback creation".
-    await this.em.persistAndFlush(voucher ? [feedback, voucher] : [feedback]);
-    return { feedback, voucher, voucherUnavailableReason };
+    throw lastError;
   }
 
   private async createVoucher(
+    em: EntityManager,
     venueName: string,
     qrCode: QrCode,
     feedback: Feedback,
@@ -154,9 +178,9 @@ export class FeedbackSubmissionService {
 
     for (let attempt = 0; attempt < VOUCHER_CODE_RETRY_LIMIT; attempt += 1) {
       const code = generateVoucherCode(venueName);
-      const exists = await this.em.findOne(Voucher, { code });
+      const exists = await em.findOne(Voucher, { code });
       if (exists) continue;
-      return this.em.create(
+      return em.create(
         Voucher,
         {
           code,
@@ -207,4 +231,13 @@ const normalizeEmail = (raw: string | null | undefined): string | undefined => {
     throw new BadRequestException('Invalid email format');
   }
   return trimmed;
+};
+
+// Postgres 40001; MikroORM may surface the code on the wrapper or only on driverError.
+const isSerializationFailure = (err: unknown): boolean => {
+  if (!err || typeof err !== 'object') return false;
+  const code = (err as { code?: unknown }).code;
+  if (code === '40001') return true;
+  const driverError = (err as { driverError?: { code?: unknown } }).driverError;
+  return driverError?.code === '40001';
 };

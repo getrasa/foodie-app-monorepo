@@ -180,7 +180,7 @@ export const ScreenComment = ({
 						marginBottom: 6,
 					}}
 				>
-					Kontakt e-mail{" "}
+					Wyślij mi kod e-mailem{" "}
 					<span style={{ color: "rgba(31,26,21,0.4)" }}>(opcjonalnie)</span>
 				</label>
 				<div
@@ -252,8 +252,7 @@ export const ScreenComment = ({
 			>
 				Wysyłając opinię zapisujemy ocenę, komentarz oraz — dla ochrony przed
 				nadużyciami — anonimowy identyfikator urządzenia, adres IP i informację
-				o przeglądarce. Adres e-mail, jeśli podasz, zapisujemy razem z opinią,
-				żeby właściciel mógł się z Tobą skontaktować w razie potrzeby.
+				o przeglądarce. E-mail służy wyłącznie do wysyłki kodu rabatowego.
 			</div>
 
 			{submitError && (

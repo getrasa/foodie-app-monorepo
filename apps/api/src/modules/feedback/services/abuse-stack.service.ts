@@ -26,7 +26,10 @@ export class AbuseStackService {
 
   constructor(private readonly em: EntityManager) {}
 
-  async checkIpHardBlock(venueId: string, ipAddress: string | null): Promise<boolean> {
+  async checkIpHardBlock(
+    venueId: string,
+    ipAddress: string | null | undefined,
+  ): Promise<boolean> {
     if (!ipAddress) return false;
     const since = new Date(Date.now() - HARD_IP_WINDOW_MS);
     const count = await this.em.count(Feedback, {
@@ -37,7 +40,10 @@ export class AbuseStackService {
     return count >= HARD_IP_THRESHOLD;
   }
 
-  async checkIpSoftAlarm(venueId: string, ipAddress: string | null): Promise<void> {
+  async checkIpSoftAlarm(
+    venueId: string,
+    ipAddress: string | null | undefined,
+  ): Promise<void> {
     if (!ipAddress) return;
     const since = new Date(Date.now() - SOFT_IP_WINDOW_MS);
     const count = await this.em.count(Feedback, {
@@ -52,10 +58,12 @@ export class AbuseStackService {
     }
   }
 
+  // `em` must be the submit tx so the count and the INSERT share one snapshot.
   async isDailyCapReached(
+    em: EntityManager,
     venueId: string,
-    deviceFingerprint: string | null,
-    localStorageToken: string | null,
+    deviceFingerprint: string | null | undefined,
+    localStorageToken: string | null | undefined,
     dailyCap: number | null | undefined,
   ): Promise<boolean> {
     if (dailyCap == null || dailyCap <= 0) return false;
@@ -71,7 +79,7 @@ export class AbuseStackService {
     }
     if (identityClauses.length === 0) return false;
     const since = new Date(Date.now() - COOLDOWN_WINDOW_MS);
-    const count = await this.em.count(Voucher, {
+    const count = await em.count(Voucher, {
       venue: { id: venueId },
       feedback: identityClauses.length === 1 ? identityClauses[0] : { $or: identityClauses },
       createdAt: { $gte: since },
