@@ -160,7 +160,8 @@ export const DiscountsPage = () => {
 		);
 	}
 
-	const numericValue = Number(form.value) || 0;
+	// Polish UI accepts comma decimals; backend normalizes on save.
+	const numericValue = Number(form.value.replace(",", ".")) || 0;
 	const valueLabel =
 		form.type === "free_item" ? "Opis produktu" : "Wartość";
 

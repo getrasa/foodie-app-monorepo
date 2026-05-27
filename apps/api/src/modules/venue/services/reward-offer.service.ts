@@ -17,22 +17,30 @@ const REWARD_TYPES: ReadonlySet<RewardType> = new Set([
   RewardType.FREE_ITEM,
 ]);
 
-const validate = (input: UpsertRewardOfferInput): void => {
+// Polish UI shows "np. 5,00" — accept comma decimals for the numeric reward types
+// and persist a canonical dot-decimal string so Voucher snapshots stay consistent.
+const normalizeNumericValue = (raw: string): string => raw.replace(/,/g, '.');
+
+const normalizeValue = (type: RewardType, raw: string): string => {
+  const trimmed = raw.trim();
+  return type === RewardType.FREE_ITEM ? trimmed : normalizeNumericValue(trimmed);
+};
+
+const validate = (input: UpsertRewardOfferInput, normalizedValue: string): void => {
   if (!REWARD_TYPES.has(input.type)) {
     throw new BadRequestException(`Unknown reward type: ${input.type}`);
   }
-  const value = input.value?.trim();
-  if (!value) {
+  if (!normalizedValue) {
     throw new BadRequestException('Reward value is required');
   }
   if (input.type === RewardType.PERCENTAGE) {
-    const n = Number(value);
+    const n = Number(normalizedValue);
     if (!Number.isFinite(n) || n <= 0 || n > 100) {
       throw new BadRequestException('Percentage must be between 1 and 100');
     }
   }
   if (input.type === RewardType.FIXED_AMOUNT) {
-    const n = Number(value);
+    const n = Number(normalizedValue);
     if (!Number.isFinite(n) || n <= 0) {
       throw new BadRequestException('Fixed amount must be positive');
     }
@@ -67,7 +75,8 @@ export class RewardOfferService {
     input: UpsertRewardOfferInput,
   ): Promise<RewardOffer> {
     const venue = await this.ownership.assertVenueOwnership(venueId, userId);
-    validate(input);
+    const normalizedValue = normalizeValue(input.type, input.value ?? '');
+    validate(input, normalizedValue);
 
     let offer = await this.em.findOne(RewardOffer, { venue });
     if (!offer) {
@@ -76,7 +85,7 @@ export class RewardOfferService {
         {
           venue,
           type: input.type,
-          value: input.value.trim(),
+          value: normalizedValue,
           expiresInDays: input.expiresInDays ?? undefined,
           dailyCap: input.dailyCap ?? undefined,
           active: input.active,
@@ -85,7 +94,7 @@ export class RewardOfferService {
       );
     } else {
       offer.type = input.type;
-      offer.value = input.value.trim();
+      offer.value = normalizedValue;
       offer.expiresInDays = input.expiresInDays ?? undefined;
       offer.dailyCap = input.dailyCap ?? undefined;
       offer.active = input.active;
