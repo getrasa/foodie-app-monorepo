@@ -46,7 +46,6 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 	const [submitting, setSubmitting] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
 	const [result, setResult] = useState<FeedbackSubmissionResult | null>(null);
-	const [emailedTo, setEmailedTo] = useState("");
 
 	const identity = useCustomerIdentity();
 
@@ -84,7 +83,6 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 				localStorageToken: identity.localStorageToken,
 			});
 			setResult(submission);
-			setEmailedTo(email.trim());
 			// A 5-star Maps nudge is the only step we slot in front of the
 			// voucher reveal — every other rating goes straight to the result.
 			const shouldNudge =
@@ -183,11 +181,7 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 				) : null;
 			case "result":
 				return result ? (
-					<ScreenResult
-						venue={data.venue}
-						result={result}
-						emailedTo={emailedTo}
-					/>
+					<ScreenResult venue={data.venue} result={result} />
 				) : null;
 		}
 	};

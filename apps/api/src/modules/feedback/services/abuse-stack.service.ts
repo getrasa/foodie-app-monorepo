@@ -55,14 +55,25 @@ export class AbuseStackService {
   async isDailyCapReached(
     venueId: string,
     deviceFingerprint: string | null,
+    localStorageToken: string | null,
     dailyCap: number | null | undefined,
   ): Promise<boolean> {
     if (dailyCap == null || dailyCap <= 0) return false;
-    if (!deviceFingerprint) return false;
+    // Either signal can carry the cap. Fingerprint is the primary signal but
+    // some browsers/extensions block FingerprintJS; the localStorage token,
+    // written on first scan, keeps the cap honest until storage is cleared.
+    const identityClauses: Array<Record<string, string>> = [];
+    if (deviceFingerprint) {
+      identityClauses.push({ deviceFingerprint });
+    }
+    if (localStorageToken) {
+      identityClauses.push({ localStorageToken });
+    }
+    if (identityClauses.length === 0) return false;
     const since = new Date(Date.now() - COOLDOWN_WINDOW_MS);
     const count = await this.em.count(Voucher, {
       venue: { id: venueId },
-      feedback: { deviceFingerprint },
+      feedback: identityClauses.length === 1 ? identityClauses[0] : { $or: identityClauses },
       createdAt: { $gte: since },
     });
     return count >= dailyCap;

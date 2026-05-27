@@ -36,8 +36,11 @@ export interface SubmitOutcome {
 }
 
 const VOUCHER_CODE_RETRY_LIMIT = 5;
-const MAX_COMMENT_LENGTH = 1000;
-const MAX_EMAIL_LENGTH = 320;
+// Both bounds match the persisted `varchar(255)` columns in
+// Migration20260527093131; over-long input is rejected with a controlled
+// 400 instead of bubbling up as a Postgres length error during flush.
+const MAX_COMMENT_LENGTH = 255;
+const MAX_EMAIL_LENGTH = 255;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 @Injectable()
@@ -98,7 +101,12 @@ export class FeedbackSubmissionService {
     } else if (!offer.active) {
       voucherUnavailableReason = 'offer_paused';
     } else if (
-      await this.abuseStack.isDailyCapReached(venue.id, ctx.deviceFingerprint, offer.dailyCap)
+      await this.abuseStack.isDailyCapReached(
+        venue.id,
+        ctx.deviceFingerprint,
+        ctx.localStorageToken,
+        offer.dailyCap,
+      )
     ) {
       voucherUnavailableReason = 'daily_cap_reached';
     }

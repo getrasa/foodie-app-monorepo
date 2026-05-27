@@ -22,14 +22,9 @@ const NO_VOUCHER_COPY: Record<string, { title: string; body: string }> = {
 interface ScreenResultProps {
 	venue: ResolvedVenue;
 	result: FeedbackSubmissionResult;
-	emailedTo: string;
 }
 
-export const ScreenResult = ({
-	venue,
-	result,
-	emailedTo,
-}: ScreenResultProps) => {
+export const ScreenResult = ({ venue, result }: ScreenResultProps) => {
 	const { voucher, voucherUnavailableReason } = result;
 	const fallback = voucherUnavailableReason
 		? NO_VOUCHER_COPY[voucherUnavailableReason]
@@ -97,23 +92,20 @@ export const ScreenResult = ({
 						rabatowy.
 					</div>
 					<VoucherCard venueName={venue.name} voucher={voucher} />
-					{emailedTo && (
-						<div
-							style={{
-								padding: "12px 14px",
-								borderRadius: 12,
-								background: "var(--fb-paper)",
-								border: "0.5px solid rgba(31,26,21,0.08)",
-								fontFamily: "var(--fb-sans)",
-								fontSize: 12.5,
-								lineHeight: 1.5,
-								color: "rgba(31,26,21,0.65)",
-							}}
-						>
-							Spróbujemy wysłać kod również na {emailedTo}. Jeśli nie dotrze
-							— zrób zrzut ekranu tej strony.
-						</div>
-					)}
+					<div
+						style={{
+							padding: "12px 14px",
+							borderRadius: 12,
+							background: "var(--fb-paper)",
+							border: "0.5px solid rgba(31,26,21,0.08)",
+							fontFamily: "var(--fb-sans)",
+							fontSize: 12.5,
+							lineHeight: 1.5,
+							color: "rgba(31,26,21,0.65)",
+						}}
+					>
+						Zrób zrzut ekranu tego kodu — to Twoja najpewniejsza kopia.
+					</div>
 				</>
 			) : (
 				<div

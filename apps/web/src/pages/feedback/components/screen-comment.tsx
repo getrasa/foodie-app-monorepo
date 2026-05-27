@@ -141,7 +141,7 @@ export const ScreenComment = ({
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 					placeholder={placeholder}
-					maxLength={500}
+					maxLength={255}
 					rows={4}
 					style={{
 						width: "100%",
@@ -165,7 +165,7 @@ export const ScreenComment = ({
 						textAlign: "right",
 					}}
 				>
-					{comment.length}/500
+					{comment.length}/255
 				</div>
 			</div>
 
@@ -180,7 +180,7 @@ export const ScreenComment = ({
 						marginBottom: 6,
 					}}
 				>
-					Wyślij mi kod e-mailem{" "}
+					Kontakt e-mail{" "}
 					<span style={{ color: "rgba(31,26,21,0.4)" }}>(opcjonalnie)</span>
 				</label>
 				<div
@@ -252,7 +252,8 @@ export const ScreenComment = ({
 			>
 				Wysyłając opinię zapisujemy ocenę, komentarz oraz — dla ochrony przed
 				nadużyciami — anonimowy identyfikator urządzenia, adres IP i informację
-				o przeglądarce. E-mail służy wyłącznie do wysyłki kodu rabatowego.
+				o przeglądarce. Adres e-mail, jeśli podasz, zapisujemy razem z opinią,
+				żeby właściciel mógł się z Tobą skontaktować w razie potrzeby.
 			</div>
 
 			{submitError && (
