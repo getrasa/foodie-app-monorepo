@@ -99,6 +99,11 @@ jobs:
           cache: pnpm
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
+      # Each Vercel project (foodie-web, foodie-web-staging) has its OWN "production"
+      # scope. We always pull/build/deploy as --prod within the linked project;
+      # which project we're acting on is determined by VERCEL_PROJECT_ID, which
+      # the GitHub Environment supplies. So a staging run pulls + deploys against
+      # the staging Vercel project, never touching production.
       - name: Pull project config
         working-directory: apps/web
         run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
