@@ -45,7 +45,7 @@ const FormLabel = ({
 interface FormState {
 	type: RewardType;
 	value: string;
-	expiresInDays: number;
+	expiresInDays: number | null;
 	dailyCap: number | null;
 	active: boolean;
 }
@@ -82,7 +82,7 @@ export const DiscountsPage = () => {
 			setForm({
 				type: offerQuery.data.type,
 				value: offerQuery.data.value,
-				expiresInDays: offerQuery.data.expiresInDays ?? 30,
+				expiresInDays: offerQuery.data.expiresInDays,
 				dailyCap: offerQuery.data.dailyCap,
 				active: offerQuery.data.active,
 			});
@@ -101,7 +101,7 @@ export const DiscountsPage = () => {
 			return venueApi.upsertRewardOffer(venue.id, {
 				type: form.type,
 				value: form.value,
-				expiresInDays: form.expiresInDays || null,
+				expiresInDays: form.expiresInDays,
 				dailyCap: form.dailyCap ?? null,
 				active: form.active,
 			});
@@ -123,7 +123,7 @@ export const DiscountsPage = () => {
 			setForm({
 				type: offerQuery.data.type,
 				value: offerQuery.data.value,
-				expiresInDays: offerQuery.data.expiresInDays ?? 30,
+				expiresInDays: offerQuery.data.expiresInDays,
 				dailyCap: offerQuery.data.dailyCap,
 				active: offerQuery.data.active,
 			});
@@ -344,7 +344,7 @@ export const DiscountsPage = () => {
 					</FormLabel>
 
 					<FormLabel label="Wygasa po">
-						<div style={{ display: "flex", gap: 8 }}>
+						<div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
 							{[14, 30, 60, 90].map((d) => (
 								<UnstyledButton
 									key={d}
@@ -363,6 +363,21 @@ export const DiscountsPage = () => {
 									{d} dni
 								</UnstyledButton>
 							))}
+							<UnstyledButton
+								onClick={() => update("expiresInDays", null)}
+								style={{
+									padding: "9px 16px",
+									borderRadius: 10,
+									background: form.expiresInDays === null ? "var(--fb-ink)" : "#fff",
+									color: form.expiresInDays === null ? "var(--fb-cream)" : "var(--fb-ink)",
+									border:
+										form.expiresInDays === null ? "none" : "1px solid rgba(31,26,21,0.12)",
+									fontSize: 13,
+									fontFamily: "var(--fb-sans)",
+								}}
+							>
+								Bez wygaśnięcia
+							</UnstyledButton>
 						</div>
 					</FormLabel>
 
@@ -639,7 +654,9 @@ export const DiscountsPage = () => {
 									marginTop: 6,
 								}}
 							>
-								Ważny {form.expiresInDays} dni od wydania
+								{form.expiresInDays === null
+									? "Bez daty wygaśnięcia"
+									: `Ważny ${form.expiresInDays} dni od wydania`}
 							</div>
 						</div>
 					</div>
