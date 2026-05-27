@@ -11,9 +11,7 @@ import { Verification } from './entities/verification.entity';
 
 @Global()
 @Module({
-  imports: [
-    MikroOrmModule.forFeature([User, Session, Account, Verification]),
-  ],
+  imports: [MikroOrmModule.forFeature([User, Session, Account, Verification])],
   controllers: [AuthController],
   providers: [AuthService, AuthGuard, AdminGuard],
   exports: [AuthService, AuthGuard, AdminGuard],
