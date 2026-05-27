@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, PasswordInput, Stack, Text, TextInput } from "@mantine/core";
+import { Alert, Button, Divider, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";

@@ -75,10 +75,11 @@ function createBetterAuth(
         enabled: !!process.env.COOKIE_DOMAIN,
         domain: process.env.COOKIE_DOMAIN,
       },
-      // TODO: temporary cross-site cookie config — web (vercel.app) and api (railway.app) are different sites,
-      // so SameSite=None+Secure is required. Fix properly by putting api + web behind the same root domain
-      // (e.g. api.foodie.app + foodie.app) so cookies become same-site again.
-      ...(process.env.NODE_ENV === 'production' && {
+      // Cross-site fallback for when web and api live on different registrable
+      // domains (e.g. *.vercel.app + *.railway.app). Once COOKIE_DOMAIN is set
+      // both surfaces share a domain — cookies become same-site and better-auth's
+      // SameSite=Lax default is correct.
+      ...(process.env.NODE_ENV === 'production' && !process.env.COOKIE_DOMAIN && {
         defaultCookieAttributes: {
           sameSite: 'none' as const,
           secure: true,
