@@ -5,6 +5,7 @@ import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './modules/health/health.module';
 import { VenueModule } from './modules/venue/venue.module';
 import { FeedbackModule } from './modules/feedback/feedback.module';
+import { VoucherModule } from './modules/voucher/voucher.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { FeedbackModule } from './modules/feedback/feedback.module';
     HealthModule,
     VenueModule,
     FeedbackModule,
+    VoucherModule,
   ],
   controllers: [],
   providers: [],

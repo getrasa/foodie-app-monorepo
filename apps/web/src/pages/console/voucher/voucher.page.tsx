@@ -58,7 +58,7 @@ const DEFAULT_STATE: FormState = {
 	active: true,
 };
 
-export const DiscountsPage = () => {
+export const VoucherPage = () => {
 	const queryClient = useQueryClient();
 	const businessQuery = useMyBusiness();
 	const venue = businessQuery.data?.venues?.[0];

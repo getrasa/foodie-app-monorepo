@@ -1,36 +1,42 @@
-import { useState } from "react";
-
-const DEMO_CODES: Record<
-	string,
-	{ rating: number; when: string; text: string; status: "open" | "redeemed" | "expired" }
-> = {
-	"4KX9": {
-		rating: 5,
-		when: "12 min temu",
-		text: "Tagliatelle al ragù było obłędne. Nasz kelner (Marco?) świetnie poradził sobie z naszym dzieckiem.",
-		status: "open",
-	},
-	"8PQ2": {
-		rating: 5,
-		when: "47 min temu",
-		text: "Najlepsze tiramisù w okolicy, bez dwóch zdań.",
-		status: "redeemed",
-	},
-	K2LM: {
-		rating: 5,
-		when: "Wczoraj",
-		text: "Czułam się jak w Bolonii. Burrata z brzoskwiniami to objawienie.",
-		status: "redeemed",
-	},
-};
+import { useMutation } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import type { VoucherStatus } from "#/lib/api/owner-feedback-api";
+import { type VoucherLookupResult, voucherApi } from "#/lib/api/voucher-api";
+import { ApiError } from "#/lib/api-client";
 
 type ResultState =
 	| null
 	| { kind: "invalid"; code: string }
-	| { kind: "used"; rating: number; when: string }
-	| { kind: "expired"; rating: number; when: string }
-	| { kind: "valid"; rating: number; when: string; text: string }
-	| { kind: "justRedeemed" };
+	| { kind: "error"; message: string }
+	| { kind: "found"; data: VoucherLookupResult }
+	| { kind: "justRedeemed"; data: VoucherLookupResult };
+
+const STATUS_BADGE: Record<VoucherStatus, { color: string; label: string }> = {
+	active: { color: "var(--fb-olive)", label: "Aktywny" },
+	redeemed: { color: "rgba(31,26,21,0.55)", label: "Już zrealizowany" },
+	expired: { color: "rgba(31,26,21,0.55)", label: "Wygasł" },
+	voided: { color: "#A63D2A", label: "Unieważniony" },
+};
+
+const formatDate = (iso: string | null): string | null => {
+	if (!iso) return null;
+	return new Date(iso).toLocaleDateString("pl-PL", {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	});
+};
+
+const formatRelative = (iso: string): string => {
+	const d = new Date(iso);
+	const delta = Date.now() - d.getTime();
+	const min = Math.floor(delta / 60000);
+	if (min < 1) return "przed chwilą";
+	if (min < 60) return `${min} min temu`;
+	const hr = Math.floor(min / 60);
+	if (hr < 24) return `${hr} godz. temu`;
+	return d.toLocaleDateString("pl-PL", { day: "numeric", month: "short" });
+};
 
 const ResultBox = ({
 	color,
@@ -79,36 +85,94 @@ const ResultBox = ({
 export const RedeemPage = () => {
 	const [code, setCode] = useState("");
 	const [result, setResult] = useState<ResultState>(null);
+	const inputRef = useRef<HTMLInputElement | null>(null);
+	const confirmButtonRef = useRef<HTMLButtonElement | null>(null);
+
+	const lookupMutation = useMutation({
+		mutationFn: (raw: string) => voucherApi.lookupByCode(raw),
+		onSuccess: (data) => {
+			setResult({ kind: "found", data });
+		},
+		onError: (err: Error, variables) => {
+			if (err instanceof ApiError && err.status === 404) {
+				setResult({ kind: "invalid", code: variables });
+				return;
+			}
+			setResult({
+				kind: "error",
+				message: err.message || "Nie udało się pobrać kodu",
+			});
+		},
+	});
+
+	const redeemMutation = useMutation({
+		mutationFn: (voucherId: string) => voucherApi.redeem(voucherId),
+		onSuccess: (voucher) => {
+			setResult((prev) =>
+				prev?.kind === "found"
+					? {
+							kind: "justRedeemed",
+							data: { voucher, feedback: prev.data.feedback },
+						}
+					: prev,
+			);
+		},
+		onError: (err: Error) => {
+			// 409 with body.status describes the actual server state — refresh the
+			// lookup view so the cashier sees the right pill.
+			if (
+				err instanceof ApiError &&
+				err.status === 409 &&
+				result?.kind === "found"
+			) {
+				const serverStatus = (err.body as { status?: VoucherStatus } | null)
+					?.status;
+				if (serverStatus) {
+					setResult({
+						kind: "found",
+						data: {
+							voucher: { ...result.data.voucher, status: serverStatus },
+							feedback: result.data.feedback,
+						},
+					});
+					return;
+				}
+			}
+			setResult({
+				kind: "error",
+				message: err.message || "Nie udało się zrealizować kodu",
+			});
+		},
+	});
+
+	// Kiosk/tablet flow: keep focus where the cashier expects it.
+	useEffect(() => {
+		if (!result) {
+			inputRef.current?.focus();
+		} else if (
+			result.kind === "found" &&
+			result.data.voucher.status === "active"
+		) {
+			confirmButtonRef.current?.focus();
+		}
+	}, [result]);
 
 	const check = () => {
-		const c = code.trim().toUpperCase();
-		if (!c) return;
-		const match = DEMO_CODES[c];
-		if (!match) {
-			setResult({ kind: "invalid", code: c });
-		} else if (match.status === "redeemed") {
-			setResult({ kind: "used", rating: match.rating, when: match.when });
-		} else if (match.status === "expired") {
-			setResult({ kind: "expired", rating: match.rating, when: match.when });
-		} else {
-			setResult({
-				kind: "valid",
-				rating: match.rating,
-				when: match.when,
-				text: match.text,
-			});
-		}
-	};
-
-	const redeem = () => {
-		if (result?.kind === "valid") {
-			setResult({ kind: "justRedeemed" });
-		}
+		const trimmed = code.trim().toUpperCase();
+		if (!trimmed) return;
+		lookupMutation.mutate(trimmed);
 	};
 
 	const reset = () => {
 		setCode("");
 		setResult(null);
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+			check();
+		}
 	};
 
 	return (
@@ -173,20 +237,12 @@ export const RedeemPage = () => {
 							border: "1px solid rgba(31,26,21,0.12)",
 						}}
 					>
-						<span
-							style={{
-								fontFamily: "var(--fb-mono)",
-								fontSize: 16,
-								color: "rgba(31,26,21,0.4)",
-							}}
-						>
-							CODE-
-						</span>
 						<input
+							ref={inputRef}
 							value={code}
 							onChange={(e) => setCode(e.target.value.toUpperCase())}
-							placeholder="4KX9"
-							onKeyDown={(e) => e.key === "Enter" && check()}
+							placeholder="LUCIA-4KX9"
+							onKeyDown={handleKeyDown}
 							style={{
 								flex: 1,
 								border: "none",
@@ -202,19 +258,21 @@ export const RedeemPage = () => {
 						<button
 							type="button"
 							onClick={check}
+							disabled={lookupMutation.isPending || !code.trim()}
 							style={{
 								padding: "10px 18px",
 								borderRadius: 10,
 								background: "var(--fb-ink)",
 								color: "var(--fb-cream)",
 								border: "none",
-								cursor: "pointer",
+								cursor: lookupMutation.isPending ? "wait" : "pointer",
+								opacity: lookupMutation.isPending || !code.trim() ? 0.5 : 1,
 								fontSize: 13,
 								fontFamily: "var(--fb-sans)",
 								fontWeight: 500,
 							}}
 						>
-							Sprawdź
+							{lookupMutation.isPending ? "Sprawdzam…" : "Sprawdź"}
 						</button>
 					</div>
 
@@ -225,135 +283,6 @@ export const RedeemPage = () => {
 									color="#A63D2A"
 									title="Nie znaleziono kodu"
 									body={`Nie mamy w bazie kodu ${result.code}. Sprawdź pisownię.`}
-								/>
-							)}
-							{result.kind === "used" && (
-								<ResultBox
-									color="rgba(31,26,21,0.55)"
-									title="Już zrealizowany"
-									body={`Ten kod jest już oznaczony jako wykorzystany. Ocena: ${result.rating}/5 · ${result.when}.`}
-								/>
-							)}
-							{result.kind === "expired" && (
-								<ResultBox
-									color="rgba(31,26,21,0.55)"
-									title="Wygasł"
-									body={`Ten kod wygasł. Ocena: ${result.rating}/5 · ${result.when}.`}
-								/>
-							)}
-							{result.kind === "valid" && (
-								<div
-									style={{
-										padding: 16,
-										borderRadius: 12,
-										background: "var(--fb-cream)",
-										border: "1px solid var(--fb-olive)",
-									}}
-								>
-									<div
-										style={{
-											display: "flex",
-											alignItems: "center",
-											gap: 8,
-										}}
-									>
-										<div
-											style={{
-												width: 18,
-												height: 18,
-												borderRadius: "50%",
-												background: "var(--fb-olive)",
-												color: "#fff",
-												display: "grid",
-												placeItems: "center",
-											}}
-										>
-											<svg
-												width="9"
-												height="9"
-												viewBox="0 0 10 10"
-											>
-												<path
-													d="M2 5.2L4 7.2L8 2.8"
-													stroke="currentColor"
-													strokeWidth="1.8"
-													fill="none"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												/>
-											</svg>
-										</div>
-										<div
-											style={{
-												fontFamily: "var(--fb-mono)",
-												fontSize: 11,
-												letterSpacing: "0.06em",
-												textTransform: "uppercase",
-												color: "var(--fb-olive)",
-											}}
-										>
-											Ważny · 15% rabatu
-										</div>
-									</div>
-									<div
-										style={{
-											marginTop: 10,
-											fontSize: 14,
-											color: "var(--fb-ink)",
-											lineHeight: 1.5,
-										}}
-									>
-										Wystawiony {result.when.toLowerCase()} ·{" "}
-										{result.rating}/5 gwiazdek
-										{result.text &&
-											` · "${result.text.slice(0, 60)}${result.text.length > 60 ? "…" : ""}"`}
-									</div>
-									<div
-										style={{
-											display: "flex",
-											gap: 8,
-											marginTop: 14,
-										}}
-									>
-										<button
-											type="button"
-											onClick={redeem}
-											style={{
-												padding: "9px 16px",
-												borderRadius: 10,
-												background: "var(--fb-ink)",
-												color: "var(--fb-cream)",
-												border: "none",
-												cursor: "pointer",
-												fontSize: 13,
-												fontWeight: 500,
-											}}
-										>
-											Oznacz jako zrealizowany
-										</button>
-										<button
-											type="button"
-											onClick={reset}
-											style={{
-												padding: "9px 16px",
-												borderRadius: 10,
-												background: "transparent",
-												color: "var(--fb-ink)",
-												border: "0.5px solid rgba(31,26,21,0.2)",
-												cursor: "pointer",
-												fontSize: 13,
-											}}
-										>
-											Anuluj
-										</button>
-									</div>
-								</div>
-							)}
-							{result.kind === "justRedeemed" && (
-								<ResultBox
-									color="var(--fb-olive)"
-									title="Zrealizowany"
-									body="Rabat naliczony. Opinia gościa została zamknięta."
 								>
 									<button
 										type="button"
@@ -369,63 +298,278 @@ export const RedeemPage = () => {
 											fontSize: 12.5,
 										}}
 									>
-										Następny kod
+										Spróbuj ponownie
 									</button>
 								</ResultBox>
 							)}
+							{result.kind === "error" && (
+								<ResultBox color="#A63D2A" title="Błąd" body={result.message}>
+									<button
+										type="button"
+										onClick={reset}
+										style={{
+											marginTop: 12,
+											padding: "8px 14px",
+											borderRadius: 8,
+											background: "var(--fb-ink)",
+											color: "var(--fb-cream)",
+											border: "none",
+											cursor: "pointer",
+											fontSize: 12.5,
+										}}
+									>
+										Wyczyść
+									</button>
+								</ResultBox>
+							)}
+							{result.kind === "found" && (
+								<FoundVoucher
+									data={result.data}
+									redeeming={redeemMutation.isPending}
+									confirmRef={confirmButtonRef}
+									onConfirm={() =>
+										redeemMutation.mutate(result.data.voucher.id)
+									}
+									onReset={reset}
+								/>
+							)}
+							{result.kind === "justRedeemed" && (
+								<JustRedeemed data={result.data} onReset={reset} />
+							)}
 						</div>
 					)}
-				</div>
-
-				<div
-					style={{
-						marginTop: 16,
-						padding: 14,
-						borderRadius: 12,
-						background: "var(--fb-paper)",
-						border: "0.5px solid rgba(31,26,21,0.08)",
-					}}
-				>
-					<div
-						style={{
-							fontFamily: "var(--fb-mono)",
-							fontSize: 10.5,
-							letterSpacing: "0.06em",
-							color: "rgba(31,26,21,0.55)",
-						}}
-					>
-						WYPRÓBUJ · kody demo
-					</div>
-					<div
-						style={{
-							display: "flex",
-							gap: 6,
-							flexWrap: "wrap",
-							marginTop: 8,
-						}}
-					>
-						{["4KX9", "8PQ2", "K2LM", "BADCODE"].map((c) => (
-							<button
-								key={c}
-								type="button"
-								onClick={() => setCode(c)}
-								style={{
-									padding: "5px 10px",
-									borderRadius: 7,
-									background: "#fff",
-									border: "0.5px solid rgba(31,26,21,0.1)",
-									cursor: "pointer",
-									fontFamily: "var(--fb-mono)",
-									fontSize: 11,
-									color: "var(--fb-ink)",
-								}}
-							>
-								{c}
-							</button>
-						))}
-					</div>
 				</div>
 			</div>
 		</div>
 	);
 };
+
+interface FoundVoucherProps {
+	data: VoucherLookupResult;
+	redeeming: boolean;
+	confirmRef: React.RefObject<HTMLButtonElement | null>;
+	onConfirm: () => void;
+	onReset: () => void;
+}
+
+const FoundVoucher = ({
+	data,
+	redeeming,
+	confirmRef,
+	onConfirm,
+	onReset,
+}: FoundVoucherProps) => {
+	const { voucher, feedback } = data;
+	const badge = STATUS_BADGE[voucher.status];
+	const expiry = formatDate(voucher.expiresAt);
+	const redeemedAt = formatDate(voucher.redeemedAt);
+	const voidedAt = formatDate(voucher.voidedAt);
+
+	if (voucher.status === "active") {
+		const issued = formatRelative(voucher.createdAt);
+		return (
+			<div
+				style={{
+					padding: 16,
+					borderRadius: 12,
+					background: "var(--fb-cream)",
+					border: "1px solid var(--fb-olive)",
+				}}
+			>
+				<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+					<div
+						style={{
+							width: 18,
+							height: 18,
+							borderRadius: "50%",
+							background: "var(--fb-olive)",
+							color: "#fff",
+							display: "grid",
+							placeItems: "center",
+						}}
+					>
+						<svg
+							width="9"
+							height="9"
+							viewBox="0 0 10 10"
+							role="img"
+							aria-label="Aktywny"
+						>
+							<title>Aktywny</title>
+							<path
+								d="M2 5.2L4 7.2L8 2.8"
+								stroke="currentColor"
+								strokeWidth="1.8"
+								fill="none"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+						</svg>
+					</div>
+					<div
+						style={{
+							fontFamily: "var(--fb-mono)",
+							fontSize: 11,
+							letterSpacing: "0.06em",
+							textTransform: "uppercase",
+							color: "var(--fb-olive)",
+						}}
+					>
+						{badge.label} · {voucher.description}
+					</div>
+				</div>
+				<div
+					style={{
+						marginTop: 10,
+						fontSize: 14,
+						color: "var(--fb-ink)",
+						lineHeight: 1.5,
+					}}
+				>
+					Wystawiony {issued.toLowerCase()}
+					{feedback ? ` · ${feedback.rating}/5 gwiazdek` : ""}
+					{feedback?.commentSnippet ? ` · „${feedback.commentSnippet}”` : ""}
+				</div>
+				{expiry && (
+					<div
+						style={{
+							marginTop: 6,
+							fontSize: 12,
+							color: "rgba(31,26,21,0.55)",
+						}}
+					>
+						Ważny do {expiry}
+					</div>
+				)}
+				<div style={{ display: "flex", gap: 8, marginTop: 14 }}>
+					<button
+						ref={confirmRef}
+						type="button"
+						onClick={onConfirm}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								e.preventDefault();
+								onConfirm();
+							}
+						}}
+						disabled={redeeming}
+						style={{
+							padding: "9px 16px",
+							borderRadius: 10,
+							background: "var(--fb-ink)",
+							color: "var(--fb-cream)",
+							border: "none",
+							cursor: redeeming ? "wait" : "pointer",
+							opacity: redeeming ? 0.7 : 1,
+							fontSize: 13,
+							fontWeight: 500,
+						}}
+					>
+						{redeeming ? "Realizuję…" : "Oznacz jako zrealizowany"}
+					</button>
+					<button
+						type="button"
+						onClick={onReset}
+						style={{
+							padding: "9px 16px",
+							borderRadius: 10,
+							background: "transparent",
+							color: "var(--fb-ink)",
+							border: "0.5px solid rgba(31,26,21,0.2)",
+							cursor: "pointer",
+							fontSize: 13,
+						}}
+					>
+						Anuluj
+					</button>
+				</div>
+			</div>
+		);
+	}
+
+	if (voucher.status === "redeemed") {
+		return (
+			<ResultBox
+				color={badge.color}
+				title={badge.label}
+				body={`Ten kod został już zrealizowany${redeemedAt ? ` ${redeemedAt}` : ""}.`}
+			>
+				<ResetButton onReset={onReset} />
+			</ResultBox>
+		);
+	}
+
+	if (voucher.status === "expired") {
+		return (
+			<ResultBox
+				color={badge.color}
+				title={badge.label}
+				body={`Ten kod wygasł${expiry ? ` ${expiry}` : ""}.`}
+			>
+				<ResetButton onReset={onReset} />
+			</ResultBox>
+		);
+	}
+
+	// voided
+	const spamFlagged = feedback?.spamMarkedAt
+		? " Opinia gościa została oznaczona jako spam."
+		: "";
+	return (
+		<ResultBox
+			color={badge.color}
+			title={badge.label}
+			body={`Ten kod został unieważniony${voidedAt ? ` ${voidedAt}` : ""}.${spamFlagged}`}
+		>
+			<ResetButton onReset={onReset} />
+		</ResultBox>
+	);
+};
+
+const ResetButton = ({ onReset }: { onReset: () => void }) => {
+	const ref = useRef<HTMLButtonElement | null>(null);
+	useEffect(() => {
+		ref.current?.focus();
+	}, []);
+	return (
+		<button
+			ref={ref}
+			type="button"
+			onClick={onReset}
+			onKeyDown={(e) => {
+				if (e.key === "Enter") {
+					e.preventDefault();
+					onReset();
+				}
+			}}
+			style={{
+				marginTop: 12,
+				padding: "8px 14px",
+				borderRadius: 8,
+				background: "var(--fb-ink)",
+				color: "var(--fb-cream)",
+				border: "none",
+				cursor: "pointer",
+				fontSize: 12.5,
+			}}
+		>
+			Następny kod
+		</button>
+	);
+};
+
+const JustRedeemed = ({
+	data,
+	onReset,
+}: {
+	data: VoucherLookupResult;
+	onReset: () => void;
+}) => (
+	<ResultBox
+		color="var(--fb-olive)"
+		title="Zrealizowany"
+		body={`Rabat naliczony · ${data.voucher.description}.`}
+	>
+		<ResetButton onReset={onReset} />
+	</ResultBox>
+);

@@ -1,12 +1,31 @@
 import { Button } from "@mantine/core";
-import type { FeedbackItem } from "../feedback.page";
+import type { FeedbackDetail } from "#/lib/api/owner-feedback-api";
 import { StaticStar } from "#/pages/console/shared/static-star";
+import { formatExpiry, formatRelativeTime, voucherStatusLabel } from "../utils";
 
 interface FeedbackDetailProps {
-	item: FeedbackItem;
+	item: FeedbackDetail;
+	mutating: boolean;
+	onToggleArchive: () => void;
+	onMarkSpam: () => void;
 }
 
-export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
+export const FeedbackDetailView = ({
+	item,
+	mutating,
+	onToggleArchive,
+	onMarkSpam,
+}: FeedbackDetailProps) => {
+	const voucherPill = item.voucher
+		? voucherStatusLabel(item.voucher.status)
+		: null;
+	const expiryLabel = item.voucher
+		? formatExpiry(item.voucher.expiresAt)
+		: null;
+	const spam = item.spamMarkedAt !== null;
+	const archived = item.archivedAt !== null;
+	const voucherActive = item.voucher?.status === "active";
+
 	return (
 		<div
 			style={{
@@ -35,9 +54,27 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 						color: "rgba(31,26,21,0.5)",
 					}}
 				>
-					{item.when} · {item.table}
+					{formatRelativeTime(item.createdAt)}
+					{item.qrCodeLabel ? ` · ${item.qrCodeLabel}` : ""}
 				</div>
 			</div>
+
+			{spam && (
+				<div
+					style={{
+						marginTop: 18,
+						padding: "8px 12px",
+						borderRadius: 8,
+						background: "rgba(166,61,42,0.08)",
+						color: "#A63D2A",
+						fontSize: 12,
+						fontFamily: "var(--fb-mono)",
+						letterSpacing: "0.04em",
+					}}
+				>
+					Oznaczone jako spam · kod rabatowy unieważniony
+				</div>
+			)}
 
 			<div
 				style={{
@@ -50,37 +87,22 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 					color: "var(--fb-ink)",
 				}}
 			>
-				{item.text ? `"${item.text}"` : "Sama ocena — bez komentarza."}
+				{item.comment ? `„${item.comment}”` : "Sama ocena — bez komentarza."}
 			</div>
 
-			{item.tags.length > 0 && (
+			{item.customerEmail && (
 				<div
 					style={{
-						display: "flex",
-						gap: 6,
-						flexWrap: "wrap",
-						marginTop: 18,
+						marginTop: 14,
+						fontSize: 12.5,
+						color: "rgba(31,26,21,0.55)",
 					}}
 				>
-					{item.tags.map((t) => (
-						<div
-							key={t}
-							style={{
-								padding: "5px 11px",
-								borderRadius: 999,
-								background: "var(--fb-paper)",
-								border: "0.5px solid rgba(31,26,21,0.08)",
-								fontSize: 12,
-								color: "rgba(31,26,21,0.7)",
-							}}
-						>
-							{t}
-						</div>
-					))}
+					Gość zostawił email: {item.customerEmail}
 				</div>
 			)}
 
-			{/* Discount block */}
+			{/* Voucher block */}
 			<div
 				style={{
 					marginTop: 28,
@@ -101,49 +123,83 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 				>
 					Wydany kod rabatowy
 				</div>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						gap: 12,
-						marginTop: 8,
-					}}
-				>
+				{item.voucher ? (
+					<>
+						<div
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: 12,
+								marginTop: 8,
+							}}
+						>
+							<div
+								style={{
+									flex: 1,
+									fontFamily: "var(--fb-mono)",
+									fontSize: 20,
+									letterSpacing: "0.1em",
+									color: "var(--fb-ink)",
+								}}
+							>
+								{item.voucher.code}
+							</div>
+							<div
+								style={{
+									fontSize: 12,
+									color: "rgba(31,26,21,0.55)",
+								}}
+							>
+								{item.voucher.description}
+								{expiryLabel ? ` · ważny do ${expiryLabel}` : ""}
+							</div>
+						</div>
+						{voucherPill && (
+							<div
+								style={{
+									display: "flex",
+									alignItems: "center",
+									gap: 5,
+									marginTop: 10,
+									fontSize: 11,
+									color: voucherPill.color,
+									fontFamily: "var(--fb-mono)",
+									letterSpacing: "0.04em",
+								}}
+							>
+								<span
+									style={{
+										width: 5,
+										height: 5,
+										borderRadius: "50%",
+										background: voucherPill.color,
+									}}
+								/>
+								{voucherPill.label}
+							</div>
+						)}
+					</>
+				) : (
 					<div
 						style={{
-							flex: 1,
-							fontFamily: "var(--fb-mono)",
-							fontSize: 20,
-							letterSpacing: "0.1em",
-							color: "var(--fb-ink)",
+							marginTop: 8,
+							fontSize: 13,
+							color: "rgba(31,26,21,0.55)",
 						}}
 					>
-						{item.code}
+						Ten gość nie dostał kodu (oferta wstrzymana, limit dzienny lub
+						wykrycie nadużycia).
 					</div>
-					<div style={{ fontSize: 12, color: "rgba(31,26,21,0.55)" }}>
-						15% rabatu · ważny do 24 maja
-					</div>
-				</div>
+				)}
 			</div>
 
-			<div style={{ display: "flex", gap: 10, marginTop: 18 }}>
-				<Button
-					style={{
-						flex: 1,
-						height: 40,
-						borderRadius: 10,
-						background: "var(--fb-ink)",
-						color: "var(--fb-cream)",
-						border: "none",
-						fontSize: 13,
-						fontFamily: "var(--fb-sans)",
-						fontWeight: 500,
-					}}
-				>
-					Oznacz jako zrealizowany
-				</Button>
+			<div
+				style={{ display: "flex", gap: 10, marginTop: 18, flexWrap: "wrap" }}
+			>
 				<Button
 					variant="default"
+					disabled={mutating}
+					onClick={onToggleArchive}
 					style={{
 						height: 40,
 						borderRadius: 10,
@@ -154,7 +210,29 @@ export const FeedbackDetail = ({ item }: FeedbackDetailProps) => {
 						fontFamily: "var(--fb-sans)",
 					}}
 				>
-					Odpowiedz prywatnie
+					{archived ? "Przywróć z archiwum" : "Zarchiwizuj"}
+				</Button>
+				<Button
+					variant="default"
+					disabled={mutating || spam}
+					onClick={onMarkSpam}
+					style={{
+						height: 40,
+						borderRadius: 10,
+						background: "transparent",
+						color: spam ? "rgba(166,61,42,0.5)" : "#A63D2A",
+						border: spam
+							? "0.5px solid rgba(166,61,42,0.25)"
+							: "0.5px solid rgba(166,61,42,0.4)",
+						fontSize: 13,
+						fontFamily: "var(--fb-sans)",
+					}}
+				>
+					{spam
+						? "Już oznaczone jako spam"
+						: voucherActive
+							? "Oznacz spam · unieważnij kod"
+							: "Oznacz spam"}
 				</Button>
 			</div>
 		</div>

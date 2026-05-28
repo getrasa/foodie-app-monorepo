@@ -17,9 +17,20 @@ const navItems: {
 	to: string;
 	badge?: number;
 }[] = [
-	{ id: "feedback", label: "Opinie", icon: MessageSquare, to: "/console/feedback", badge: 12 },
-	{ id: "analytics", label: "Analityka", icon: BarChart3, to: "/console/analytics" },
-	{ id: "discount", label: "Rabaty", icon: Gift, to: "/console/discounts" },
+	{
+		id: "feedback",
+		label: "Opinie",
+		icon: MessageSquare,
+		to: "/console/feedback",
+		badge: 12,
+	},
+	{
+		id: "analytics",
+		label: "Analityka",
+		icon: BarChart3,
+		to: "/console/analytics",
+	},
+	{ id: "voucher", label: "Rabaty", icon: Gift, to: "/console/voucher" },
 	{ id: "qr", label: "Kod QR", icon: QrCode, to: "/console/qr-code" },
 	{ id: "redeem", label: "Zrealizuj kod", icon: Ticket, to: "/console/redeem" },
 ];
@@ -29,7 +40,10 @@ interface ConsoleNavbarProps {
 	onMobileClose: () => void;
 }
 
-export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) => {
+export const ConsoleNavbar = ({
+	session,
+	onMobileClose,
+}: ConsoleNavbarProps) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -51,7 +65,14 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 			}}
 		>
 			{/* Brand */}
-			<div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 8px 16px" }}>
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					gap: 10,
+					padding: "0 8px 16px",
+				}}
+			>
 				<div
 					style={{
 						width: 28,
@@ -80,7 +101,14 @@ export const ConsoleNavbar = ({ session, onMobileClose }: ConsoleNavbarProps) =>
 			</div>
 
 			{/* Nav items */}
-			<div style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 4 }}>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					gap: 2,
+					marginTop: 4,
+				}}
+			>
 				{navItems.map((item) => {
 					const active = location.pathname.startsWith(item.to);
 					const Icon = item.icon;

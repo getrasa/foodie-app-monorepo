@@ -1,111 +1,178 @@
-import { useState } from "react";
-import { FeedbackFilters } from "./components/feedback-filters";
+import { Alert, Center, Loader } from "@mantine/core";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+	type ArchivedFilterParam,
+	type FeedbackDetail,
+	type FeedbackListItem,
+	ownerFeedbackApi,
+	type RatingFilterParam,
+	type ReadFilterParam,
+} from "#/lib/api/owner-feedback-api";
+import { useMyBusiness } from "#/lib/api/use-my-business";
+import { ApiError } from "#/lib/api-client";
 import { FeedbackRow } from "./components/feedback-card";
-import { FeedbackDetail } from "./components/feedback-detail";
+import { FeedbackDetailView } from "./components/feedback-detail";
+import { FeedbackFilters } from "./components/feedback-filters";
 
-const MOCK_FEEDBACK = [
-	{
-		id: 1,
-		rating: 5,
-		when: "12 min temu",
-		code: "LUCIA-4KX9",
-		status: "open" as const,
-		text: "Tagliatelle al ragù było obłędne. Nasz kelner (Marco?) świetnie poradził sobie z naszym dzieckiem. Na pewno wrócimy w przyszłym miesiącu.",
-		tags: ["Makaron", "Obsługa"],
-		table: "T7",
+const feedbackListKey = (
+	venueId: string,
+	filters: {
+		rating: RatingFilterParam;
+		read: ReadFilterParam;
+		archived: ArchivedFilterParam;
 	},
-	{
-		id: 2,
-		rating: 5,
-		when: "47 min temu",
-		code: "LUCIA-8PQ2",
-		status: "redeemed" as const,
-		text: "Najlepsze tiramisù w okolicy, bez dwóch zdań.",
-		tags: ["Deser"],
-		table: "T3",
-	},
-	{
-		id: 3,
-		rating: 4,
-		when: "1 godz. temu",
-		code: "LUCIA-MN4V",
-		status: "open" as const,
-		text: "Świetna atmosfera, karta win mile zaskoczyła. Makaron przyszedł lekko wystygnięty.",
-		tags: ["Karta win", "Atmosfera"],
-		table: "T12",
-	},
-	{
-		id: 4,
-		rating: 5,
-		when: "2 godz. temu",
-		code: "LUCIA-ZX71",
-		status: "open" as const,
-		text: "",
-		tags: [],
-		table: "T5",
-	},
-	{
-		id: 5,
-		rating: 3,
-		when: "3 godz. temu",
-		code: "LUCIA-RR09",
-		status: "open" as const,
-		text: "Jedzenie było dobre, ale na primo czekaliśmy 40 minut. Lokal był jednak zapchany — rozumiem.",
-		tags: ["Obsługa"],
-		table: "T9",
-	},
-	{
-		id: 6,
-		rating: 5,
-		when: "Wczoraj",
-		code: "LUCIA-K2LM",
-		status: "redeemed" as const,
-		text: "Czułam się jak w Bolonii. Burrata z brzoskwiniami to objawienie.",
-		tags: ["Makaron", "Atmosfera"],
-		table: "T2",
-	},
-	{
-		id: 7,
-		rating: 4,
-		when: "Wczoraj",
-		code: "LUCIA-7YHT",
-		status: "expired" as const,
-		text: "Solidne miejsce na wieczór w tygodniu. Wpadnę tu z teściami.",
-		tags: ["Atmosfera"],
-		table: "T11",
-	},
-	{
-		id: 8,
-		rating: 5,
-		when: "2 dni temu",
-		code: "LUCIA-BB52",
-		status: "open" as const,
-		text: "Lucia podeszła osobiście do naszego stolika, żeby zapytać, jak się czujemy. Taka troska to rzadkość.",
-		tags: ["Obsługa"],
-		table: "T6",
-	},
-];
+) => ["feedback", "list", venueId, filters] as const;
 
-export type FeedbackItem = (typeof MOCK_FEEDBACK)[number];
+const feedbackDetailKey = (id: string) => ["feedback", "detail", id] as const;
 
 export const FeedbackPage = () => {
-	const [selected, setSelected] = useState(MOCK_FEEDBACK[0].id);
-	const [filter, setFilter] = useState("all");
+	const queryClient = useQueryClient();
+	const businessQuery = useMyBusiness();
+	const venue = businessQuery.data?.venues?.[0];
 
-	const list =
-		filter === "all"
-			? MOCK_FEEDBACK
-			: filter === "5"
-				? MOCK_FEEDBACK.filter((f) => f.rating === 5)
-				: filter === "low"
-					? MOCK_FEEDBACK.filter((f) => f.rating <= 3)
-					: MOCK_FEEDBACK;
+	const [rating, setRating] = useState<RatingFilterParam>("all");
+	const [read, setRead] = useState<ReadFilterParam>("all");
+	const [archived, setArchived] = useState<ArchivedFilterParam>("no");
+	const [selectedId, setSelectedId] = useState<string | null>(null);
 
-	const selectedItem = MOCK_FEEDBACK.find((f) => f.id === selected);
+	const venueId = venue?.id;
+	const listQuery = useQuery({
+		queryKey: venueId
+			? feedbackListKey(venueId, { rating, read, archived })
+			: ["feedback", "list", "none"],
+		queryFn: () =>
+			ownerFeedbackApi.list(venueId as string, { rating, read, archived }),
+		enabled: !!venueId,
+	});
+
+	const list = listQuery.data ?? [];
+
+	// Auto-select the first item when the list loads or selection no longer
+	// matches a row in the filtered set.
+	useEffect(() => {
+		if (list.length === 0) {
+			if (selectedId !== null) setSelectedId(null);
+			return;
+		}
+		if (!selectedId || !list.some((f) => f.id === selectedId)) {
+			setSelectedId(list[0].id);
+		}
+	}, [list, selectedId]);
+
+	const detailQuery = useQuery({
+		queryKey: selectedId
+			? feedbackDetailKey(selectedId)
+			: ["feedback", "detail", "none"],
+		queryFn: () => ownerFeedbackApi.get(selectedId as string),
+		enabled: !!selectedId,
+	});
+
+	const markReadMutation = useMutation({
+		mutationFn: (id: string) => ownerFeedbackApi.update(id, { read: true }),
+		onSuccess: (updated) => {
+			applyDetailUpdate(updated);
+		},
+	});
+
+	const archiveMutation = useMutation({
+		mutationFn: ({ id, archived }: { id: string; archived: boolean }) =>
+			ownerFeedbackApi.update(id, { archived }),
+		onSuccess: (updated) => {
+			applyDetailUpdate(updated);
+		},
+	});
+
+	const spamMutation = useMutation({
+		mutationFn: (id: string) => ownerFeedbackApi.markSpam(id),
+		onSuccess: (updated) => {
+			applyDetailUpdate(updated);
+		},
+	});
+
+	// Opening a Feedback marks it read. Fire once per selection identity —
+	// list refetches with the same selection shouldn't re-mark.
+	const markedRef = useRef<string | null>(null);
+	const markReadMutate = markReadMutation.mutate;
+	useEffect(() => {
+		if (!selectedId || markedRef.current === selectedId) return;
+		const row = list.find((f) => f.id === selectedId);
+		if (!row || row.readAt) return;
+		markedRef.current = selectedId;
+		markReadMutate(selectedId);
+	}, [selectedId, list, markReadMutate]);
+
+	const applyDetailUpdate = (updated: FeedbackDetail) => {
+		queryClient.setQueryData(feedbackDetailKey(updated.id), updated);
+		queryClient.setQueriesData<FeedbackListItem[] | undefined>(
+			{ queryKey: ["feedback", "list"] },
+			(prev) => {
+				if (!prev) return prev;
+				return prev.map((row) =>
+					row.id === updated.id ? mergeListRow(row, updated) : row,
+				);
+			},
+		);
+	};
+
+	const unreadCount = useMemo(
+		() =>
+			list.filter((f) => f.readAt === null && f.spamMarkedAt === null).length,
+		[list],
+	);
+
+	const detail = detailQuery.data;
+	const detailMutating =
+		archiveMutation.isPending ||
+		spamMutation.isPending ||
+		markReadMutation.isPending;
+
+	const handleMarkSpam = () => {
+		if (!detail) return;
+		const voucherWillBeVoided = detail.voucher?.status === "active";
+		const message = voucherWillBeVoided
+			? "Oznaczyć tę opinię jako spam? Powiązany kod rabatowy zostanie unieważniony."
+			: "Oznaczyć tę opinię jako spam?";
+		if (!window.confirm(message)) return;
+		spamMutation.mutate(detail.id);
+	};
+
+	if (businessQuery.isPending) {
+		return (
+			<Center h="50vh">
+				<Loader color="var(--fb-primary)" />
+			</Center>
+		);
+	}
+
+	if (businessQuery.isError && !(businessQuery.error instanceof ApiError)) {
+		return (
+			<div style={{ padding: "28px 32px" }}>
+				<Alert color="red" variant="light">
+					Nie udało się załadować danych firmy.
+				</Alert>
+			</div>
+		);
+	}
+
+	if (!venue) {
+		return (
+			<div style={{ padding: "28px 32px" }}>
+				<Alert color="yellow" variant="light">
+					Najpierw przejdź przez konfigurację swojej restauracji.
+				</Alert>
+			</div>
+		);
+	}
 
 	return (
-		<div style={{ display: "flex", height: "100%", minHeight: "calc(100vh - 50px)" }}>
-			{/* List panel */}
+		<div
+			style={{
+				display: "flex",
+				height: "100%",
+				minHeight: "calc(100vh - 50px)",
+			}}
+		>
 			<div
 				style={{
 					width: 340,
@@ -135,26 +202,95 @@ export const FeedbackPage = () => {
 							marginTop: 3,
 						}}
 					>
-						{MOCK_FEEDBACK.length} wpisów · 12 nieprzeczytanych
+						{list.length} wpisów · {unreadCount} nieprzeczytanych
 					</div>
-					<FeedbackFilters filter={filter} onFilterChange={setFilter} />
+					<FeedbackFilters
+						rating={rating}
+						read={read}
+						archived={archived}
+						onRatingChange={setRating}
+						onReadChange={setRead}
+						onArchivedChange={setArchived}
+					/>
 				</div>
 				<div style={{ flex: 1, overflowY: "auto" }}>
+					{listQuery.isPending && (
+						<Center py={40}>
+							<Loader color="var(--fb-primary)" />
+						</Center>
+					)}
+					{!listQuery.isPending && list.length === 0 && (
+						<div
+							style={{
+								padding: "32px 18px",
+								color: "rgba(31,26,21,0.5)",
+								fontSize: 13,
+								textAlign: "center",
+							}}
+						>
+							Brak opinii pasujących do filtrów.
+						</div>
+					)}
 					{list.map((item) => (
 						<FeedbackRow
 							key={item.id}
 							item={item}
-							selected={selected === item.id}
-							onClick={() => setSelected(item.id)}
+							selected={selectedId === item.id}
+							onClick={() => setSelectedId(item.id)}
 						/>
 					))}
 				</div>
 			</div>
 
-			{/* Detail panel */}
 			<div style={{ flex: 1, background: "#fff" }}>
-				{selectedItem && <FeedbackDetail item={selectedItem} />}
+				{detailQuery.isPending && selectedId && (
+					<Center h="100%">
+						<Loader color="var(--fb-primary)" />
+					</Center>
+				)}
+				{detail && (
+					<FeedbackDetailView
+						item={detail}
+						mutating={detailMutating}
+						onToggleArchive={() =>
+							archiveMutation.mutate({
+								id: detail.id,
+								archived: detail.archivedAt === null,
+							})
+						}
+						onMarkSpam={handleMarkSpam}
+					/>
+				)}
+				{!selectedId && (
+					<Center h="100%">
+						<div
+							style={{
+								fontSize: 13,
+								color: "rgba(31,26,21,0.5)",
+							}}
+						>
+							Wybierz opinię z listy.
+						</div>
+					</Center>
+				)}
 			</div>
 		</div>
 	);
 };
+
+const mergeListRow = (
+	row: FeedbackListItem,
+	updated: FeedbackDetail,
+): FeedbackListItem => ({
+	...row,
+	readAt: updated.readAt,
+	archivedAt: updated.archivedAt,
+	spamMarkedAt: updated.spamMarkedAt,
+	voucher: updated.voucher
+		? {
+				code: updated.voucher.code,
+				status: updated.voucher.status,
+				expiresAt: updated.voucher.expiresAt,
+			}
+		: row.voucher,
+});

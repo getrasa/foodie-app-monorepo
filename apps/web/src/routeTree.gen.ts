@@ -17,12 +17,12 @@ import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console/index'
 import { Route as QQrCodeIdRouteImport } from './routes/q/$qrCodeId'
+import { Route as ConsoleVoucherRouteImport } from './routes/console/voucher'
 import { Route as ConsoleSettingsRouteImport } from './routes/console/settings'
 import { Route as ConsoleRedeemRouteImport } from './routes/console/redeem'
 import { Route as ConsoleQrCodeRouteImport } from './routes/console/qr-code'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console/onboarding'
 import { Route as ConsoleFeedbackRouteImport } from './routes/console/feedback'
-import { Route as ConsoleDiscountsRouteImport } from './routes/console/discounts'
 import { Route as ConsoleDashboardRouteImport } from './routes/console/dashboard'
 import { Route as ConsoleAnalyticsRouteImport } from './routes/console/analytics'
 
@@ -66,6 +66,11 @@ const QQrCodeIdRoute = QQrCodeIdRouteImport.update({
   path: '/q/$qrCodeId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleVoucherRoute = ConsoleVoucherRouteImport.update({
+  id: '/voucher',
+  path: '/voucher',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleSettingsRoute = ConsoleSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -91,11 +96,6 @@ const ConsoleFeedbackRoute = ConsoleFeedbackRouteImport.update({
   path: '/feedback',
   getParentRoute: () => ConsoleRoute,
 } as any)
-const ConsoleDiscountsRoute = ConsoleDiscountsRouteImport.update({
-  id: '/discounts',
-  path: '/discounts',
-  getParentRoute: () => ConsoleRoute,
-} as any)
 const ConsoleDashboardRoute = ConsoleDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -116,12 +116,12 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/console/analytics': typeof ConsoleAnalyticsRoute
   '/console/dashboard': typeof ConsoleDashboardRoute
-  '/console/discounts': typeof ConsoleDiscountsRoute
   '/console/feedback': typeof ConsoleFeedbackRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/qr-code': typeof ConsoleQrCodeRoute
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
+  '/console/voucher': typeof ConsoleVoucherRoute
   '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console/': typeof ConsoleIndexRoute
 }
@@ -133,12 +133,12 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/console/analytics': typeof ConsoleAnalyticsRoute
   '/console/dashboard': typeof ConsoleDashboardRoute
-  '/console/discounts': typeof ConsoleDiscountsRoute
   '/console/feedback': typeof ConsoleFeedbackRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/qr-code': typeof ConsoleQrCodeRoute
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
+  '/console/voucher': typeof ConsoleVoucherRoute
   '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console': typeof ConsoleIndexRoute
 }
@@ -152,12 +152,12 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/console/analytics': typeof ConsoleAnalyticsRoute
   '/console/dashboard': typeof ConsoleDashboardRoute
-  '/console/discounts': typeof ConsoleDiscountsRoute
   '/console/feedback': typeof ConsoleFeedbackRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/qr-code': typeof ConsoleQrCodeRoute
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
+  '/console/voucher': typeof ConsoleVoucherRoute
   '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console/': typeof ConsoleIndexRoute
 }
@@ -172,12 +172,12 @@ export interface FileRouteTypes {
     | '/signup'
     | '/console/analytics'
     | '/console/dashboard'
-    | '/console/discounts'
     | '/console/feedback'
     | '/console/onboarding'
     | '/console/qr-code'
     | '/console/redeem'
     | '/console/settings'
+    | '/console/voucher'
     | '/q/$qrCodeId'
     | '/console/'
   fileRoutesByTo: FileRoutesByTo
@@ -189,12 +189,12 @@ export interface FileRouteTypes {
     | '/signup'
     | '/console/analytics'
     | '/console/dashboard'
-    | '/console/discounts'
     | '/console/feedback'
     | '/console/onboarding'
     | '/console/qr-code'
     | '/console/redeem'
     | '/console/settings'
+    | '/console/voucher'
     | '/q/$qrCodeId'
     | '/console'
   id:
@@ -207,12 +207,12 @@ export interface FileRouteTypes {
     | '/signup'
     | '/console/analytics'
     | '/console/dashboard'
-    | '/console/discounts'
     | '/console/feedback'
     | '/console/onboarding'
     | '/console/qr-code'
     | '/console/redeem'
     | '/console/settings'
+    | '/console/voucher'
     | '/q/$qrCodeId'
     | '/console/'
   fileRoutesById: FileRoutesById
@@ -285,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QQrCodeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/console/voucher': {
+      id: '/console/voucher'
+      path: '/voucher'
+      fullPath: '/console/voucher'
+      preLoaderRoute: typeof ConsoleVoucherRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/settings': {
       id: '/console/settings'
       path: '/settings'
@@ -320,13 +327,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleFeedbackRouteImport
       parentRoute: typeof ConsoleRoute
     }
-    '/console/discounts': {
-      id: '/console/discounts'
-      path: '/discounts'
-      fullPath: '/console/discounts'
-      preLoaderRoute: typeof ConsoleDiscountsRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
     '/console/dashboard': {
       id: '/console/dashboard'
       path: '/dashboard'
@@ -347,24 +347,24 @@ declare module '@tanstack/react-router' {
 interface ConsoleRouteChildren {
   ConsoleAnalyticsRoute: typeof ConsoleAnalyticsRoute
   ConsoleDashboardRoute: typeof ConsoleDashboardRoute
-  ConsoleDiscountsRoute: typeof ConsoleDiscountsRoute
   ConsoleFeedbackRoute: typeof ConsoleFeedbackRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleQrCodeRoute: typeof ConsoleQrCodeRoute
   ConsoleRedeemRoute: typeof ConsoleRedeemRoute
   ConsoleSettingsRoute: typeof ConsoleSettingsRoute
+  ConsoleVoucherRoute: typeof ConsoleVoucherRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleAnalyticsRoute: ConsoleAnalyticsRoute,
   ConsoleDashboardRoute: ConsoleDashboardRoute,
-  ConsoleDiscountsRoute: ConsoleDiscountsRoute,
   ConsoleFeedbackRoute: ConsoleFeedbackRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleQrCodeRoute: ConsoleQrCodeRoute,
   ConsoleRedeemRoute: ConsoleRedeemRoute,
   ConsoleSettingsRoute: ConsoleSettingsRoute,
+  ConsoleVoucherRoute: ConsoleVoucherRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
 }
 
