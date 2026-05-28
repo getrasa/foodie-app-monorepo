@@ -2,7 +2,7 @@ import { Alert } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { BrandLogo } from "#/components/brand-logo";
+import { BrandMark } from "#/components/brand-mark";
 import { authClient } from "#/lib/auth-client";
 
 export const LoginPage = () => {
@@ -41,7 +41,7 @@ export const LoginPage = () => {
 				{/* Top row */}
 				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
 					<a href="/" style={{ color: "inherit", textDecoration: "none" }}>
-						<BrandLogo size={32} wordmarkSize={20} />
+						<BrandMark />
 					</a>
 					<div style={{ fontSize: isMobile ? 12.5 : 13.5, color: "var(--fb-ink-soft)", textAlign: "right" }}>
 						{!isMobile && "Pierwszy raz tutaj?"}

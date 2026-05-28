@@ -7,7 +7,9 @@ interface VariantPageProps {
 	slug: string;
 }
 
-const SIZES = [0.8, 0.9, 1.0] as const;
+const SIZES = [0.9, 1.0, 1.1] as const;
+// Pulls the whole scale down 10% — label "1.0" renders at the old "0.9".
+const SIZE_MULTIPLIER = 0.9;
 
 interface BgChoice {
 	id: "cream" | "paper" | "ink";
@@ -93,7 +95,7 @@ export const VariantPage = ({ slug }: VariantPageProps) => {
 			style={{
 				...surfaceVars,
 				display: "inline-block",
-				transform: `scale(${size})`,
+				transform: `scale(${size * SIZE_MULTIPLIER})`,
 				transformOrigin: "left center",
 				transition: "transform 200ms ease",
 			}}

@@ -141,7 +141,7 @@ const Mark05 = () => (
 		/>
 	</svg>
 );
-const Logo05 = () => (
+export const Logo05 = () => (
 	<span style={lockup(9)}>
 		<Mark05 />
 		<span style={baseWordmark}>Jak Było?</span>

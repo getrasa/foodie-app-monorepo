@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { BrandLogo } from "#/components/brand-logo";
+import { BrandMark } from "#/components/brand-mark";
 import { StaticStar } from "#/pages/console/shared/static-star";
 import "./landing.css";
 
@@ -24,7 +24,7 @@ export const LandingPage = () => {
 		<div style={{ background: "var(--fb-cream)", color: "var(--fb-ink)", fontFamily: "var(--fb-sans)", lineHeight: 1.5 }}>
 			{/* ─── NAV ─── */}
 			<nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 32px", maxWidth: 1240, margin: "0 auto" }}>
-				<BrandLogo size={32} wordmarkSize={20} />
+				<BrandMark />
 				<div className="fb-nav-links" style={{ display: "flex", gap: 28, fontSize: 14, color: "var(--fb-ink-soft)" }}>
 					<a href="#how" style={{ color: "inherit", textDecoration: "none" }}>Jak to działa</a>
 					<a href="#why" style={{ color: "inherit", textDecoration: "none" }}>Dlaczego my</a>
@@ -420,7 +420,7 @@ export const LandingPage = () => {
 					<div className="fb-footer-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr", gap: 40, marginBottom: 48 }}>
 						<div>
 							<div style={{ marginBottom: 12 }}>
-								<BrandLogo size={32} wordmarkSize={22} />
+								<BrandMark />
 							</div>
 							<div style={{ fontSize: 13, color: "var(--fb-ink-soft)", maxWidth: 280, lineHeight: 1.55 }}>Szczere opinie i słodkie rabaciki — dla lokali, w których właściciel wciąż sam wita gości przy drzwiach.</div>
 						</div>

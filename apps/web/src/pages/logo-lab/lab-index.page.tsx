@@ -2,7 +2,8 @@ import { Link } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { VARIANTS } from "./variants";
 
-const TILE_BG = "#F1EADC";
+const TOP_BG = "#FBF7EF"; // matches variant page default bg (cream)
+const CAPTION_BG = "#F1EADC";
 
 export const LabIndexPage = () => {
 	return (
@@ -131,7 +132,7 @@ export const LabIndexPage = () => {
 					{VARIANTS.map((v) => {
 						const surfaceVars = {
 							color: "var(--fb-ink)",
-							"--lab-bg": TILE_BG,
+							"--lab-bg": TOP_BG,
 						} as CSSProperties;
 						return (
 							<Link
@@ -145,7 +146,7 @@ export const LabIndexPage = () => {
 									border: "0.5px solid var(--fb-line)",
 									borderRadius: 14,
 									overflow: "hidden",
-									background: TILE_BG,
+									background: CAPTION_BG,
 									transition: "transform 200ms ease, box-shadow 200ms ease",
 								}}
 								onMouseEnter={(e) => {
@@ -162,7 +163,7 @@ export const LabIndexPage = () => {
 								<div
 									style={{
 										...surfaceVars,
-										background: TILE_BG,
+										background: TOP_BG,
 										padding: "16px 18px",
 										display: "flex",
 										alignItems: "center",
@@ -200,7 +201,7 @@ export const LabIndexPage = () => {
 								</div>
 
 								{/* Caption */}
-								<div style={{ padding: "20px 22px 22px", background: TILE_BG }}>
+								<div style={{ padding: "20px 22px 22px", background: CAPTION_BG }}>
 									<div
 										style={{
 											display: "flex",
