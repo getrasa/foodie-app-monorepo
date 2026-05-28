@@ -15,8 +15,10 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LogoLabIndexRouteImport } from './routes/logo-lab/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console/index'
 import { Route as QQrCodeIdRouteImport } from './routes/q/$qrCodeId'
+import { Route as LogoLabVariantRouteImport } from './routes/logo-lab/$variant'
 import { Route as ConsoleVoucherRouteImport } from './routes/console/voucher'
 import { Route as ConsoleSettingsRouteImport } from './routes/console/settings'
 import { Route as ConsoleRedeemRouteImport } from './routes/console/redeem'
@@ -56,6 +58,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LogoLabIndexRoute = LogoLabIndexRouteImport.update({
+  id: '/logo-lab/',
+  path: '/logo-lab/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -64,6 +71,11 @@ const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
 const QQrCodeIdRoute = QQrCodeIdRouteImport.update({
   id: '/q/$qrCodeId',
   path: '/q/$qrCodeId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogoLabVariantRoute = LogoLabVariantRouteImport.update({
+  id: '/logo-lab/$variant',
+  path: '/logo-lab/$variant',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsoleVoucherRoute = ConsoleVoucherRouteImport.update({
@@ -122,8 +134,10 @@ export interface FileRoutesByFullPath {
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
   '/console/voucher': typeof ConsoleVoucherRoute
+  '/logo-lab/$variant': typeof LogoLabVariantRoute
   '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console/': typeof ConsoleIndexRoute
+  '/logo-lab/': typeof LogoLabIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -139,8 +153,10 @@ export interface FileRoutesByTo {
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
   '/console/voucher': typeof ConsoleVoucherRoute
+  '/logo-lab/$variant': typeof LogoLabVariantRoute
   '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console': typeof ConsoleIndexRoute
+  '/logo-lab': typeof LogoLabIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -158,8 +174,10 @@ export interface FileRoutesById {
   '/console/redeem': typeof ConsoleRedeemRoute
   '/console/settings': typeof ConsoleSettingsRoute
   '/console/voucher': typeof ConsoleVoucherRoute
+  '/logo-lab/$variant': typeof LogoLabVariantRoute
   '/q/$qrCodeId': typeof QQrCodeIdRoute
   '/console/': typeof ConsoleIndexRoute
+  '/logo-lab/': typeof LogoLabIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,8 +196,10 @@ export interface FileRouteTypes {
     | '/console/redeem'
     | '/console/settings'
     | '/console/voucher'
+    | '/logo-lab/$variant'
     | '/q/$qrCodeId'
     | '/console/'
+    | '/logo-lab/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,8 +215,10 @@ export interface FileRouteTypes {
     | '/console/redeem'
     | '/console/settings'
     | '/console/voucher'
+    | '/logo-lab/$variant'
     | '/q/$qrCodeId'
     | '/console'
+    | '/logo-lab'
   id:
     | '__root__'
     | '/'
@@ -213,8 +235,10 @@ export interface FileRouteTypes {
     | '/console/redeem'
     | '/console/settings'
     | '/console/voucher'
+    | '/logo-lab/$variant'
     | '/q/$qrCodeId'
     | '/console/'
+    | '/logo-lab/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -224,7 +248,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  LogoLabVariantRoute: typeof LogoLabVariantRoute
   QQrCodeIdRoute: typeof QQrCodeIdRoute
+  LogoLabIndexRoute: typeof LogoLabIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -271,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/logo-lab/': {
+      id: '/logo-lab/'
+      path: '/logo-lab'
+      fullPath: '/logo-lab/'
+      preLoaderRoute: typeof LogoLabIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/console/': {
       id: '/console/'
       path: '/'
@@ -283,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/q/$qrCodeId'
       fullPath: '/q/$qrCodeId'
       preLoaderRoute: typeof QQrCodeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logo-lab/$variant': {
+      id: '/logo-lab/$variant'
+      path: '/logo-lab/$variant'
+      fullPath: '/logo-lab/$variant'
+      preLoaderRoute: typeof LogoLabVariantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/console/voucher': {
@@ -378,7 +418,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  LogoLabVariantRoute: LogoLabVariantRoute,
   QQrCodeIdRoute: QQrCodeIdRoute,
+  LogoLabIndexRoute: LogoLabIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
