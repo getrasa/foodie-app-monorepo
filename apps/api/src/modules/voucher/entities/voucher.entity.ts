@@ -20,6 +20,19 @@ export enum VoucherStatus {
   VOIDED = 'voided',
 }
 
+// An ACTIVE voucher past its expiresAt is effectively EXPIRED — the nightly
+// sweep transitions the stored status, but callers should not depend on that
+// timing. Use this everywhere a voucher's status is read for a decision or a
+// response, so the redeem path and the lookup path agree.
+export const computeEffectiveVoucherStatus = (
+  status: VoucherStatus,
+  expiresAt: Date | null | undefined,
+  now: Date = new Date(),
+): VoucherStatus =>
+  status === VoucherStatus.ACTIVE && expiresAt && expiresAt <= now
+    ? VoucherStatus.EXPIRED
+    : status;
+
 @Entity({ tableName: 'voucher' })
 export class Voucher {
   @PrimaryKey({ type: 'uuid' })
