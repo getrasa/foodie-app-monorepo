@@ -18,6 +18,7 @@ import {
   type ArchivedFilter,
   type RatingFilter,
   type ReadFilter,
+  type SpamFilter,
 } from '../services/feedback-management.service';
 import {
   toFeedbackListItem,
@@ -59,6 +60,14 @@ const parseArchived = (raw: string | undefined): ArchivedFilter | undefined => {
   return raw;
 };
 
+const parseSpam = (raw: string | undefined): SpamFilter | undefined => {
+  if (raw == null || raw === '') return undefined;
+  if (raw !== 'yes' && raw !== 'no' && raw !== 'all') {
+    throw new BadRequestException('spam must be one of: yes, no, all');
+  }
+  return raw;
+};
+
 const parseDate = (
   raw: string | undefined,
   field: string,
@@ -83,6 +92,7 @@ export class FeedbackManagementController {
     @Query('rating') rating?: string,
     @Query('read') read?: string,
     @Query('archived') archived?: string,
+    @Query('spam') spam?: string,
     @Query('from') from?: string,
     @Query('to') to?: string,
     @Query('limit') limit?: string,
@@ -91,6 +101,7 @@ export class FeedbackManagementController {
       rating: parseRating(rating),
       read: parseRead(read),
       archived: parseArchived(archived),
+      spam: parseSpam(spam),
       from: parseDate(from, 'from'),
       to: parseDate(to, 'to'),
       limit: limit ? Number(limit) : undefined,

@@ -15,11 +15,13 @@ import { OwnershipService } from '../../venue/services/ownership.service';
 export type RatingFilter = number | 'low' | 'all';
 export type ReadFilter = 'unread' | 'read' | 'all';
 export type ArchivedFilter = 'yes' | 'no' | 'all';
+export type SpamFilter = 'yes' | 'no' | 'all';
 
 export interface FeedbackListFilters {
   rating?: RatingFilter;
   read?: ReadFilter;
   archived?: ArchivedFilter;
+  spam?: SpamFilter;
   from?: Date;
   to?: Date;
   limit?: number;
@@ -74,6 +76,15 @@ export class FeedbackManagementService {
       where.archivedAt = null;
     } else if (filters.archived === 'yes') {
       where.archivedAt = { $ne: null };
+    }
+
+    // Default is 'all' so existing callers (the feedback page) stay
+    // unchanged; the navbar's unread-count query explicitly passes 'no' so
+    // triaged spam stops counting toward the badge.
+    if (filters.spam === 'no') {
+      where.spamMarkedAt = null;
+    } else if (filters.spam === 'yes') {
+      where.spamMarkedAt = { $ne: null };
     }
 
     if (filters.from || filters.to) {

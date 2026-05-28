@@ -42,6 +42,7 @@ export const ConsoleNavbar = ({
 			ownerFeedbackApi.list(venueId!, {
 				read: "unread",
 				archived: "no",
+				spam: "no",
 				limit: 100,
 			}),
 		enabled: !!venueId,

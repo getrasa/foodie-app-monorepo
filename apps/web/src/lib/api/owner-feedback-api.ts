@@ -57,11 +57,13 @@ export interface FeedbackDetail {
 export type RatingFilterParam = "all" | "low" | 1 | 2 | 3 | 4 | 5;
 export type ReadFilterParam = "all" | "read" | "unread";
 export type ArchivedFilterParam = "all" | "yes" | "no";
+export type SpamFilterParam = "all" | "yes" | "no";
 
 export interface FeedbackListParams {
 	rating?: RatingFilterParam;
 	read?: ReadFilterParam;
 	archived?: ArchivedFilterParam;
+	spam?: SpamFilterParam;
 	from?: string;
 	to?: string;
 	limit?: number;
@@ -77,6 +79,9 @@ const buildQuery = (params: FeedbackListParams): string => {
 	}
 	if (params.archived !== undefined) {
 		search.set("archived", params.archived);
+	}
+	if (params.spam !== undefined) {
+		search.set("spam", params.spam);
 	}
 	if (params.from) search.set("from", params.from);
 	if (params.to) search.set("to", params.to);
