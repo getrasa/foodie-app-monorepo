@@ -1,3 +1,4 @@
+import type { ResolvedTag } from "#/lib/api/feedback-api";
 import { StaticStar } from "#/pages/console/shared/static-star";
 import { BackRow } from "./back-row";
 import { PrimaryButton } from "./primary-button";
@@ -18,6 +19,9 @@ interface ScreenCommentProps {
 	setComment: (c: string) => void;
 	email: string;
 	setEmail: (e: string) => void;
+	tags: ResolvedTag[];
+	selectedTagIds: string[];
+	toggleTag: (id: string) => void;
 	onSubmit: () => void;
 	onBack: () => void;
 	submitting: boolean;
@@ -30,6 +34,9 @@ export const ScreenComment = ({
 	setComment,
 	email,
 	setEmail,
+	tags,
+	selectedTagIds,
+	toggleTag,
 	onSubmit,
 	onBack,
 	submitting,
@@ -122,6 +129,51 @@ export const ScreenComment = ({
 						: "Opcjonalne — można pominąć i przejść dalej."}
 				</div>
 			</div>
+
+			{tags.length > 0 && (
+				<div style={{ marginTop: 18 }}>
+					<div
+						style={{
+							fontFamily: "var(--fb-mono)",
+							fontSize: 10,
+							letterSpacing: "0.06em",
+							textTransform: "uppercase",
+							color: "rgba(31,26,21,0.5)",
+							marginBottom: 8,
+						}}
+					>
+						Co najbardziej Ci utkwiło? (opcjonalne)
+					</div>
+					<div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+						{tags.map((tag) => {
+							const active = selectedTagIds.includes(tag.id);
+							return (
+								<button
+									key={tag.id}
+									type="button"
+									onClick={() => toggleTag(tag.id)}
+									style={{
+										padding: "7px 14px",
+										borderRadius: 999,
+										background: active ? "var(--fb-ink)" : "var(--fb-paper)",
+										color: active ? "var(--fb-cream)" : "var(--fb-ink)",
+										border: active
+											? "1px solid var(--fb-ink)"
+											: "0.5px solid rgba(31,26,21,0.12)",
+										fontFamily: "var(--fb-sans)",
+										fontSize: 13,
+										cursor: "pointer",
+										transition: "background 0.12s, color 0.12s",
+									}}
+									aria-pressed={active}
+								>
+									{tag.label}
+								</button>
+							);
+						})}
+					</div>
+				</div>
+			)}
 
 			<div
 				style={{

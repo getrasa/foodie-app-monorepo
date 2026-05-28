@@ -26,8 +26,8 @@ export class PublicFeedbackController {
 
   @Get(':qrCodeId/resolve')
   async resolve(@Param('qrCodeId') qrCodeId: string): Promise<ResolveQrResponse> {
-    const { qrCode, offer } = await this.submission.resolveQr(qrCodeId);
-    return toResolveQrResponse(qrCode, offer);
+    const { qrCode, offer, tags } = await this.submission.resolveQr(qrCodeId);
+    return toResolveQrResponse(qrCode, offer, tags);
   }
 
   @Post(':qrCodeId/feedback')

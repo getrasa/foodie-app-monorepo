@@ -78,6 +78,10 @@ export const FeedbackPage = () => {
 			// the optimistic merge keeps the just-opened row visible without
 			// its unread badge until the user changes filter or reloads.
 			applyDetailUpdate(updated);
+			// The navbar's unread badge is a separate query, not driven by the
+			// list — safe to refetch on every mark-read without triggering the
+			// auto-selection cascade above.
+			queryClient.invalidateQueries({ queryKey: ["feedback-unread-count"] });
 		},
 	});
 
@@ -90,6 +94,7 @@ export const FeedbackPage = () => {
 			// (archived=no) and the archive list (archived=yes), so refetch any
 			// cached lists rather than leave a stale optimistic merge behind.
 			queryClient.invalidateQueries({ queryKey: ["feedback", "list"] });
+			queryClient.invalidateQueries({ queryKey: ["feedback-unread-count"] });
 		},
 	});
 
@@ -97,6 +102,7 @@ export const FeedbackPage = () => {
 		mutationFn: (id: string) => ownerFeedbackApi.markSpam(id),
 		onSuccess: (updated) => {
 			applyDetailUpdate(updated);
+			queryClient.invalidateQueries({ queryKey: ["feedback-unread-count"] });
 		},
 	});
 

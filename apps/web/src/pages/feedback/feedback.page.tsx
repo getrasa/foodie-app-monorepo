@@ -43,6 +43,7 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 	const [rating, setRating] = useState(0);
 	const [comment, setComment] = useState("");
 	const [email, setEmail] = useState("");
+	const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 	const [submitting, setSubmitting] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
 	const [result, setResult] = useState<FeedbackSubmissionResult | null>(null);
@@ -80,6 +81,7 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 				rating,
 				comment: comment.trim() || null,
 				customerEmail: email.trim() || null,
+				tagIds: selectedTagIds.length > 0 ? selectedTagIds : undefined,
 				deviceFingerprint: identity.deviceFingerprint,
 				localStorageToken: identity.localStorageToken,
 			});
@@ -166,6 +168,13 @@ export const FeedbackPage = ({ qrCodeId }: FeedbackPageProps) => {
 						setComment={setComment}
 						email={email}
 						setEmail={setEmail}
+						tags={data.tags}
+						selectedTagIds={selectedTagIds}
+						toggleTag={(id) =>
+							setSelectedTagIds((prev) =>
+								prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+							)
+						}
 						onSubmit={handleSubmit}
 						onBack={() => setPhase("rating")}
 						submitting={submitting}

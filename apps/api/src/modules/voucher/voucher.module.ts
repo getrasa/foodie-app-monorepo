@@ -4,11 +4,13 @@ import { Voucher } from './entities/voucher.entity';
 import { VoucherController } from './controllers/voucher.controller';
 import { VoucherService } from './services/voucher.service';
 import { VoucherExpirySweepService } from './services/voucher-expiry-sweep.service';
+import { VoucherEmailService } from './services/voucher-email.service';
 import { VenueModule } from '../venue/venue.module';
 
 @Module({
   imports: [MikroOrmModule.forFeature([Voucher]), VenueModule],
   controllers: [VoucherController],
-  providers: [VoucherService, VoucherExpirySweepService],
+  providers: [VoucherService, VoucherExpirySweepService, VoucherEmailService],
+  exports: [VoucherEmailService],
 })
 export class VoucherModule {}
