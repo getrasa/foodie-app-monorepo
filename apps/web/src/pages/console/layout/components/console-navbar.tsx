@@ -1,4 +1,5 @@
 import { Box, Menu, Text, UnstyledButton } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import {
 	BarChart3,
@@ -9,31 +10,18 @@ import {
 	Ticket,
 } from "lucide-react";
 import { authClient } from "#/lib/auth-client";
+import { ownerFeedbackApi } from "#/lib/api/owner-feedback-api";
+import { useMyBusiness } from "#/lib/api/use-my-business";
 
-const navItems: {
+interface NavItem {
 	id: string;
 	label: string;
 	icon: typeof MessageSquare;
 	to: string;
 	badge?: number;
-}[] = [
-	{
-		id: "feedback",
-		label: "Opinie",
-		icon: MessageSquare,
-		to: "/console/feedback",
-		badge: 12,
-	},
-	{
-		id: "analytics",
-		label: "Analityka",
-		icon: BarChart3,
-		to: "/console/analytics",
-	},
-	{ id: "voucher", label: "Rabaty", icon: Gift, to: "/console/voucher" },
-	{ id: "qr", label: "Kod QR", icon: QrCode, to: "/console/qr-code" },
-	{ id: "redeem", label: "Zrealizuj kod", icon: Ticket, to: "/console/redeem" },
-];
+}
+
+const formatBadge = (count: number): string => (count > 99 ? "99+" : String(count));
 
 interface ConsoleNavbarProps {
 	session: { user: { name?: string | null } };
@@ -46,6 +34,45 @@ export const ConsoleNavbar = ({
 }: ConsoleNavbarProps) => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const businessQuery = useMyBusiness();
+	const venueId = businessQuery.data?.venues?.[0]?.id;
+	const unreadQuery = useQuery({
+		queryKey: ["feedback-unread-count", venueId],
+		queryFn: () =>
+			ownerFeedbackApi.list(venueId!, {
+				read: "unread",
+				archived: "no",
+				limit: 100,
+			}),
+		enabled: !!venueId,
+		refetchInterval: 60_000,
+		staleTime: 30_000,
+	});
+
+	const unreadCount = unreadQuery.data?.length ?? 0;
+	const navItems: NavItem[] = [
+		{
+			id: "feedback",
+			label: "Opinie",
+			icon: MessageSquare,
+			to: "/console/feedback",
+			badge: unreadCount > 0 ? unreadCount : undefined,
+		},
+		{
+			id: "analytics",
+			label: "Analityka",
+			icon: BarChart3,
+			to: "/console/analytics",
+		},
+		{ id: "voucher", label: "Rabaty", icon: Gift, to: "/console/voucher" },
+		{ id: "qr", label: "Kod QR", icon: QrCode, to: "/console/qr-code" },
+		{
+			id: "redeem",
+			label: "Zrealizuj kod",
+			icon: Ticket,
+			to: "/console/redeem",
+		},
+	];
 
 	const handleSignOut = async () => {
 		await authClient.signOut();
@@ -139,7 +166,7 @@ export const ConsoleNavbar = ({
 								<Icon size={16} />
 							</span>
 							<span style={{ flex: 1 }}>{item.label}</span>
-							{item.badge && (
+							{item.badge !== undefined && (
 								<span
 									style={{
 										background: "var(--fb-primary)",
@@ -151,7 +178,7 @@ export const ConsoleNavbar = ({
 										fontFamily: "var(--fb-mono)",
 									}}
 								>
-									{item.badge}
+									{formatBadge(item.badge)}
 								</span>
 							)}
 						</UnstyledButton>

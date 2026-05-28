@@ -1,15 +1,27 @@
+interface TrendBucket {
+	date: string;
+	avgRating: number;
+	count: number;
+}
+
 interface RatingTrendChartProps {
-	data: number[];
+	data: TrendBucket[];
+	rangeLabel: string;
 }
 
 const Sparkline = ({ data }: { data: number[] }) => {
 	const w = 420;
 	const h = 120;
 	const max = 5;
-	const min = 3.8;
+	const min = 1;
 
+	if (data.length === 0) {
+		return null;
+	}
+
+	const denom = data.length === 1 ? 1 : data.length - 1;
 	const pts = data.map((v, i) => {
-		const x = (i / (data.length - 1)) * w;
+		const x = (i / denom) * w;
 		const y = h - ((v - min) / (max - min)) * h;
 		return [x, y] as const;
 	});
@@ -55,7 +67,44 @@ const Sparkline = ({ data }: { data: number[] }) => {
 	);
 };
 
-export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
+const formatBucketLabel = (iso: string): string => {
+	const d = new Date(`${iso}T00:00:00Z`);
+	if (Number.isNaN(d.getTime())) return iso;
+	const day = String(d.getUTCDate()).padStart(2, "0");
+	const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+	return `${day}.${month}`;
+};
+
+const ratingBuckets = (buckets: TrendBucket[]): number[] =>
+	buckets.filter((b) => b.count > 0).map((b) => b.avgRating);
+
+const overallAverage = (buckets: TrendBucket[]): number | null => {
+	let sum = 0;
+	let count = 0;
+	for (const b of buckets) {
+		if (b.count > 0) {
+			sum += b.avgRating * b.count;
+			count += b.count;
+		}
+	}
+	return count === 0 ? null : sum / count;
+};
+
+const headline = (avg: number | null): string => {
+	if (avg == null) return "Brak ocen w tym okresie";
+	if (avg >= 4.5) return "Świetna seria";
+	if (avg >= 4.0) return "Stabilnie wysoko";
+	if (avg >= 3.0) return "Jest co poprawiać";
+	return "Trzeba zareagować";
+};
+
+export const RatingTrendChart = ({ data, rangeLabel }: RatingTrendChartProps) => {
+	const sparkPoints = ratingBuckets(data);
+	const avg = overallAverage(data);
+	const first = data[0];
+	const middle = data[Math.floor(data.length / 2)];
+	const last = data[data.length - 1];
+
 	return (
 		<div
 			style={{
@@ -93,7 +142,7 @@ export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
 							letterSpacing: "-0.01em",
 						}}
 					>
-						Stabilnie, z lekką górką
+						{headline(avg)}
 					</div>
 				</div>
 				<div
@@ -103,11 +152,26 @@ export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
 						color: "rgba(31,26,21,0.5)",
 					}}
 				>
-					14D
+					{rangeLabel}
 				</div>
 			</div>
-			<div style={{ marginTop: 16 }}>
-				<Sparkline data={data} />
+			<div style={{ marginTop: 16, minHeight: 120 }}>
+				{sparkPoints.length === 0 ? (
+					<div
+						style={{
+							height: 120,
+							display: "grid",
+							placeItems: "center",
+							fontFamily: "var(--fb-sans)",
+							fontSize: 13,
+							color: "rgba(31,26,21,0.45)",
+						}}
+					>
+						Brak ocen w tym okresie
+					</div>
+				) : (
+					<Sparkline data={sparkPoints} />
+				)}
 			</div>
 			<div
 				style={{
@@ -119,9 +183,9 @@ export const RatingTrendChart = ({ data }: RatingTrendChartProps) => {
 					color: "rgba(31,26,21,0.45)",
 				}}
 			>
-				<span>10 kwi</span>
-				<span>17 kwi</span>
-				<span>24 kwi</span>
+				<span>{first ? formatBucketLabel(first.date) : ""}</span>
+				<span>{middle ? formatBucketLabel(middle.date) : ""}</span>
+				<span>{last ? formatBucketLabel(last.date) : ""}</span>
 			</div>
 		</div>
 	);

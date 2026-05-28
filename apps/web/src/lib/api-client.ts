@@ -17,6 +17,8 @@ interface RequestOptions {
 	signal?: AbortSignal;
 }
 
+
+
 const request = async <T>(path: string, options: RequestOptions = {}): Promise<T> => {
 	const url = `${API_BASE_URL}${path}`;
 	const response = await fetch(url, {
@@ -61,6 +63,7 @@ export const apiClient = {
 		request<T>(path, { method: "PATCH", body }),
 	put: <T>(path: string, body?: unknown) =>
 		request<T>(path, { method: "PUT", body }),
+	delete: <T>(path: string) => request<T>(path, { method: "DELETE" }),
 };
 
 export const PUBLIC_BASE_URL =

@@ -18,12 +18,18 @@ export interface ResolvedRewardOffer {
 	active: boolean;
 }
 
+export interface ResolvedTag {
+	id: string;
+	label: string;
+}
+
 export interface ResolvedQrCode {
 	qrCodeId: string;
 	experience: "feedback";
 	venueId: string;
 	venue: ResolvedVenue;
 	rewardOffer: ResolvedRewardOffer | null;
+	tags: ResolvedTag[];
 }
 
 export type VoucherUnavailableReason =

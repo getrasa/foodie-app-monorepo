@@ -10,11 +10,14 @@ import {
 import { EntityManager, IsolationLevel } from '@mikro-orm/core';
 import { QrCode } from '../../venue/entities/qr-code.entity';
 import { RewardOffer } from '../../venue/entities/reward-offer.entity';
+import { Tag } from '../../venue/entities/tag.entity';
 import { Voucher } from '../../voucher/entities/voucher.entity';
 import { Feedback } from '../entities/feedback.entity';
+import { FeedbackTag } from '../entities/feedback-tag.entity';
 import { AbuseStackService } from './abuse-stack.service';
 import { generateVoucherCode } from '../../voucher/services/voucher-code';
 import { describeRewardOffer } from '../../voucher/services/reward-description';
+import { VoucherEmailService } from '../../voucher/services/voucher-email.service';
 import type {
   SubmitFeedbackBody,
   VoucherUnavailableReason,
@@ -50,9 +53,12 @@ export class FeedbackSubmissionService {
   constructor(
     private readonly em: EntityManager,
     private readonly abuseStack: AbuseStackService,
+    private readonly voucherEmail: VoucherEmailService,
   ) {}
 
-  async resolveQr(qrCodeId: string): Promise<{ qrCode: QrCode; offer: RewardOffer | null }> {
+  async resolveQr(
+    qrCodeId: string,
+  ): Promise<{ qrCode: QrCode; offer: RewardOffer | null; tags: Tag[] }> {
     const qrCode = await this.em.findOne(
       QrCode,
       { id: qrCodeId },
@@ -68,7 +74,12 @@ export class FeedbackSubmissionService {
       throw new GoneException('Venue is no longer active');
     }
     const offer = await this.em.findOne(RewardOffer, { venue: qrCode.venue });
-    return { qrCode, offer };
+    const tags = await this.em.find(
+      Tag,
+      { venue: qrCode.venue, archivedAt: null },
+      { orderBy: { sortOrder: 'ASC', createdAt: 'ASC' } },
+    );
+    return { qrCode, offer, tags };
   }
 
   async submit(ctx: SubmitContext): Promise<SubmitOutcome> {
@@ -78,6 +89,7 @@ export class FeedbackSubmissionService {
     }
     const comment = normalizeComment(ctx.body.comment);
     const customerEmail = normalizeEmail(ctx.body.customerEmail);
+    const tagIds = normalizeTagIds(ctx.body.tagIds);
     // A 1-4 star rating must come with an explanation — that's where the
     // actionable signal lives for the owner. Only a perfect 5 may be silent.
     if (rating < 5 && !comment) {
@@ -107,7 +119,7 @@ export class FeedbackSubmissionService {
     let lastError: unknown;
     for (let attempt = 0; attempt < SUBMIT_TRANSACTION_RETRY_LIMIT; attempt += 1) {
       try {
-        return await this.em.transactional(
+        const outcome = await this.em.transactional(
           async (em) => {
             let voucherUnavailableReason: VoucherUnavailableReason | null = null;
             if (!offer) {
@@ -126,6 +138,8 @@ export class FeedbackSubmissionService {
               voucherUnavailableReason = 'daily_cap_reached';
             }
 
+            const tags = await loadTagsForVenue(em, venue.id, tagIds);
+
             const feedback = em.create(
               Feedback,
               {
@@ -142,17 +156,34 @@ export class FeedbackSubmissionService {
               { partial: true },
             );
 
+            const feedbackTags = tags.map((tag) =>
+              em.create(FeedbackTag, { feedback, tag }, { partial: true }),
+            );
+
             let voucher: Voucher | null = null;
             if (!voucherUnavailableReason && offer) {
               voucher = await this.createVoucher(em, venue.name, qrCode, feedback, offer);
             }
 
-            await em.persistAndFlush(voucher ? [feedback, voucher] : [feedback]);
-            // TODO(PR-5): send the voucher code to `customerEmail` via Resend.
+            const toPersist: Array<Feedback | Voucher | FeedbackTag> = [feedback];
+            if (voucher) toPersist.push(voucher);
+            toPersist.push(...feedbackTags);
+            await em.persistAndFlush(toPersist);
             return { feedback, voucher, voucherUnavailableReason };
           },
           { isolationLevel: IsolationLevel.SERIALIZABLE },
         );
+        // After commit, fire-and-forget the voucher email. Errors are swallowed
+        // inside dispatch() so a Resend outage cannot fail an already-recorded
+        // feedback submission.
+        if (outcome.voucher && customerEmail) {
+          void this.voucherEmail.dispatch({
+            toEmail: customerEmail,
+            voucher: outcome.voucher,
+            venueName: venue.name,
+          });
+        }
+        return outcome;
       } catch (err) {
         lastError = err;
         if (!isSerializationFailure(err)) throw err;
@@ -231,6 +262,50 @@ const normalizeEmail = (raw: string | null | undefined): string | undefined => {
     throw new BadRequestException('Invalid email format');
   }
   return trimmed;
+};
+
+const MAX_TAGS_PER_FEEDBACK = 20;
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const normalizeTagIds = (raw: unknown): string[] => {
+  if (raw == null) return [];
+  if (!Array.isArray(raw)) {
+    throw new BadRequestException('tagIds must be an array');
+  }
+  const seen = new Set<string>();
+  for (const value of raw) {
+    if (typeof value !== 'string' || !UUID_RE.test(value)) {
+      throw new BadRequestException('Each tagId must be a UUID');
+    }
+    seen.add(value);
+  }
+  if (seen.size > MAX_TAGS_PER_FEEDBACK) {
+    throw new BadRequestException(
+      `At most ${MAX_TAGS_PER_FEEDBACK} tags can be attached to a feedback`,
+    );
+  }
+  return [...seen];
+};
+
+const loadTagsForVenue = async (
+  em: EntityManager,
+  venueId: string,
+  tagIds: string[],
+): Promise<Tag[]> => {
+  if (tagIds.length === 0) return [];
+  // Tags must belong to the same Venue and be non-archived. A mismatch is a
+  // 400 because the diner's client should only ever see the Venue's own
+  // non-archived tags.
+  const tags = await em.find(Tag, {
+    id: { $in: tagIds },
+    venue: { id: venueId },
+    archivedAt: null,
+  });
+  if (tags.length !== tagIds.length) {
+    throw new BadRequestException('One or more tagIds are invalid for this venue');
+  }
+  return tags;
 };
 
 // Postgres 40001; MikroORM may surface the code on the wrapper or only on driverError.
