@@ -1,6 +1,10 @@
 import { Feedback } from '../../feedback/entities/feedback.entity';
 import { RewardType } from '../../venue/entities/reward-offer.entity';
-import { Voucher, VoucherStatus } from '../entities/voucher.entity';
+import {
+  computeEffectiveVoucherStatus,
+  Voucher,
+  VoucherStatus,
+} from '../entities/voucher.entity';
 
 export interface VoucherFeedbackSummary {
   id: string;
@@ -48,7 +52,10 @@ export const toVoucherResponse = (v: Voucher): VoucherResponse => ({
   type: v.type,
   value: v.value,
   description: v.description,
-  status: v.status,
+  // Apply the effective-status check so a stored ACTIVE that's past its
+  // expiresAt is reported as EXPIRED — keeps lookup and redeem responses
+  // consistent regardless of when the nightly sweep last ran.
+  status: computeEffectiveVoucherStatus(v.status, v.expiresAt),
   expiresAt: v.expiresAt?.toISOString() ?? null,
   redeemedAt: v.redeemedAt?.toISOString() ?? null,
   voidedAt: v.voidedAt?.toISOString() ?? null,

@@ -4,7 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { EntityManager, LockMode } from '@mikro-orm/core';
-import { Voucher, VoucherStatus } from '../entities/voucher.entity';
+import {
+  computeEffectiveVoucherStatus,
+  Voucher,
+  VoucherStatus,
+} from '../entities/voucher.entity';
 import { OwnershipService } from '../../venue/services/ownership.service';
 
 @Injectable()
@@ -59,14 +63,11 @@ export class VoucherService {
       this.ownership.assertOwnsVenue(voucher.venue, userId);
 
       const now = new Date();
-      // Treat past-expiry actives as expired even if the nightly sweep hasn't
-      // run yet — the sweep is a backstop, not the source of truth.
-      const effectiveStatus =
-        voucher.status === VoucherStatus.ACTIVE &&
-        voucher.expiresAt &&
-        voucher.expiresAt <= now
-          ? VoucherStatus.EXPIRED
-          : voucher.status;
+      const effectiveStatus = computeEffectiveVoucherStatus(
+        voucher.status,
+        voucher.expiresAt,
+        now,
+      );
 
       if (effectiveStatus !== VoucherStatus.ACTIVE) {
         // 409 Conflict carries the current state so the UI can render the right
