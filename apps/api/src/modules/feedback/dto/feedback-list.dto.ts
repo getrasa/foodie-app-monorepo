@@ -1,5 +1,8 @@
 import { Feedback } from '../entities/feedback.entity';
-import { VoucherStatus } from '../../voucher/entities/voucher.entity';
+import {
+  computeEffectiveVoucherStatus,
+  VoucherStatus,
+} from '../../voucher/entities/voucher.entity';
 
 export interface FeedbackListVoucher {
   code: string;
@@ -31,7 +34,10 @@ export const toFeedbackListItem = (f: Feedback): FeedbackListItem => ({
   voucher: f.voucher
     ? {
         code: f.voucher.code,
-        status: f.voucher.status,
+        status: computeEffectiveVoucherStatus(
+          f.voucher.status,
+          f.voucher.expiresAt,
+        ),
         expiresAt: f.voucher.expiresAt?.toISOString() ?? null,
       }
     : null,

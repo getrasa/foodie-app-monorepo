@@ -5,7 +5,11 @@ import {
 } from '@nestjs/common';
 import { EntityManager, FilterQuery, LockMode } from '@mikro-orm/core';
 import { Feedback } from '../entities/feedback.entity';
-import { Voucher, VoucherStatus } from '../../voucher/entities/voucher.entity';
+import {
+  computeEffectiveVoucherStatus,
+  Voucher,
+  VoucherStatus,
+} from '../../voucher/entities/voucher.entity';
 import { OwnershipService } from '../../venue/services/ownership.service';
 
 export type RatingFilter = number | 'low' | 'all';
@@ -151,9 +155,17 @@ export class FeedbackManagementService {
         { feedback: feedback.id },
         { lockMode: LockMode.PESSIMISTIC_WRITE },
       );
-      if (voucher && voucher.status === VoucherStatus.ACTIVE) {
-        voucher.status = VoucherStatus.VOIDED;
-        voucher.voidedAt = new Date();
+      if (voucher) {
+        // Use the effective status so an active-but-past-expiresAt voucher
+        // keeps its expired terminal state instead of being flipped to voided.
+        const effective = computeEffectiveVoucherStatus(
+          voucher.status,
+          voucher.expiresAt,
+        );
+        if (effective === VoucherStatus.ACTIVE) {
+          voucher.status = VoucherStatus.VOIDED;
+          voucher.voidedAt = new Date();
+        }
       }
 
       await em.populate(feedback, ['voucher', 'feedbackTags.tag']);

@@ -1,6 +1,9 @@
 import { Feedback } from '../entities/feedback.entity';
 import { RewardType } from '../../venue/entities/reward-offer.entity';
-import { VoucherStatus } from '../../voucher/entities/voucher.entity';
+import {
+  computeEffectiveVoucherStatus,
+  VoucherStatus,
+} from '../../voucher/entities/voucher.entity';
 
 export interface FeedbackDetailVoucher {
   id: string;
@@ -62,7 +65,10 @@ export const toFeedbackDetailResponse = (
           type: f.voucher.type,
           value: f.voucher.value,
           description: f.voucher.description,
-          status: f.voucher.status,
+          status: computeEffectiveVoucherStatus(
+            f.voucher.status,
+            f.voucher.expiresAt,
+          ),
           expiresAt: f.voucher.expiresAt?.toISOString() ?? null,
           redeemedAt: f.voucher.redeemedAt?.toISOString() ?? null,
           voidedAt: f.voucher.voidedAt?.toISOString() ?? null,
