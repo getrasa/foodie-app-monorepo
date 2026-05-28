@@ -1,14 +1,19 @@
 import { AppShell, Burger, Center, Group, Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Outlet, useNavigate } from "@tanstack/react-router";
+import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { BrandLogo } from "#/components/brand-logo";
+import { useMyBusiness } from "#/lib/api/use-my-business";
 import { authClient } from "#/lib/auth-client";
 import { ConsoleNavbar } from "./components/console-navbar";
+
+const ONBOARDING_PATH = "/console/onboarding";
 
 export const ConsoleLayout = () => {
 	const { data: session, isPending } = authClient.useSession();
 	const navigate = useNavigate();
+	const location = useLocation();
+	const businessQuery = useMyBusiness();
 	const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
 
 	useEffect(() => {
@@ -16,6 +21,20 @@ export const ConsoleLayout = () => {
 			void navigate({ to: "/login" });
 		}
 	}, [isPending, session, navigate]);
+
+	const onOnboarding = location.pathname.startsWith(ONBOARDING_PATH);
+	const businessSettled =
+		!!session && !businessQuery.isPending && !businessQuery.isError;
+	const venue = businessQuery.data?.venues?.[0];
+	const needsOnboarding =
+		businessSettled &&
+		(!venue || !businessQuery.data?.onboardingCompletedAt);
+
+	useEffect(() => {
+		if (needsOnboarding && !onOnboarding) {
+			void navigate({ to: ONBOARDING_PATH });
+		}
+	}, [needsOnboarding, onOnboarding, navigate]);
 
 	if (isPending) {
 		return (
@@ -26,6 +45,21 @@ export const ConsoleLayout = () => {
 	}
 
 	if (!session) {
+		return null;
+	}
+
+	// While we don't yet know whether the user finished onboarding, hold the
+	// layout so we don't briefly render a console page that would immediately
+	// redirect to /console/onboarding.
+	if (!onOnboarding && businessQuery.isPending) {
+		return (
+			<Center h="100vh" bg="var(--fb-cream)">
+				<Loader color="var(--fb-primary)" />
+			</Center>
+		);
+	}
+
+	if (needsOnboarding && !onOnboarding) {
 		return null;
 	}
 
