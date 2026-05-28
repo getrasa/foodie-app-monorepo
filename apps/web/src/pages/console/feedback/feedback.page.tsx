@@ -71,6 +71,12 @@ export const FeedbackPage = () => {
 	const markReadMutation = useMutation({
 		mutationFn: (id: string) => ownerFeedbackApi.update(id, { read: true }),
 		onSuccess: (updated) => {
+			// Deliberately no list invalidation here. Mark-read fires implicitly
+			// on selection; invalidating would refetch a list without this row
+			// (when read=unread), auto-select would jump to the next unread
+			// row, mark it read, and cascade through the entire list. Leaving
+			// the optimistic merge keeps the just-opened row visible without
+			// its unread badge until the user changes filter or reloads.
 			applyDetailUpdate(updated);
 		},
 	});
@@ -80,6 +86,10 @@ export const FeedbackPage = () => {
 			ownerFeedbackApi.update(id, { archived }),
 		onSuccess: (updated) => {
 			applyDetailUpdate(updated);
+			// Archive toggles change the row's membership in the active list
+			// (archived=no) and the archive list (archived=yes), so refetch any
+			// cached lists rather than leave a stale optimistic merge behind.
+			queryClient.invalidateQueries({ queryKey: ["feedback", "list"] });
 		},
 	});
 

@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { EntityManager, FilterQuery } from '@mikro-orm/core';
+import { EntityManager, FilterQuery, LockMode } from '@mikro-orm/core';
 import { Feedback } from '../entities/feedback.entity';
 import { Voucher, VoucherStatus } from '../../voucher/entities/voucher.entity';
 import { OwnershipService } from '../../venue/services/ownership.service';
@@ -143,7 +143,14 @@ export class FeedbackManagementService {
         feedback.spamMarkedAt = new Date();
       }
 
-      const voucher = await em.findOne(Voucher, { feedback: feedback.id });
+      // Lock the voucher row so a concurrent cashier redemption can't slip a
+      // status=REDEEMED commit between our read and write — without the lock
+      // we could overwrite a terminal REDEEMED with VOIDED.
+      const voucher = await em.findOne(
+        Voucher,
+        { feedback: feedback.id },
+        { lockMode: LockMode.PESSIMISTIC_WRITE },
+      );
       if (voucher && voucher.status === VoucherStatus.ACTIVE) {
         voucher.status = VoucherStatus.VOIDED;
         voucher.voidedAt = new Date();
