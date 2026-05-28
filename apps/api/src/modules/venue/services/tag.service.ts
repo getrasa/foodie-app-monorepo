@@ -32,6 +32,16 @@ const normalizeLabel = (raw: string | undefined): string => {
   return trimmed;
 };
 
+// Returns the value when valid; throws 400 otherwise. The body type is just a
+// TS hint — Nest doesn't validate it at runtime, so we have to guard against
+// strings, floats, and negatives here ourselves.
+const validateSortOrder = (value: unknown): number => {
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
+    throw new BadRequestException('sortOrder must be a non-negative integer');
+  }
+  return value;
+};
+
 @Injectable()
 export class TagService {
   constructor(
@@ -56,8 +66,8 @@ export class TagService {
     const venue = await this.ownership.assertVenueOwnership(venueId, userId);
     const label = normalizeLabel(input.label);
 
-    let sortOrder = input.sortOrder ?? null;
-    if (sortOrder == null) {
+    let sortOrder: number;
+    if (input.sortOrder == null) {
       // Default to max(existing sortOrder) + 1 so new tags land at the bottom.
       // Archived tags are still considered so we don't reuse a slot that the
       // owner may un-archive later by reordering manually.
@@ -71,6 +81,8 @@ export class TagService {
         -1,
       );
       sortOrder = max + 1;
+    } else {
+      sortOrder = validateSortOrder(input.sortOrder);
     }
 
     const tag = this.em.create(
@@ -93,10 +105,7 @@ export class TagService {
       tag.label = normalizeLabel(input.label);
     }
     if (input.sortOrder !== undefined) {
-      if (!Number.isInteger(input.sortOrder) || input.sortOrder < 0) {
-        throw new BadRequestException('sortOrder must be a non-negative integer');
-      }
-      tag.sortOrder = input.sortOrder;
+      tag.sortOrder = validateSortOrder(input.sortOrder);
     }
 
     await this.em.flush();
