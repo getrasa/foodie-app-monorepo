@@ -12,7 +12,7 @@ const CheckIcon = () => (
 
 const StarSvg = ({ size = 11, filled = true }: { size?: number; filled?: boolean }) => (
 	<svg width={size} height={size} viewBox="0 0 44 44">
-		<path d="M22 3.5L27.4 15.6L40.5 17.1L30.8 26.2L33.4 39.2L22 32.6L10.6 39.2L13.2 26.2L3.5 17.1L16.6 15.6L22 3.5Z" fill={filled ? "var(--fb-primary)" : "rgba(31,26,21,0.18)"} />
+		<path d="M22 3.5L27.4 15.6L40.5 17.1L30.8 26.2L33.4 39.2L22 32.6L10.6 39.2L13.2 26.2L3.5 17.1L16.6 15.6L22 3.5Z" fill={filled ? "var(--fb-primary)" : "rgba(12,10,7,0.18)"} />
 	</svg>
 );
 
@@ -64,10 +64,10 @@ export const LandingPage = () => {
 
 					{/* Hero visual */}
 					<div className="fb-hero-visual" style={{ position: "relative", height: 540, display: "flex", alignItems: "center", justifyContent: "center" }}>
-						<div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at 60% 40%, rgba(200,106,62,0.16), transparent 65%)", zIndex: 0 }} />
+						<div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at 60% 40%, rgba(230,123,60,0.16), transparent 65%)", zIndex: 0 }} />
 
 						{/* Google rating lift card */}
-						<div className="fb-hero-note" style={{ position: "absolute", left: -10, top: 80, zIndex: 4, width: 220, padding: "14px 16px", background: "var(--fb-cream)", borderRadius: 14, border: "0.5px solid var(--fb-line)", boxShadow: "0 16px 30px -10px rgba(31,26,21,0.18)", transform: "rotate(-4deg)" }}>
+						<div className="fb-hero-note" style={{ position: "absolute", left: -10, top: 80, zIndex: 4, width: 220, padding: "14px 16px", background: "var(--fb-cream)", borderRadius: 14, border: "0.5px solid var(--fb-line)", boxShadow: "0 16px 30px -10px rgba(12,10,7,0.18)", transform: "rotate(-4deg)" }}>
 							<div style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
 								<svg width="14" height="14" viewBox="0 0 24 24">
 									<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -85,14 +85,14 @@ export const LandingPage = () => {
 								</span>
 							</div>
 							<svg style={{ display: "block", margin: "6px 0 4px" }} width="100%" height="36" viewBox="0 0 160 36" preserveAspectRatio="none">
-								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5 L158 36 L2 36 Z" fill="rgba(200,106,62,0.12)" />
+								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5 L158 36 L2 36 Z" fill="rgba(230,123,60,0.12)" />
 								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5" stroke="var(--fb-primary)" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9.5, letterSpacing: "0.08em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>OSTATNIE 60 DNI · 198 NOWYCH OPINII</div>
 						</div>
 
 						{/* Phone */}
-						<div style={{ position: "relative", zIndex: 2, width: 280, height: 540, borderRadius: 36, background: "var(--fb-cream)", boxShadow: "0 0 0 8px var(--fb-ink), 0 30px 60px -15px rgba(31,26,21,0.35), 0 10px 20px -5px rgba(31,26,21,0.2)", overflow: "hidden", padding: "28px 22px", display: "flex", flexDirection: "column" }}>
+						<div style={{ position: "relative", zIndex: 2, width: 280, height: 540, borderRadius: 36, background: "var(--fb-cream)", boxShadow: "0 0 0 8px var(--fb-ink), 0 30px 60px -15px rgba(12,10,7,0.35), 0 10px 20px -5px rgba(12,10,7,0.2)", overflow: "hidden", padding: "28px 22px", display: "flex", flexDirection: "column" }}>
 							<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "var(--fb-mono)", fontSize: 9.5, color: "var(--fb-ink-mute)", letterSpacing: "0.08em", padding: "0 4px" }}>
 								<span>9:41</span>
 								<span>● ▮▮</span>
@@ -106,7 +106,7 @@ export const LandingPage = () => {
 						</div>
 
 						{/* Tilted coupon */}
-						<div className="fb-hero-coupon" style={{ position: "absolute", right: -20, bottom: 60, zIndex: 3, width: 240, padding: "18px 18px 16px", background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 16, boxShadow: "0 24px 50px -12px rgba(31,26,21,0.4)", transform: "rotate(4deg)" }}>
+						<div className="fb-hero-coupon" style={{ position: "absolute", right: -20, bottom: 60, zIndex: 3, width: 240, padding: "18px 18px 16px", background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 16, boxShadow: "0 24px 50px -12px rgba(12,10,7,0.4)", transform: "rotate(4deg)" }}>
 							<div style={{ position: "absolute", left: -9, top: "60%", width: 18, height: 18, borderRadius: "50%", background: "var(--fb-cream)" }} />
 							<div style={{ position: "absolute", right: -9, top: "60%", width: 18, height: 18, borderRadius: "50%", background: "var(--fb-cream)" }} />
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.55 }}>Bistro Pod Lipą</div>
@@ -154,10 +154,10 @@ export const LandingPage = () => {
 								<h3 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 28, letterSpacing: "-0.01em", lineHeight: 1.1, margin: 0 }}>{step.h}</h3>
 								<p style={{ fontSize: 14.5, color: "var(--fb-ink-soft)", lineHeight: 1.55, margin: 0 }}>{step.p}</p>
 								<div style={{ height: 180, borderRadius: 12, background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center", overflow: "hidden" }}>
-									{step.art === "qr" && <div style={{ background: "#fff", padding: 16, borderRadius: 10, boxShadow: "0 4px 12px rgba(31,26,21,0.08)" }}><QrIllustration /></div>}
+									{step.art === "qr" && <div style={{ background: "#fff", padding: 16, borderRadius: 10, boxShadow: "0 4px 12px rgba(12,10,7,0.08)" }}><QrIllustration /></div>}
 									{step.art === "stars" && <div style={{ display: "flex", gap: 6 }}>{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={32} filled={i < 5} />)}</div>}
 									{step.art === "coupon" && (
-										<div style={{ background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 12, padding: "14px 16px", position: "relative", width: "75%", boxShadow: "0 8px 18px -6px rgba(31,26,21,0.25)" }}>
+										<div style={{ background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 12, padding: "14px 16px", position: "relative", width: "75%", boxShadow: "0 8px 18px -6px rgba(12,10,7,0.25)" }}>
 											<div style={{ position: "absolute", left: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-paper)" }} />
 											<div style={{ position: "absolute", right: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-paper)" }} />
 											<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9, opacity: 0.5, letterSpacing: "0.08em" }}>BISTRO POD LIPĄ</div>
@@ -203,7 +203,7 @@ export const LandingPage = () => {
 						<div className="fb-fnl-split" style={{ position: "relative", height: 240 }}>
 							<svg width="100%" height="100%" viewBox="0 0 100 200" preserveAspectRatio="none">
 								<path d="M0 100 C 50 100, 50 30, 100 30" stroke="var(--fb-olive)" strokeWidth="2" fill="none" />
-								<path d="M0 100 C 50 100, 50 170, 100 170" stroke="#8E3B3B" strokeWidth="2" fill="none" strokeDasharray="4 4" />
+								<path d="M0 100 C 50 100, 50 170, 100 170" stroke="var(--fb-bordeaux)" strokeWidth="2" fill="none" strokeDasharray="4 4" />
 							</svg>
 						</div>
 
@@ -226,7 +226,7 @@ export const LandingPage = () => {
 							{/* 1-4 star → Private */}
 							<div>
 								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)" }}>1–4 gwiazdki</div>
-								<div style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid #8E3B3B" }}>
+								<div style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid var(--fb-bordeaux)" }}>
 									<div style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
 										<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6l-3 2.5V12a2 2 0 01-1-2V4z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>
 										Tylko dla kuchni
@@ -240,7 +240,7 @@ export const LandingPage = () => {
 					</div>
 
 					{/* Shared outcome */}
-					<div style={{ marginTop: 40, padding: "18px 22px", border: "1px dashed rgba(31,26,21,0.2)", borderRadius: 14, background: "var(--fb-cream)", display: "flex", alignItems: "center", gap: 14, color: "var(--fb-ink-soft)", fontSize: 14.5, lineHeight: 1.45 }}>
+					<div style={{ marginTop: 40, padding: "18px 22px", border: "1px dashed rgba(12,10,7,0.2)", borderRadius: 14, background: "var(--fb-cream)", display: "flex", alignItems: "center", gap: 14, color: "var(--fb-ink-soft)", fontSize: 14.5, lineHeight: 1.45 }}>
 						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
 						<div><strong style={{ color: "var(--fb-ink)", fontWeight: 500 }}>Obie strony</strong> dostają jednorazowy kod rabatowy na następną wizytę. Nawet ci niezadowoleni — bo właśnie tak zły wieczór zamienia się w powrót.</div>
 					</div>
@@ -277,7 +277,7 @@ export const LandingPage = () => {
 						</div>
 
 						{/* Dashboard mock */}
-						<div style={{ background: "#fff", borderRadius: 18, border: "0.5px solid var(--fb-line)", boxShadow: "0 30px 60px -20px rgba(31,26,21,0.2)", overflow: "hidden", transform: "rotate(-1deg)" }}>
+						<div style={{ background: "#fff", borderRadius: 18, border: "0.5px solid var(--fb-line)", boxShadow: "0 30px 60px -20px rgba(12,10,7,0.2)", overflow: "hidden", transform: "rotate(-1deg)" }}>
 							<div style={{ height: 36, background: "var(--fb-paper)", display: "flex", alignItems: "center", gap: 6, padding: "0 14px", borderBottom: "0.5px solid var(--fb-line)" }}>
 								<div style={{ width: 9, height: 9, borderRadius: "50%", background: "#ff5f57" }} />
 								<div style={{ width: 9, height: 9, borderRadius: "50%", background: "#febc2e" }} />
@@ -346,8 +346,8 @@ export const LandingPage = () => {
 			<section className="fb-section" style={{ padding: "120px 0" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div className="fb-quote-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 60, alignItems: "center" }}>
-						<div style={{ width: "100%", aspectRatio: "4/5", borderRadius: 18, background: "radial-gradient(ellipse at 35% 30%, rgba(200,106,62,0.22), transparent 60%), linear-gradient(160deg, var(--fb-paper) 0%, var(--fb-paper-2) 100%)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center" }}>
-							<div style={{ width: "64%", height: "70%", borderRadius: 14, background: "linear-gradient(160deg, rgba(31,26,21,0.07) 0%, rgba(31,26,21,0.18) 100%)", display: "grid", placeItems: "center", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.1em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>Zdjęcie właściciela</div>
+						<div style={{ width: "100%", aspectRatio: "4/5", borderRadius: 18, background: "radial-gradient(ellipse at 35% 30%, rgba(230,123,60,0.22), transparent 60%), linear-gradient(160deg, var(--fb-paper) 0%, var(--fb-paper-2) 100%)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center" }}>
+							<div style={{ width: "64%", height: "70%", borderRadius: 14, background: "linear-gradient(160deg, rgba(12,10,7,0.07) 0%, rgba(12,10,7,0.18) 100%)", display: "grid", placeItems: "center", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.1em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>Zdjęcie właściciela</div>
 						</div>
 						<div>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Historia właściciela</div>
@@ -403,7 +403,7 @@ export const LandingPage = () => {
 			</section>
 
 			{/* ─── FINAL CTA ─── */}
-			<section style={{ textAlign: "center", padding: "140px 0 100px", background: "radial-gradient(ellipse at 50% 100%, rgba(200,106,62,0.15), transparent 70%), var(--fb-cream)" }}>
+			<section style={{ textAlign: "center", padding: "140px 0 100px", background: "radial-gradient(ellipse at 50% 100%, rgba(230,123,60,0.15), transparent 70%), var(--fb-cream)" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(56px, 8vw, 110px)", lineHeight: 0.95, letterSpacing: "-0.025em", margin: "0 auto", maxWidth: 880, fontWeight: 400 }}>
 						Najlepsza recenzja<br />to ta, która <em style={{ color: "var(--fb-primary)", fontFamily: "var(--fb-serif)", fontStyle: "italic" }}>wraca.</em>
@@ -630,10 +630,10 @@ const PriceCard = ({ tier, sub, price, features, featured, ghost, onCta }: {
 		borderRadius: 18, border: featured ? "none" : "0.5px solid var(--fb-line)",
 		color: featured ? "var(--fb-cream)" : "var(--fb-ink)",
 		display: "flex", flexDirection: "column", gap: 18,
-		boxShadow: featured ? "0 24px 50px -16px rgba(31,26,21,0.3)" : "none",
+		boxShadow: featured ? "0 24px 50px -16px rgba(12,10,7,0.3)" : "none",
 	}}>
 		<div>
-			{featured && <div style={{ display: "inline-flex", padding: "4px 10px", borderRadius: 6, background: "var(--fb-primary)", color: "var(--fb-cream)", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase" }}>Najczęściej wybierany</div>}
+			{featured && <div style={{ display: "inline-flex", padding: "4px 10px", borderRadius: 6, background: "var(--fb-primary)", color: "var(--fb-ink)", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase" }}>Najczęściej wybierany</div>}
 			<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 30, letterSpacing: "-0.01em", lineHeight: 1, marginTop: featured ? 12 : 0 }}>{tier}</div>
 			<div style={{ marginTop: 6, fontSize: 13, color: featured ? "rgba(251,247,239,0.65)" : "var(--fb-ink-soft)" }}>{sub}</div>
 		</div>
@@ -653,7 +653,7 @@ const PriceCard = ({ tier, sub, price, features, featured, ghost, onCta }: {
 			width: "100%", padding: "10px 18px", borderRadius: 10, fontSize: 13.5, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
 			background: ghost ? "transparent" : featured ? "var(--fb-cream)" : "var(--fb-ink)",
 			color: ghost ? "var(--fb-ink)" : featured ? "var(--fb-ink)" : "var(--fb-cream)",
-			border: ghost ? "1px solid rgba(31,26,21,0.2)" : "none",
+			border: ghost ? "1px solid rgba(12,10,7,0.2)" : "none",
 		}}>
 			{ghost ? "Porozmawiajmy →" : "Wypróbuj za darmo →"}
 		</button>

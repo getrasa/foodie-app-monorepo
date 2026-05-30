@@ -25,7 +25,7 @@ export const Monogram = ({ size = 56, letter }: MonogramProps) => {
 				fontStyle: "italic",
 				letterSpacing: "-0.02em",
 				boxShadow:
-					"0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 24px rgba(31,26,21,0.18)",
+					"0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 24px rgba(12,10,7,0.18)",
 				flexShrink: 0,
 			}}
 		>

@@ -142,7 +142,7 @@ export const LoginPage = () => {
 						<div style={{ display: "flex", alignItems: "center", margin: "4px 0 22px" }}>
 							<label style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", fontSize: 13.5, color: "var(--fb-ink-soft)", userSelect: "none", whiteSpace: "nowrap" }}>
 								<input type="checkbox" defaultChecked style={{ display: "none" }} />
-								<span style={{ width: 17, height: 17, borderRadius: 5, border: "1px solid rgba(31,26,21,0.25)", background: "var(--fb-ink)", display: "grid", placeItems: "center" }}>
+								<span style={{ width: 17, height: 17, borderRadius: 5, border: "1px solid rgba(12,10,7,0.25)", background: "var(--fb-ink)", display: "grid", placeItems: "center" }}>
 									<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.2L4 7.2L8 2.8" stroke="var(--fb-cream)" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
 								</span>
 								Nie wylogowuj mnie
@@ -187,9 +187,9 @@ export const LoginPage = () => {
 			{!isMobile && (
 			<div style={{ position: "relative", overflow: "hidden", background: "var(--fb-paper)", padding: 24, display: "flex", flexDirection: "column", gap: 24 }}>
 				{/* Hero image */}
-				<div style={{ position: "relative", flex: 1, minHeight: 0, borderRadius: 18, overflow: "hidden", background: "linear-gradient(180deg, rgba(31,26,21,0) 55%, rgba(31,26,21,0.55) 100%), url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80') center/cover", boxShadow: "0 30px 60px -30px rgba(31,26,21,0.35)" }}>
+				<div style={{ position: "relative", flex: 1, minHeight: 0, borderRadius: 18, overflow: "hidden", background: "linear-gradient(180deg, rgba(12,10,7,0) 55%, rgba(12,10,7,0.55) 100%), url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80') center/cover", boxShadow: "0 30px 60px -30px rgba(12,10,7,0.35)" }}>
 					{/* Floating coupon */}
-					<div style={{ position: "absolute", left: 24, top: 24, width: 200, padding: "14px 16px", background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 14, transform: "rotate(-3deg)", boxShadow: "0 20px 40px -12px rgba(31,26,21,0.5)", zIndex: 2 }}>
+					<div style={{ position: "absolute", left: 24, top: 24, width: 200, padding: "14px 16px", background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 14, transform: "rotate(-3deg)", boxShadow: "0 20px 40px -12px rgba(12,10,7,0.5)", zIndex: 2 }}>
 						<div style={{ position: "absolute", left: -7, top: "58%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-paper)" }} />
 						<div style={{ position: "absolute", right: -7, top: "58%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-paper)" }} />
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.55 }}>Trattoria da Lucia</div>
@@ -217,7 +217,7 @@ export const LoginPage = () => {
 						Yelp jest dla obcych. Jak Było jest dla stałych klientów, których jeszcze nie poznałam.
 					</div>
 					<div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 12, fontSize: 12.5, color: "var(--fb-ink-soft)", fontFamily: "var(--fb-mono)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
-						<span style={{ width: 28, height: 1, background: "rgba(31,26,21,0.3)" }} />
+						<span style={{ width: 28, height: 1, background: "rgba(12,10,7,0.3)" }} />
 						<div><strong style={{ color: "var(--fb-ink)", fontWeight: 500 }}>Lucia Romano</strong> · Właścicielka, Trattoria da Lucia</div>
 					</div>
 				</div>

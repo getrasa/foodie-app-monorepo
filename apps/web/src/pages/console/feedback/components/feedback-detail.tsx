@@ -51,7 +51,7 @@ export const FeedbackDetailView = ({
 					style={{
 						fontFamily: "var(--fb-mono)",
 						fontSize: 11,
-						color: "rgba(31,26,21,0.5)",
+						color: "rgba(12,10,7,0.5)",
 					}}
 				>
 					{formatRelativeTime(item.createdAt)}
@@ -95,7 +95,7 @@ export const FeedbackDetailView = ({
 					style={{
 						marginTop: 14,
 						fontSize: 12.5,
-						color: "rgba(31,26,21,0.55)",
+						color: "rgba(12,10,7,0.55)",
 					}}
 				>
 					Gość zostawił email: {item.customerEmail}
@@ -109,7 +109,7 @@ export const FeedbackDetailView = ({
 					padding: 16,
 					borderRadius: 12,
 					background: "var(--fb-paper)",
-					border: "0.5px solid rgba(31,26,21,0.08)",
+					border: "0.5px solid rgba(12,10,7,0.08)",
 				}}
 			>
 				<div
@@ -118,7 +118,7 @@ export const FeedbackDetailView = ({
 						fontSize: 10,
 						letterSpacing: "0.06em",
 						textTransform: "uppercase",
-						color: "rgba(31,26,21,0.5)",
+						color: "rgba(12,10,7,0.5)",
 					}}
 				>
 					Wydany kod rabatowy
@@ -147,7 +147,7 @@ export const FeedbackDetailView = ({
 							<div
 								style={{
 									fontSize: 12,
-									color: "rgba(31,26,21,0.55)",
+									color: "rgba(12,10,7,0.55)",
 								}}
 							>
 								{item.voucher.description}
@@ -184,7 +184,7 @@ export const FeedbackDetailView = ({
 						style={{
 							marginTop: 8,
 							fontSize: 13,
-							color: "rgba(31,26,21,0.55)",
+							color: "rgba(12,10,7,0.55)",
 						}}
 					>
 						Ten gość nie dostał kodu (oferta wstrzymana, limit dzienny lub
@@ -205,7 +205,7 @@ export const FeedbackDetailView = ({
 						borderRadius: 10,
 						background: "transparent",
 						color: "var(--fb-ink)",
-						border: "0.5px solid rgba(31,26,21,0.2)",
+						border: "0.5px solid rgba(12,10,7,0.2)",
 						fontSize: 13,
 						fontFamily: "var(--fb-sans)",
 					}}

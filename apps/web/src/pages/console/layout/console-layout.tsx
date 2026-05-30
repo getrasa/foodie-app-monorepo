@@ -75,11 +75,11 @@ export const ConsoleLayout = () => {
 			styles={{
 				header: {
 					background: "var(--fb-paper)",
-					borderBottom: "0.5px solid rgba(31,26,21,0.08)",
+					borderBottom: "0.5px solid rgba(12,10,7,0.08)",
 				},
 				navbar: {
 					background: "var(--fb-paper)",
-					borderRight: "0.5px solid rgba(31,26,21,0.08)",
+					borderRight: "0.5px solid rgba(12,10,7,0.08)",
 				},
 				main: {
 					background: "#fff",

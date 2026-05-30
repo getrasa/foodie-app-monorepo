@@ -74,7 +74,7 @@ export const ScreenResult = ({
 						fontSize: 11,
 						letterSpacing: "0.08em",
 						textTransform: "uppercase",
-						color: "rgba(31,26,21,0.6)",
+						color: "rgba(12,10,7,0.6)",
 					}}
 				>
 					Opinia przyjęta · Dziękujemy
@@ -104,11 +104,11 @@ export const ScreenResult = ({
 								padding: "12px 14px",
 								borderRadius: 12,
 								background: "var(--fb-paper)",
-								border: "0.5px solid rgba(31,26,21,0.08)",
+								border: "0.5px solid rgba(12,10,7,0.08)",
 								fontFamily: "var(--fb-sans)",
 								fontSize: 12.5,
 								lineHeight: 1.5,
-								color: "rgba(31,26,21,0.65)",
+								color: "rgba(12,10,7,0.65)",
 							}}
 						>
 							Spróbujemy wysłać kod również na {emailedTo}. Jeśli nie dotrze
@@ -122,7 +122,7 @@ export const ScreenResult = ({
 						padding: "20px 18px",
 						borderRadius: 16,
 						background: "var(--fb-paper)",
-						border: "0.5px solid rgba(31,26,21,0.07)",
+						border: "0.5px solid rgba(12,10,7,0.07)",
 					}}
 				>
 					<div
@@ -143,7 +143,7 @@ export const ScreenResult = ({
 							fontFamily: "var(--fb-sans)",
 							fontSize: 14,
 							lineHeight: 1.5,
-							color: "rgba(31,26,21,0.65)",
+							color: "rgba(12,10,7,0.65)",
 						}}
 					>
 						{fallback?.body ??

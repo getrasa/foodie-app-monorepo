@@ -34,7 +34,7 @@ const BreakdownRow = ({ label, value, color }: BreakdownRowProps) => (
 			style={{
 				fontFamily: "var(--fb-mono)",
 				fontSize: 12,
-				color: "rgba(31,26,21,0.65)",
+				color: "rgba(12,10,7,0.65)",
 			}}
 		>
 			{value}
@@ -52,7 +52,7 @@ export const RedemptionRateCard = ({ data }: RedemptionRateCardProps) => {
 				padding: "20px 22px",
 				borderRadius: 14,
 				background: "#fff",
-				border: "0.5px solid rgba(31,26,21,0.08)",
+				border: "0.5px solid rgba(12,10,7,0.08)",
 			}}
 		>
 			<div
@@ -68,7 +68,7 @@ export const RedemptionRateCard = ({ data }: RedemptionRateCardProps) => {
 						fontSize: 10,
 						letterSpacing: "0.06em",
 						textTransform: "uppercase",
-						color: "rgba(31,26,21,0.5)",
+						color: "rgba(12,10,7,0.5)",
 					}}
 				>
 					Realizacja kodów
@@ -77,7 +77,7 @@ export const RedemptionRateCard = ({ data }: RedemptionRateCardProps) => {
 					style={{
 						fontFamily: "var(--fb-mono)",
 						fontSize: 11,
-						color: "rgba(31,26,21,0.5)",
+						color: "rgba(12,10,7,0.5)",
 					}}
 				>
 					{data.issued} wydanych
@@ -101,7 +101,7 @@ export const RedemptionRateCard = ({ data }: RedemptionRateCardProps) => {
 				style={{
 					marginTop: 4,
 					fontSize: 12,
-					color: "rgba(31,26,21,0.55)",
+					color: "rgba(12,10,7,0.55)",
 				}}
 			>
 				{data.redeemed} z {data.issued} kodów zrealizowano
@@ -110,7 +110,7 @@ export const RedemptionRateCard = ({ data }: RedemptionRateCardProps) => {
 			<div
 				style={{
 					marginTop: 16,
-					borderTop: "0.5px solid rgba(31,26,21,0.08)",
+					borderTop: "0.5px solid rgba(12,10,7,0.08)",
 					paddingTop: 8,
 				}}
 			>
@@ -123,7 +123,7 @@ export const RedemptionRateCard = ({ data }: RedemptionRateCardProps) => {
 				<BreakdownRow
 					label="Wygasłe"
 					value={data.expired}
-					color="rgba(31,26,21,0.3)"
+					color="rgba(12,10,7,0.3)"
 				/>
 				<BreakdownRow
 					label="Unieważnione"
