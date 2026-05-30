@@ -21,7 +21,7 @@ export const LandingPage = () => {
 	const [openFaq, setOpenFaq] = useState(0);
 
 	return (
-		<div className="fb-landing" style={{ background: "var(--fb-cream)", color: "var(--fb-ink)", fontFamily: "var(--fb-sans)", lineHeight: 1.5 }}>
+		<div style={{ background: "var(--fb-cream)", color: "var(--fb-ink)", fontFamily: "var(--fb-sans)", lineHeight: 1.5 }}>
 			{/* ─── NAV ─── */}
 			<nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 32px", maxWidth: 1240, margin: "0 auto" }}>
 				<BrandMark />

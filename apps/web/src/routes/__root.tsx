@@ -13,29 +13,29 @@ import { useState } from "react";
 import { createQueryClient } from "#/lib/query-client";
 
 const terracotta: MantineColorsTuple = [
-	"#fef5f0",
-	"#fce8db",
-	"#f6cdaf",
-	"#f0af80",
-	"#e99255",
-	"#db7a3e",
-	"#C86A3E",
-	"#a55530",
-	"#834425",
-	"#63331c",
+	"#fefaf7",
+	"#fcede4",
+	"#f7d2bd",
+	"#f1b592",
+	"#ec9b6b",
+	"#e98850",
+	"#e67b3c",
+	"#ba6431",
+	"#955027",
+	"#723d1e",
 ];
 
 const olive: MantineColorsTuple = [
-	"#f4f6ef",
-	"#e6ebd9",
-	"#ccd6b3",
-	"#b0c08c",
-	"#95aa68",
-	"#7E8B5C",
-	"#6e7b4e",
-	"#5b6740",
-	"#485333",
-	"#364027",
+	"#f8f9f6",
+	"#e7e9e1",
+	"#c6c9b6",
+	"#a0a786",
+	"#7f875b",
+	"#67713d",
+	"#566127",
+	"#464f20",
+	"#383f19",
+	"#2b3013",
 ];
 
 const theme = createTheme({
