@@ -1,5 +1,20 @@
 /* Landing page responsive overrides — desktop styles live inline in landing.page.tsx */
 
+/* High Contrast brand palette, scoped to the landing page only.
+   Overrides the global --fb-* tokens from styles.css for this subtree. */
+.fb-landing {
+	--fb-cream: #f5f0e5;
+	--fb-paper: #eae2d0;
+	--fb-paper-2: #dcd1b9;
+	--fb-ink: #0c0a07;
+	--fb-ink-soft: rgba(12, 10, 7, 0.76);
+	--fb-ink-mute: rgba(12, 10, 7, 0.56);
+	--fb-line: rgba(12, 10, 7, 0.18);
+	--fb-primary: #e67b3c;
+	--fb-olive: #566127;
+	--fb-bordeaux: #791f1f;
+}
+
 @media (max-width: 900px) {
 	.fb-hero-grid {
 		grid-template-columns: 1fr !important;
