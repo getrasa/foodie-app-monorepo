@@ -7,6 +7,7 @@ import {
 	LogOut,
 	MessageSquare,
 	QrCode,
+	Settings,
 	Ticket,
 } from "lucide-react";
 import { authClient } from "#/lib/auth-client";
@@ -72,6 +73,12 @@ export const ConsoleNavbar = ({
 			label: "Zrealizuj kod",
 			icon: Ticket,
 			to: "/console/redeem",
+		},
+		{
+			id: "settings",
+			label: "Ustawienia",
+			icon: Settings,
+			to: "/console/settings",
 		},
 	];
 
@@ -143,6 +150,8 @@ export const ConsoleNavbar = ({
 					return (
 						<UnstyledButton
 							key={item.id}
+							className="fb-nav-item"
+							data-active={active}
 							onClick={() => {
 								void navigate({ to: item.to });
 								onMobileClose();

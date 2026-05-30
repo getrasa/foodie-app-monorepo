@@ -1,72 +1,205 @@
-import { Alert, Button, Stack, TextInput, Textarea } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { useState } from "react";
+import { Alert, Center, Loader } from "@mantine/core";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import {
+	MY_BUSINESS_QUERY_KEY,
+	useMyBusiness,
+} from "#/lib/api/use-my-business";
+import { venueApi, type VenueSummary } from "#/lib/api/venue-api";
+import {
+	brandInputStyle,
+	brandPrimaryButtonStyle,
+	brandSecondaryButtonStyle,
+} from "./brand-styles";
+import { FormLabel } from "./form-label";
 
-interface RestaurantProfileFormValues {
+interface FormState {
 	name: string;
 	address: string;
 	googleMapsUrl: string;
 }
 
-export const RestaurantProfileForm = () => {
-	const [saved, setSaved] = useState(false);
+const EMPTY_STATE: FormState = { name: "", address: "", googleMapsUrl: "" };
 
-	// TODO: Load current restaurant data from API
-	const form = useForm<RestaurantProfileFormValues>({
-		initialValues: {
-			name: "",
-			address: "",
-			googleMapsUrl: "",
+const toFormState = (venue: VenueSummary): FormState => ({
+	name: venue.name,
+	address: venue.address ?? "",
+	googleMapsUrl: venue.googleMapsUrl ?? "",
+});
+
+export const RestaurantProfileForm = () => {
+	const queryClient = useQueryClient();
+	const businessQuery = useMyBusiness();
+	const business = businessQuery.data;
+	const venue = business?.venues?.[0];
+
+	const [form, setForm] = useState<FormState>(EMPTY_STATE);
+	const [snapshot, setSnapshot] = useState<FormState>(EMPTY_STATE);
+	const [banner, setBanner] = useState<{ kind: "success" | "error"; text: string } | null>(null);
+	const [nameError, setNameError] = useState<string | null>(null);
+	const hydratedRef = useRef(false);
+
+	// Seed the form once the venue arrives. Don't re-seed on background refetches
+	// — that would clobber user edits. Successful saves reset the snapshot
+	// explicitly in onSuccess below.
+	useEffect(() => {
+		if (!venue || hydratedRef.current) return;
+		const initial = toFormState(venue);
+		setForm(initial);
+		setSnapshot(initial);
+		hydratedRef.current = true;
+	}, [venue]);
+
+	const dirty =
+		form.name !== snapshot.name ||
+		form.address !== snapshot.address ||
+		form.googleMapsUrl !== snapshot.googleMapsUrl;
+
+	const mutation = useMutation({
+		mutationFn: async () => {
+			if (!business || !venue) throw new Error("Brak danych restauracji");
+			const trimmedName = form.name.trim();
+			const address = form.address.trim() || null;
+			const googleMapsUrl = form.googleMapsUrl.trim() || null;
+
+			await Promise.all([
+				business.name !== trimmedName
+					? venueApi.updateBusiness(business.id, { name: trimmedName })
+					: null,
+				venueApi.updateVenue(venue.id, {
+					name: trimmedName,
+					address,
+					googleMapsUrl,
+				}),
+			]);
+
+			return { name: trimmedName, address: address ?? "", googleMapsUrl: googleMapsUrl ?? "" };
 		},
-		validate: {
-			name: (value) =>
-				value.trim().length >= 2
-					? null
-					: "Nazwa restauracji musi mieć co najmniej 2 znaki",
+		onSuccess: async (saved) => {
+			setBanner({ kind: "success", text: "Profil restauracji zapisany" });
+			setForm(saved);
+			setSnapshot(saved);
+			await queryClient.invalidateQueries({ queryKey: MY_BUSINESS_QUERY_KEY });
+		},
+		onError: (err: Error) => {
+			setBanner({ kind: "error", text: err.message });
 		},
 	});
 
-	const handleSubmit = (values: RestaurantProfileFormValues) => {
-		// TODO: PUT restaurant profile to API
-		console.log("Save restaurant profile:", values);
-		setSaved(true);
-		setTimeout(() => setSaved(false), 3000);
+	const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+		setForm((prev) => ({ ...prev, [key]: value }));
+		if (key === "name") setNameError(null);
+		setBanner(null);
 	};
 
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!dirty || mutation.isPending) return;
+		if (form.name.trim().length < 2) {
+			setNameError("Nazwa restauracji musi mieć co najmniej 2 znaki");
+			return;
+		}
+		mutation.mutate();
+	};
+
+	const handleReset = () => {
+		setForm(snapshot);
+		setNameError(null);
+		setBanner(null);
+	};
+
+	if (businessQuery.isPending) {
+		return (
+			<Center py="lg">
+				<Loader color="var(--fb-primary)" size="sm" />
+			</Center>
+		);
+	}
+
+	if (!venue) {
+		return (
+			<Alert color="yellow" variant="light">
+				Najpierw przejdź przez konfigurację swojej restauracji.
+			</Alert>
+		);
+	}
+
 	return (
-		<form onSubmit={form.onSubmit(handleSubmit)}>
-			<Stack gap="md">
-				{saved && (
-					<Alert color="green" variant="light">
-						Profil restauracji zapisany
+		<form onSubmit={handleSubmit}>
+			<div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+				{banner && (
+					<Alert
+						color={banner.kind === "success" ? "olive" : "red"}
+						variant="light"
+					>
+						{banner.text}
 					</Alert>
 				)}
 
-				<TextInput
-					label="Nazwa restauracji"
-					placeholder="np. Trattoria u Mario"
-					required
-					{...form.getInputProps("name")}
-				/>
+				<FormLabel label="Nazwa restauracji">
+					<input
+						value={form.name}
+						onChange={(e) => update("name", e.target.value)}
+						placeholder="np. Trattoria u Mario"
+						style={brandInputStyle(!!nameError)}
+					/>
+					{nameError && (
+						<div
+							style={{
+								fontSize: 12,
+								color: "var(--fb-primary)",
+								marginTop: 6,
+							}}
+						>
+							{nameError}
+						</div>
+					)}
+				</FormLabel>
 
-				<Textarea
-					label="Adres"
-					placeholder="ul. Główna 123, Miasto"
-					minRows={2}
-					{...form.getInputProps("address")}
-				/>
+				<FormLabel label="Adres">
+					<textarea
+						value={form.address}
+						onChange={(e) => update("address", e.target.value)}
+						placeholder="ul. Główna 123, Miasto"
+						rows={2}
+						style={{
+							...brandInputStyle(false),
+							resize: "vertical",
+							minHeight: 64,
+						}}
+					/>
+				</FormLabel>
 
-				<TextInput
+				<FormLabel
 					label="Link do Google Maps"
-					placeholder="Wklej link Google Maps do swojej restauracji"
-					description="Wykorzystywany, żeby kierować zadowolonych gości do wystawienia opinii w Google"
-					{...form.getInputProps("googleMapsUrl")}
-				/>
+					hint="Kierujemy zadowolonych gości do wystawienia opinii w Google"
+				>
+					<input
+						value={form.googleMapsUrl}
+						onChange={(e) => update("googleMapsUrl", e.target.value)}
+						placeholder="https://maps.google.com/…"
+						style={brandInputStyle(false)}
+					/>
+				</FormLabel>
 
-				<Button type="submit" size="md">
-					Zapisz profil
-				</Button>
-			</Stack>
+				<div style={{ display: "flex", gap: 10, paddingTop: 4 }}>
+					<button
+						type="submit"
+						disabled={!dirty || mutation.isPending}
+						style={brandPrimaryButtonStyle(!dirty || mutation.isPending)}
+					>
+						{mutation.isPending ? "Zapisuję…" : "Zapisz profil"}
+					</button>
+					<button
+						type="button"
+						onClick={handleReset}
+						disabled={!dirty || mutation.isPending}
+						style={brandSecondaryButtonStyle(!dirty || mutation.isPending)}
+					>
+						Resetuj
+					</button>
+				</div>
+			</div>
 		</form>
 	);
 };

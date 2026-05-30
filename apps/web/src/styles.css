@@ -31,3 +31,11 @@ body {
   -webkit-font-smoothing: antialiased;
   background: var(--fb-cream);
 }
+
+.fb-nav-item {
+  transition: background 120ms ease, color 120ms ease;
+}
+.fb-nav-item[data-active="false"]:hover {
+  background: rgba(12,10,7,0.05) !important;
+  color: var(--fb-ink) !important;
+}
