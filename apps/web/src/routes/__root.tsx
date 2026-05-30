@@ -40,6 +40,7 @@ const olive: MantineColorsTuple = [
 
 const theme = createTheme({
 	primaryColor: "terracotta",
+	autoContrast: true,
 	colors: {
 		terracotta,
 		olive,

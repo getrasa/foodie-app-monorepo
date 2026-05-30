@@ -633,7 +633,7 @@ const PriceCard = ({ tier, sub, price, features, featured, ghost, onCta }: {
 		boxShadow: featured ? "0 24px 50px -16px rgba(12,10,7,0.3)" : "none",
 	}}>
 		<div>
-			{featured && <div style={{ display: "inline-flex", padding: "4px 10px", borderRadius: 6, background: "var(--fb-primary)", color: "var(--fb-cream)", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase" }}>Najczęściej wybierany</div>}
+			{featured && <div style={{ display: "inline-flex", padding: "4px 10px", borderRadius: 6, background: "var(--fb-primary)", color: "var(--fb-ink)", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase" }}>Najczęściej wybierany</div>}
 			<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 30, letterSpacing: "-0.01em", lineHeight: 1, marginTop: featured ? 12 : 0 }}>{tier}</div>
 			<div style={{ marginTop: 6, fontSize: 13, color: featured ? "rgba(251,247,239,0.65)" : "var(--fb-ink-soft)" }}>{sub}</div>
 		</div>

@@ -161,7 +161,7 @@ export const FeedbackFilters = ({
 										padding: "0 5px",
 										borderRadius: 8,
 										background: "var(--fb-primary)",
-										color: "#fff",
+										color: "var(--fb-ink)",
 										fontSize: 10,
 										fontFamily: "var(--fb-mono)",
 										lineHeight: 1,

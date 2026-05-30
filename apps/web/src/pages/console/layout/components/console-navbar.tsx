@@ -171,7 +171,7 @@ export const ConsoleNavbar = ({
 								<span
 									style={{
 										background: "var(--fb-primary)",
-										color: "#fff",
+										color: "var(--fb-ink)",
 										fontSize: 10,
 										fontWeight: 500,
 										padding: "1px 6px",
