@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { VARIANTS } from "./variants";
 
-const TOP_BG = "#FBF7EF"; // matches variant page default bg (cream)
-const CAPTION_BG = "#F1EADC";
+const TOP_BG = "#F5F0E5"; // matches variant page default bg (cream)
+const CAPTION_BG = "#EAE2D0";
 
 export const LabIndexPage = () => {
 	return (
@@ -152,7 +152,7 @@ export const LabIndexPage = () => {
 								onMouseEnter={(e) => {
 									e.currentTarget.style.transform = "translateY(-3px)";
 									e.currentTarget.style.boxShadow =
-										"0 24px 50px -22px rgba(31,26,21,0.22)";
+										"0 24px 50px -22px rgba(12,10,7,0.22)";
 								}}
 								onMouseLeave={(e) => {
 									e.currentTarget.style.transform = "translateY(0)";
@@ -169,7 +169,7 @@ export const LabIndexPage = () => {
 										alignItems: "center",
 										justifyContent: "space-between",
 										gap: 10,
-										borderBottom: "0.5px solid rgba(31,26,21,0.06)",
+										borderBottom: "0.5px solid rgba(12,10,7,0.06)",
 										minHeight: 84,
 									}}
 								>

@@ -192,7 +192,7 @@ export const FeedbackPage = () => {
 			<div
 				style={{
 					width: 340,
-					borderRight: "0.5px solid rgba(31,26,21,0.08)",
+					borderRight: "0.5px solid rgba(12,10,7,0.08)",
 					display: "flex",
 					flexDirection: "column",
 					flexShrink: 0,
@@ -214,7 +214,7 @@ export const FeedbackPage = () => {
 						style={{
 							fontFamily: "var(--fb-mono)",
 							fontSize: 11,
-							color: "rgba(31,26,21,0.5)",
+							color: "rgba(12,10,7,0.5)",
 							marginTop: 3,
 						}}
 					>
@@ -239,7 +239,7 @@ export const FeedbackPage = () => {
 						<div
 							style={{
 								padding: "32px 18px",
-								color: "rgba(31,26,21,0.5)",
+								color: "rgba(12,10,7,0.5)",
 								fontSize: 13,
 								textAlign: "center",
 							}}
@@ -282,7 +282,7 @@ export const FeedbackPage = () => {
 						<div
 							style={{
 								fontSize: 13,
-								color: "rgba(31,26,21,0.5)",
+								color: "rgba(12,10,7,0.5)",
 							}}
 						>
 							Wybierz opinię z listy.

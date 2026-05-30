@@ -18,9 +18,9 @@ interface BgChoice {
 }
 
 const BACKGROUNDS: BgChoice[] = [
-	{ id: "cream", bg: "#FBF7EF", tone: "light" },
-	{ id: "paper", bg: "#F1EADC", tone: "light" },
-	{ id: "ink", bg: "#1F1A15", tone: "dark" },
+	{ id: "cream", bg: "#F5F0E5", tone: "light" },
+	{ id: "paper", bg: "#EAE2D0", tone: "light" },
+	{ id: "ink", bg: "#0C0A07", tone: "dark" },
 ];
 
 export const VariantPage = ({ slug }: VariantPageProps) => {
@@ -75,10 +75,10 @@ export const VariantPage = ({ slug }: VariantPageProps) => {
 	const fg = isDark ? "var(--fb-cream)" : "var(--fb-ink)";
 	const fgSoft = isDark ? "rgba(251,247,239,0.62)" : "var(--fb-ink-soft)";
 	const fgMute = isDark ? "rgba(251,247,239,0.45)" : "var(--fb-ink-mute)";
-	const lineColor = isDark ? "rgba(251,247,239,0.12)" : "rgba(31,26,21,0.1)";
+	const lineColor = isDark ? "rgba(251,247,239,0.12)" : "rgba(12,10,7,0.1)";
 	const borderQuiet = isDark
 		? "rgba(251,247,239,0.18)"
-		: "rgba(31,26,21,0.14)";
+		: "rgba(12,10,7,0.14)";
 
 	const currentIndex = VARIANTS.findIndex((v) => v.slug === slug);
 	const prev = VARIANTS[(currentIndex - 1 + VARIANTS.length) % VARIANTS.length];

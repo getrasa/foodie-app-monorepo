@@ -165,7 +165,7 @@ export const AnalyticsPage = () => {
 					<div
 						style={{
 							fontSize: 13,
-							color: "rgba(31,26,21,0.55)",
+							color: "rgba(12,10,7,0.55)",
 							marginTop: 4,
 						}}
 					>
@@ -177,7 +177,7 @@ export const AnalyticsPage = () => {
 					style={{
 						display: "inline-flex",
 						background: "#fff",
-						border: "0.5px solid rgba(31,26,21,0.12)",
+						border: "0.5px solid rgba(12,10,7,0.12)",
 						borderRadius: 10,
 						padding: 3,
 					}}
@@ -215,7 +215,7 @@ export const AnalyticsPage = () => {
 						padding: "32px 28px",
 						borderRadius: 14,
 						background: "#fff",
-						border: "0.5px solid rgba(31,26,21,0.08)",
+						border: "0.5px solid rgba(12,10,7,0.08)",
 						textAlign: "center",
 					}}
 				>
@@ -233,7 +233,7 @@ export const AnalyticsPage = () => {
 						style={{
 							marginTop: 8,
 							fontSize: 14,
-							color: "rgba(31,26,21,0.6)",
+							color: "rgba(12,10,7,0.6)",
 							lineHeight: 1.5,
 						}}
 					>

@@ -20,7 +20,7 @@ export const RatingDistributionChart = ({
 				padding: "20px 22px",
 				borderRadius: 14,
 				background: "#fff",
-				border: "0.5px solid rgba(31,26,21,0.08)",
+				border: "0.5px solid rgba(12,10,7,0.08)",
 			}}
 		>
 			<div
@@ -29,7 +29,7 @@ export const RatingDistributionChart = ({
 					fontSize: 10,
 					letterSpacing: "0.06em",
 					textTransform: "uppercase",
-					color: "rgba(31,26,21,0.5)",
+					color: "rgba(12,10,7,0.5)",
 				}}
 			>
 				Rozkład
@@ -63,7 +63,7 @@ export const RatingDistributionChart = ({
 								style={{
 									fontFamily: "var(--fb-mono)",
 									fontSize: 11,
-									color: "rgba(31,26,21,0.6)",
+									color: "rgba(12,10,7,0.6)",
 								}}
 							>
 								{d.stars}
@@ -88,7 +88,7 @@ export const RatingDistributionChart = ({
 											? "var(--fb-primary)"
 											: d.stars === 3
 												? "var(--fb-ink)"
-												: "rgba(31,26,21,0.3)",
+												: "rgba(12,10,7,0.3)",
 									borderRadius: 4,
 								}}
 							/>
@@ -97,7 +97,7 @@ export const RatingDistributionChart = ({
 							style={{
 								fontFamily: "var(--fb-mono)",
 								fontSize: 11,
-								color: "rgba(31,26,21,0.6)",
+								color: "rgba(12,10,7,0.6)",
 								width: 30,
 								textAlign: "right",
 							}}

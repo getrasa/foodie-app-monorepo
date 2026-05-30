@@ -120,7 +120,7 @@ export const TagManager = ({ venueId }: TagManagerProps) => {
 						background: "var(--fb-cream)",
 						borderRadius: 12,
 						fontSize: 13,
-						color: "rgba(31,26,21,0.65)",
+						color: "rgba(12,10,7,0.65)",
 						lineHeight: 1.5,
 					}}
 				>
@@ -140,7 +140,7 @@ export const TagManager = ({ venueId }: TagManagerProps) => {
 									gap: 10,
 									padding: "10px 12px",
 									background: "#fff",
-									border: "0.5px solid rgba(31,26,21,0.1)",
+									border: "0.5px solid rgba(12,10,7,0.1)",
 									borderRadius: 10,
 								}}
 							>
@@ -184,7 +184,7 @@ export const TagManager = ({ venueId }: TagManagerProps) => {
 												width: "100%",
 												padding: "6px 8px",
 												borderRadius: 6,
-												border: "1px solid rgba(31,26,21,0.2)",
+												border: "1px solid rgba(12,10,7,0.2)",
 												fontFamily: "var(--fb-sans)",
 												fontSize: 14,
 												outline: "none",
@@ -276,7 +276,7 @@ export const TagManager = ({ venueId }: TagManagerProps) => {
 						flex: 1,
 						padding: "10px 12px",
 						borderRadius: 10,
-						border: "1px solid rgba(31,26,21,0.12)",
+						border: "1px solid rgba(12,10,7,0.12)",
 						fontFamily: "var(--fb-sans)",
 						fontSize: 14,
 						color: "var(--fb-ink)",
@@ -317,7 +317,7 @@ const iconButtonStyle = (color = "var(--fb-ink)"): React.CSSProperties => ({
 	height: 28,
 	borderRadius: 8,
 	background: "transparent",
-	border: "0.5px solid rgba(31,26,21,0.12)",
+	border: "0.5px solid rgba(12,10,7,0.12)",
 	cursor: "pointer",
 	color,
 });
@@ -331,6 +331,6 @@ const moveButtonStyle = (disabled: boolean): React.CSSProperties => ({
 	background: "transparent",
 	border: "none",
 	cursor: disabled ? "not-allowed" : "pointer",
-	color: disabled ? "rgba(31,26,21,0.25)" : "rgba(31,26,21,0.55)",
+	color: disabled ? "rgba(12,10,7,0.25)" : "rgba(12,10,7,0.55)",
 	padding: 0,
 });

@@ -111,7 +111,7 @@ export const RatingTrendChart = ({ data, rangeLabel }: RatingTrendChartProps) =>
 				padding: "20px 22px",
 				borderRadius: 14,
 				background: "#fff",
-				border: "0.5px solid rgba(31,26,21,0.08)",
+				border: "0.5px solid rgba(12,10,7,0.08)",
 			}}
 		>
 			<div
@@ -128,7 +128,7 @@ export const RatingTrendChart = ({ data, rangeLabel }: RatingTrendChartProps) =>
 							fontSize: 10,
 							letterSpacing: "0.06em",
 							textTransform: "uppercase",
-							color: "rgba(31,26,21,0.5)",
+							color: "rgba(12,10,7,0.5)",
 						}}
 					>
 						Trend ocen
@@ -149,7 +149,7 @@ export const RatingTrendChart = ({ data, rangeLabel }: RatingTrendChartProps) =>
 					style={{
 						fontFamily: "var(--fb-mono)",
 						fontSize: 10,
-						color: "rgba(31,26,21,0.5)",
+						color: "rgba(12,10,7,0.5)",
 					}}
 				>
 					{rangeLabel}
@@ -164,7 +164,7 @@ export const RatingTrendChart = ({ data, rangeLabel }: RatingTrendChartProps) =>
 							placeItems: "center",
 							fontFamily: "var(--fb-sans)",
 							fontSize: 13,
-							color: "rgba(31,26,21,0.45)",
+							color: "rgba(12,10,7,0.45)",
 						}}
 					>
 						Brak ocen w tym okresie
@@ -180,7 +180,7 @@ export const RatingTrendChart = ({ data, rangeLabel }: RatingTrendChartProps) =>
 					marginTop: 6,
 					fontFamily: "var(--fb-mono)",
 					fontSize: 10,
-					color: "rgba(31,26,21,0.45)",
+					color: "rgba(12,10,7,0.45)",
 				}}
 			>
 				<span>{first ? formatBucketLabel(first.date) : ""}</span>

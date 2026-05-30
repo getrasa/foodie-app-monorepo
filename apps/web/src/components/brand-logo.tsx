@@ -44,7 +44,7 @@ export const BrandLogo = ({
 					letterSpacing: "-0.04em",
 					lineHeight: 1,
 					boxShadow:
-						"0 1px 0 rgba(255,255,255,0.1) inset, 0 4px 10px rgba(31,26,21,0.18)",
+						"0 1px 0 rgba(255,255,255,0.1) inset, 0 4px 10px rgba(12,10,7,0.18)",
 					flexShrink: 0,
 				}}
 			>
@@ -67,7 +67,7 @@ export const BrandLogo = ({
 						position: "absolute",
 						top: -Math.round(size * 0.06),
 						right: -Math.round(size * 0.06),
-						filter: "drop-shadow(0 1px 2px rgba(31,26,21,0.25))",
+						filter: "drop-shadow(0 1px 2px rgba(12,10,7,0.25))",
 					}}
 				>
 					<path

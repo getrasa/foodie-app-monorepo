@@ -22,7 +22,7 @@ export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
 				textAlign: "left",
 				padding: "14px 18px",
 				background: selected ? "var(--fb-cream)" : "transparent",
-				borderBottom: "0.5px solid rgba(31,26,21,0.07)",
+				borderBottom: "0.5px solid rgba(12,10,7,0.07)",
 				borderLeft: selected
 					? "2px solid var(--fb-primary)"
 					: "2px solid transparent",
@@ -73,7 +73,7 @@ export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
 					style={{
 						fontFamily: "var(--fb-mono)",
 						fontSize: 10,
-						color: "rgba(31,26,21,0.45)",
+						color: "rgba(12,10,7,0.45)",
 					}}
 				>
 					{formatRelativeTime(item.createdAt)}
@@ -83,7 +83,7 @@ export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
 				style={{
 					fontSize: 13.5,
 					lineHeight: 1.45,
-					color: item.comment ? "var(--fb-ink)" : "rgba(31,26,21,0.4)",
+					color: item.comment ? "var(--fb-ink)" : "rgba(12,10,7,0.4)",
 					fontStyle: item.comment ? "normal" : "italic",
 					fontWeight: unread && !spam ? 500 : 400,
 					display: "-webkit-box",
@@ -127,7 +127,7 @@ export const FeedbackRow = ({ item, selected, onClick }: FeedbackRowProps) => {
 					<div
 						style={{
 							fontSize: 11,
-							color: "rgba(31,26,21,0.4)",
+							color: "rgba(12,10,7,0.4)",
 							fontFamily: "var(--fb-mono)",
 						}}
 					>
