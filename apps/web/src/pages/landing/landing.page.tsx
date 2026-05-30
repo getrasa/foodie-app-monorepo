@@ -76,10 +76,10 @@ export const LandingPage = () => {
 									<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z" />
 								</svg>
 								<span>Ocena Google</span>
-								<span style={{ marginLeft: "auto", color: "#2F8F4E", fontWeight: 600, fontFamily: "var(--fb-mono)", fontSize: 10.5 }}>▲ +0,4</span>
+								<span style={{ marginLeft: "auto", color: "#2F8F4E", fontWeight: 600, fontFamily: "var(--fb-mono)", fontSize: 10.5 }}>▲ +0,6</span>
 							</div>
 							<div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 8 }}>
-								<span style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 36, lineHeight: 1, letterSpacing: "-0.02em", color: "var(--fb-ink)" }}>4,7</span>
+								<span style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 36, lineHeight: 1, letterSpacing: "-0.02em", color: "var(--fb-ink)" }}>4,9</span>
 								<span style={{ display: "inline-flex", gap: 1 }}>
 									{[1, 2, 3, 4, 5].map((i) => <svg key={i} width="13" height="13" viewBox="0 0 44 44"><path d="M22 3.5L27.4 15.6L40.5 17.1L30.8 26.2L33.4 39.2L22 32.6L10.6 39.2L13.2 26.2L3.5 17.1L16.6 15.6L22 3.5Z" fill="#F59E0B" /></svg>)}
 								</span>
