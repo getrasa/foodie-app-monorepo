@@ -52,6 +52,13 @@ const theme = createTheme({
 	},
 });
 
+const SITE_URL = "https://jakbylo.pl";
+const SITE_NAME = "Jak Było";
+const SITE_TITLE = "Jak Było — Szczera opinia. Słodki rabacik.";
+const SITE_DESCRIPTION =
+	"Jak Było zamienia zadowolonych gości w opinie na Google Maps, a krytykę kieruje prosto do Ciebie. Jeden kod QR na stoliku, rabat dla każdego gościa.";
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
 export const Route = createRootRoute({
 	head: () => ({
 		meta: [
@@ -63,8 +70,35 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "Jak Było — Szczera opinia. Słodki rabacik.",
+				title: SITE_TITLE,
 			},
+			{
+				name: "description",
+				content: SITE_DESCRIPTION,
+			},
+			{
+				name: "theme-color",
+				content: "#F5F0E5",
+			},
+			// Open Graph (Facebook, LinkedIn, Messenger, …)
+			{ property: "og:type", content: "website" },
+			{ property: "og:site_name", content: SITE_NAME },
+			{ property: "og:locale", content: "pl_PL" },
+			{ property: "og:title", content: SITE_TITLE },
+			{ property: "og:description", content: SITE_DESCRIPTION },
+			{ property: "og:url", content: SITE_URL },
+			{ property: "og:image", content: OG_IMAGE },
+			{ property: "og:image:width", content: "1200" },
+			{ property: "og:image:height", content: "630" },
+			{
+				property: "og:image:alt",
+				content: "Jak Było — opinie Google na autopilocie dla restauracji",
+			},
+			// Twitter / X
+			{ name: "twitter:card", content: "summary_large_image" },
+			{ name: "twitter:title", content: SITE_TITLE },
+			{ name: "twitter:description", content: SITE_DESCRIPTION },
+			{ name: "twitter:image", content: OG_IMAGE },
 		],
 		links: [
 			{
@@ -84,6 +118,11 @@ export const Route = createRootRoute({
 				rel: "stylesheet",
 				href: appCss,
 			},
+			// Favicons & app icons
+			{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+			{ rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+			{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+			{ rel: "manifest", href: "/manifest.json" },
 		],
 	}),
 	shellComponent: RootDocument,
