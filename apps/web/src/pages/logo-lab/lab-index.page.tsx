@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { VARIANTS } from "./variants";
 
-const TOP_BG = "#FCEFDF"; // matches variant page default bg (cream)
+const TOP_BG = "#FBF4EB"; // matches variant page default bg (cream)
 const CAPTION_BG = "#F5E3CB";
 
 export const LabIndexPage = () => {

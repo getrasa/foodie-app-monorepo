@@ -403,7 +403,7 @@ export const LandingPage = () => {
 			</section>
 
 			{/* ─── FINAL CTA ─── */}
-			<section style={{ textAlign: "center", padding: "140px 0 100px", background: "radial-gradient(ellipse at 50% 100%, rgba(117,26,31,0.18), transparent 70%), var(--fb-cream)" }}>
+			<section style={{ textAlign: "center", padding: "140px 0 100px", background: "radial-gradient(ellipse at 50% 100%, rgba(108,43,49,0.18), transparent 70%), var(--fb-cream)" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(56px, 8vw, 110px)", lineHeight: 0.95, letterSpacing: "-0.025em", margin: "0 auto", maxWidth: 880, fontWeight: 400 }}>
 						Najlepsza recenzja<br />to ta, która <em style={{ color: "var(--fb-primary)", fontFamily: "var(--fb-serif)", fontStyle: "italic" }}>wraca.</em>

@@ -18,7 +18,7 @@ interface BgChoice {
 }
 
 const BACKGROUNDS: BgChoice[] = [
-	{ id: "cream", bg: "#FCEFDF", tone: "light" },
+	{ id: "cream", bg: "#FBF4EB", tone: "light" },
 	{ id: "paper", bg: "#F5E3CB", tone: "light" },
 	{ id: "ink", bg: "#221812", tone: "dark" },
 ];

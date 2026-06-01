@@ -13,16 +13,16 @@ import { useState } from "react";
 import { createQueryClient } from "#/lib/query-client";
 
 const burgundy: MantineColorsTuple = [
-	"#fbf3f4",
-	"#f3dadc",
-	"#e5b1b4",
-	"#d4858a",
-	"#c25f65",
-	"#a83840",
-	"#751a1f",
-	"#5a1318",
-	"#440e12",
-	"#30090c",
+	"#fbf2f3",
+	"#f4dadc",
+	"#e8b3b6",
+	"#d8898d",
+	"#c46269",
+	"#a93f48",
+	"#6c2b31",
+	"#4f1f24",
+	"#3a161a",
+	"#281013",
 ];
 
 const olive: MantineColorsTuple = [
@@ -78,7 +78,7 @@ export const Route = createRootRoute({
 			},
 			{
 				name: "theme-color",
-				content: "#FCEFDF",
+				content: "#FBF4EB",
 			},
 			// Open Graph (Facebook, LinkedIn, Messenger, …)
 			{ property: "og:type", content: "website" },

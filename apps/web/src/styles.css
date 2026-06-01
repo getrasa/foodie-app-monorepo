@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --fb-cream: #FCEFDF;
+  --fb-cream: #FBF4EB;
   --fb-paper: #F5E3CB;
   --fb-paper-2: #EDD6B5;
   --fb-ink: #221812;
-  --fb-primary: #751A1F;
-  --fb-primary-deep: #5A1318;
+  --fb-primary: #6C2B31;
+  --fb-primary-deep: #4F1F24;
   --fb-olive: #7E8B5C;
   --fb-olive-deep: #5E6B40;
   --fb-bordeaux: #C86A3E;
