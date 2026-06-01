@@ -12,8 +12,8 @@ export const StatTile = ({ label, value, sub, deltaUp }: StatTileProps) => {
 				padding: "18px 20px",
 				borderRadius: 14,
 				background: "#fff",
-				border: "0.5px solid rgba(12,10,7,0.08)",
-				boxShadow: "0 1px 2px rgba(12,10,7,0.025)",
+				border: "0.5px solid rgba(31,26,21,0.08)",
+				boxShadow: "0 1px 2px rgba(31,26,21,0.025)",
 			}}
 		>
 			<div
@@ -22,7 +22,7 @@ export const StatTile = ({ label, value, sub, deltaUp }: StatTileProps) => {
 					fontSize: 10,
 					letterSpacing: "0.06em",
 					textTransform: "uppercase",
-					color: "rgba(12,10,7,0.5)",
+					color: "rgba(31,26,21,0.5)",
 				}}
 			>
 				{label}
@@ -45,7 +45,7 @@ export const StatTile = ({ label, value, sub, deltaUp }: StatTileProps) => {
 					style={{
 						marginTop: 6,
 						fontSize: 12,
-						color: deltaUp ? "var(--fb-olive)" : "rgba(12,10,7,0.55)",
+						color: deltaUp ? "var(--fb-olive)" : "rgba(31,26,21,0.55)",
 					}}
 				>
 					{sub}

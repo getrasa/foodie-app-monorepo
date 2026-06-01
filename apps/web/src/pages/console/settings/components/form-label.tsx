@@ -12,7 +12,7 @@ export const FormLabel = ({ label, hint, children }: FormLabelProps) => (
 				fontSize: 10.5,
 				letterSpacing: "0.06em",
 				textTransform: "uppercase",
-				color: "rgba(12,10,7,0.55)",
+				color: "rgba(31,26,21,0.55)",
 				marginBottom: 8,
 			}}
 		>

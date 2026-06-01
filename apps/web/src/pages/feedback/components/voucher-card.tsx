@@ -70,7 +70,7 @@ export const VoucherCard = ({ venueName, voucher }: VoucherCardProps) => {
 					borderRadius: 20,
 					padding: "22px 22px 0",
 					overflow: "hidden",
-					boxShadow: "0 20px 40px -12px rgba(12,10,7,0.3)",
+					boxShadow: "0 20px 40px -12px rgba(31,26,21,0.3)",
 				}}
 			>
 				<div

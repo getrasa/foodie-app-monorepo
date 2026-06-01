@@ -175,7 +175,7 @@ export const QrCodePage = () => {
 			<div
 				style={{
 					fontSize: 13,
-					color: "rgba(12,10,7,0.55)",
+					color: "rgba(31,26,21,0.55)",
 					marginTop: 4,
 				}}
 			>
@@ -203,11 +203,11 @@ export const QrCodePage = () => {
 					<div
 						style={{
 							background: "var(--fb-cream)",
-							border: "0.5px solid rgba(12,10,7,0.1)",
+							border: "0.5px solid rgba(31,26,21,0.1)",
 							borderRadius: 16,
 							padding: 22,
 							textAlign: "center",
-							boxShadow: "0 1px 2px rgba(12,10,7,0.03)",
+							boxShadow: "0 1px 2px rgba(31,26,21,0.03)",
 						}}
 					>
 						<div
@@ -215,7 +215,7 @@ export const QrCodePage = () => {
 								fontFamily: "var(--fb-mono)",
 								fontSize: 10,
 								letterSpacing: "0.08em",
-								color: "rgba(12,10,7,0.5)",
+								color: "rgba(31,26,21,0.5)",
 								textTransform: "uppercase",
 							}}
 						>
@@ -240,7 +240,7 @@ export const QrCodePage = () => {
 								padding: 16,
 								borderRadius: 14,
 								display: "inline-block",
-								border: "0.5px solid rgba(12,10,7,0.08)",
+								border: "0.5px solid rgba(31,26,21,0.08)",
 							}}
 						>
 							<QRCodeSVG
@@ -254,7 +254,7 @@ export const QrCodePage = () => {
 						<div
 							style={{
 								fontSize: 12.5,
-								color: "rgba(12,10,7,0.6)",
+								color: "rgba(31,26,21,0.6)",
 								marginTop: 14,
 								lineHeight: 1.5,
 							}}
@@ -268,7 +268,7 @@ export const QrCodePage = () => {
 								fontFamily: "var(--fb-mono)",
 								fontSize: 9,
 								letterSpacing: "0.1em",
-								color: "rgba(12,10,7,0.35)",
+								color: "rgba(31,26,21,0.35)",
 								marginTop: 16,
 							}}
 						>
@@ -281,7 +281,7 @@ export const QrCodePage = () => {
 							textAlign: "center",
 							fontFamily: "var(--fb-mono)",
 							fontSize: 11,
-							color: "rgba(12,10,7,0.5)",
+							color: "rgba(31,26,21,0.5)",
 						}}
 					>
 						{scanUrl}
@@ -296,7 +296,7 @@ export const QrCodePage = () => {
 							fontSize: 10.5,
 							letterSpacing: "0.06em",
 							textTransform: "uppercase",
-							color: "rgba(12,10,7,0.55)",
+							color: "rgba(31,26,21,0.55)",
 							marginBottom: 10,
 						}}
 					>
@@ -320,7 +320,7 @@ export const QrCodePage = () => {
 									gap: 14,
 									padding: "14px 16px",
 									background: "#fff",
-									border: "0.5px solid rgba(12,10,7,0.1)",
+									border: "0.5px solid rgba(31,26,21,0.1)",
 									borderRadius: 12,
 									cursor: "pointer",
 									textAlign: "left",
@@ -366,7 +366,7 @@ export const QrCodePage = () => {
 									<div
 										style={{
 											fontSize: 11.5,
-											color: "rgba(12,10,7,0.55)",
+											color: "rgba(31,26,21,0.55)",
 											marginTop: 2,
 										}}
 									>
@@ -377,7 +377,7 @@ export const QrCodePage = () => {
 									style={{
 										fontFamily: "var(--fb-mono)",
 										fontSize: 10,
-										color: "rgba(12,10,7,0.5)",
+										color: "rgba(31,26,21,0.5)",
 									}}
 								>
 									{o.format}
@@ -392,7 +392,7 @@ export const QrCodePage = () => {
 							padding: "14px 16px",
 							borderRadius: 12,
 							background: "var(--fb-paper)",
-							border: "0.5px solid rgba(12,10,7,0.08)",
+							border: "0.5px solid rgba(31,26,21,0.08)",
 							display: "flex",
 							alignItems: "flex-start",
 							gap: 10,
@@ -412,7 +412,7 @@ export const QrCodePage = () => {
 							<div
 								style={{
 									fontSize: 12,
-									color: "rgba(12,10,7,0.6)",
+									color: "rgba(31,26,21,0.6)",
 									marginTop: 2,
 									lineHeight: 1.4,
 								}}

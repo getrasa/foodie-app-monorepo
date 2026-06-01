@@ -12,7 +12,7 @@ export const voucherStatusPill = (
 	voucher: FeedbackListVoucher | null,
 ): VoucherPill => {
 	if (!voucher) {
-		return { color: "rgba(12,10,7,0.35)", label: "Bez kodu" };
+		return { color: "rgba(31,26,21,0.35)", label: "Bez kodu" };
 	}
 	return voucherStatusLabel(voucher.status);
 };
@@ -24,7 +24,7 @@ export const voucherStatusLabel = (status: VoucherStatus): VoucherPill => {
 		case "redeemed":
 			return { color: "var(--fb-olive)", label: "Zrealizowany" };
 		case "expired":
-			return { color: "rgba(12,10,7,0.35)", label: "Wygasł" };
+			return { color: "rgba(31,26,21,0.35)", label: "Wygasł" };
 		case "voided":
 			return { color: "#A63D2A", label: "Unieważniony" };
 	}

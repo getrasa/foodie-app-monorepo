@@ -35,7 +35,7 @@ export const ScreenLanding = ({
 						height: 8,
 						borderRadius: "50%",
 						background: "var(--fb-primary)",
-						boxShadow: "0 0 0 4px rgba(230,123,60,0.15)",
+						boxShadow: "0 0 0 4px rgba(117,26,31,0.15)",
 					}}
 				/>
 				<div
@@ -44,7 +44,7 @@ export const ScreenLanding = ({
 						fontSize: 11,
 						letterSpacing: "0.08em",
 						textTransform: "uppercase",
-						color: "rgba(12,10,7,0.55)",
+						color: "rgba(31,26,21,0.55)",
 					}}
 				>
 					Zeskanowano
@@ -72,7 +72,7 @@ export const ScreenLanding = ({
 						fontFamily: "var(--fb-sans)",
 						fontSize: 15,
 						lineHeight: 1.5,
-						color: "rgba(12,10,7,0.62)",
+						color: "rgba(31,26,21,0.62)",
 						maxWidth: 280,
 					}}
 				>
@@ -100,7 +100,7 @@ export const ScreenLanding = ({
 						display: "flex",
 						alignItems: "center",
 						gap: 14,
-						border: "0.5px solid rgba(12,10,7,0.07)",
+						border: "0.5px solid rgba(31,26,21,0.07)",
 					}}
 				>
 					<div
@@ -139,7 +139,7 @@ export const ScreenLanding = ({
 							style={{
 								fontFamily: "var(--fb-sans)",
 								fontSize: 12.5,
-								color: "rgba(12,10,7,0.55)",
+								color: "rgba(31,26,21,0.55)",
 								marginTop: 2,
 							}}
 						>
@@ -158,7 +158,7 @@ export const ScreenLanding = ({
 					fontFamily: "var(--fb-mono)",
 					fontSize: 10.5,
 					letterSpacing: "0.04em",
-					color: "rgba(12,10,7,0.4)",
+					color: "rgba(31,26,21,0.4)",
 					textAlign: "center",
 				}}
 			>

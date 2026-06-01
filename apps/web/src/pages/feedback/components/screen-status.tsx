@@ -34,7 +34,7 @@ export const ScreenStatus = ({ heading, body }: ScreenStatusProps) => {
 					fontFamily: "var(--fb-sans)",
 					fontSize: 14.5,
 					lineHeight: 1.5,
-					color: "rgba(12,10,7,0.62)",
+					color: "rgba(31,26,21,0.62)",
 					maxWidth: 320,
 				}}
 			>

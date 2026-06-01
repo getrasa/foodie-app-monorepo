@@ -15,7 +15,7 @@ const SectionCard = ({
 	<div
 		style={{
 			background: "var(--fb-cream)",
-			border: "0.5px solid rgba(12,10,7,0.1)",
+			border: "0.5px solid rgba(31,26,21,0.1)",
 			borderRadius: 16,
 			padding: 22,
 		}}
@@ -35,7 +35,7 @@ const SectionCard = ({
 			<div
 				style={{
 					fontSize: 12.5,
-					color: "rgba(12,10,7,0.55)",
+					color: "rgba(31,26,21,0.55)",
 					marginTop: 4,
 					lineHeight: 1.5,
 				}}
@@ -74,7 +74,7 @@ export const SettingsPage = () => {
 			<div
 				style={{
 					fontSize: 13,
-					color: "rgba(12,10,7,0.55)",
+					color: "rgba(31,26,21,0.55)",
 					marginTop: 4,
 				}}
 			>
@@ -107,7 +107,7 @@ export const SettingsPage = () => {
 						<div
 							style={{
 								fontSize: 13,
-								color: "rgba(12,10,7,0.55)",
+								color: "rgba(31,26,21,0.55)",
 							}}
 						>
 							Najpierw skonfiguruj swoją restaurację, by zarządzać tagami.

@@ -95,8 +95,8 @@ export const AccountSettings = () => {
 					disabled
 					style={{
 						...brandInputStyle(false),
-						background: "rgba(12,10,7,0.04)",
-						color: "rgba(12,10,7,0.55)",
+						background: "rgba(31,26,21,0.04)",
+						color: "rgba(31,26,21,0.55)",
 						cursor: "not-allowed",
 					}}
 				/>
@@ -105,7 +105,7 @@ export const AccountSettings = () => {
 			<div
 				style={{
 					height: 1,
-					background: "rgba(12,10,7,0.08)",
+					background: "rgba(31,26,21,0.08)",
 					margin: "2px 0",
 				}}
 			/>
@@ -118,7 +118,7 @@ export const AccountSettings = () => {
 							fontSize: 10.5,
 							letterSpacing: "0.06em",
 							textTransform: "uppercase",
-							color: "rgba(12,10,7,0.55)",
+							color: "rgba(31,26,21,0.55)",
 						}}
 					>
 						Zmień hasło
@@ -185,7 +185,7 @@ export const AccountSettings = () => {
 			<div
 				style={{
 					height: 1,
-					background: "rgba(12,10,7,0.08)",
+					background: "rgba(31,26,21,0.08)",
 					margin: "2px 0",
 				}}
 			/>
@@ -200,7 +200,7 @@ export const AccountSettings = () => {
 						alignItems: "center",
 						gap: 8,
 						color: "var(--fb-primary)",
-						borderColor: "rgba(12,10,7,0.15)",
+						borderColor: "rgba(31,26,21,0.15)",
 					}}
 				>
 					<LogOut size={14} />

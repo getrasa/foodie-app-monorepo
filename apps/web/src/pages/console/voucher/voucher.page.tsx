@@ -20,7 +20,7 @@ const FormLabel = ({
 				fontSize: 10.5,
 				letterSpacing: "0.06em",
 				textTransform: "uppercase",
-				color: "rgba(12,10,7,0.55)",
+				color: "rgba(31,26,21,0.55)",
 				marginBottom: 8,
 			}}
 		>
@@ -185,7 +185,7 @@ export const VoucherPage = () => {
 			>
 				Rabaty
 			</div>
-			<div style={{ fontSize: 13, color: "rgba(12,10,7,0.55)", marginTop: 4 }}>
+			<div style={{ fontSize: 13, color: "rgba(31,26,21,0.55)", marginTop: 4 }}>
 				To, co dostaje każdy gość po wystawieniu opinii.
 			</div>
 
@@ -238,7 +238,7 @@ export const VoucherPage = () => {
 										border:
 											form.type === o.k
 												? "1.5px solid var(--fb-ink)"
-												: "1px solid rgba(12,10,7,0.12)",
+												: "1px solid rgba(31,26,21,0.12)",
 										textAlign: "left",
 										fontFamily: "var(--fb-sans)",
 									}}
@@ -255,7 +255,7 @@ export const VoucherPage = () => {
 									<div
 										style={{
 											fontSize: 11.5,
-											color: "rgba(12,10,7,0.55)",
+											color: "rgba(31,26,21,0.55)",
 											marginTop: 2,
 										}}
 									>
@@ -276,7 +276,7 @@ export const VoucherPage = () => {
 									width: "100%",
 									padding: "10px 14px",
 									borderRadius: 10,
-									border: "1px solid rgba(12,10,7,0.12)",
+									border: "1px solid rgba(31,26,21,0.12)",
 									background: "#fff",
 									fontFamily: "var(--fb-sans)",
 									fontSize: 14,
@@ -300,7 +300,7 @@ export const VoucherPage = () => {
 										padding: "10px 14px",
 										borderRadius: 10,
 										background: "#fff",
-										border: "1px solid rgba(12,10,7,0.12)",
+										border: "1px solid rgba(31,26,21,0.12)",
 										width: 160,
 									}}
 								>
@@ -321,7 +321,7 @@ export const VoucherPage = () => {
 									<span
 										style={{
 											fontSize: 18,
-											color: "rgba(12,10,7,0.55)",
+											color: "rgba(31,26,21,0.55)",
 										}}
 									>
 										{form.type === "percentage" ? "%" : "zł"}
@@ -355,7 +355,7 @@ export const VoucherPage = () => {
 										background: form.expiresInDays === d ? "var(--fb-ink)" : "#fff",
 										color: form.expiresInDays === d ? "var(--fb-cream)" : "var(--fb-ink)",
 										border:
-											form.expiresInDays === d ? "none" : "1px solid rgba(12,10,7,0.12)",
+											form.expiresInDays === d ? "none" : "1px solid rgba(31,26,21,0.12)",
 										fontSize: 13,
 										fontFamily: "var(--fb-sans)",
 									}}
@@ -371,7 +371,7 @@ export const VoucherPage = () => {
 									background: form.expiresInDays === null ? "var(--fb-ink)" : "#fff",
 									color: form.expiresInDays === null ? "var(--fb-cream)" : "var(--fb-ink)",
 									border:
-										form.expiresInDays === null ? "none" : "1px solid rgba(12,10,7,0.12)",
+										form.expiresInDays === null ? "none" : "1px solid rgba(31,26,21,0.12)",
 									fontSize: 13,
 									fontFamily: "var(--fb-sans)",
 								}}
@@ -394,7 +394,7 @@ export const VoucherPage = () => {
 									display: "flex",
 									alignItems: "center",
 									background: "#fff",
-									border: "1px solid rgba(12,10,7,0.12)",
+									border: "1px solid rgba(31,26,21,0.12)",
 									borderRadius: 10,
 									overflow: "hidden",
 								}}
@@ -450,7 +450,7 @@ export const VoucherPage = () => {
 								onClick={() => update("dailyCap", form.dailyCap ? null : 3)}
 								style={{
 									fontSize: 12.5,
-									color: "rgba(12,10,7,0.55)",
+									color: "rgba(31,26,21,0.55)",
 									textDecoration: "underline",
 								}}
 							>
@@ -459,7 +459,7 @@ export const VoucherPage = () => {
 							<div
 								style={{
 									fontSize: 12.5,
-									color: "rgba(12,10,7,0.55)",
+									color: "rgba(31,26,21,0.55)",
 								}}
 							>
 								kodów na urządzenie dziennie
@@ -476,7 +476,7 @@ export const VoucherPage = () => {
 								gap: 10,
 								padding: "10px 14px",
 								background: "#fff",
-								border: "1px solid rgba(12,10,7,0.12)",
+								border: "1px solid rgba(31,26,21,0.12)",
 								borderRadius: 10,
 								fontFamily: "var(--fb-sans)",
 								fontSize: 13,
@@ -489,7 +489,7 @@ export const VoucherPage = () => {
 									borderRadius: 9,
 									background: form.active
 										? "var(--fb-olive)"
-										: "rgba(12,10,7,0.15)",
+										: "rgba(31,26,21,0.15)",
 									position: "relative",
 									transition: "background 0.2s",
 								}}
@@ -547,7 +547,7 @@ export const VoucherPage = () => {
 								borderRadius: 10,
 								background: "transparent",
 								color: "var(--fb-ink)",
-								border: "0.5px solid rgba(12,10,7,0.2)",
+								border: "0.5px solid rgba(31,26,21,0.2)",
 								cursor: dirty ? "pointer" : "not-allowed",
 								opacity: dirty ? 1 : 0.5,
 								fontSize: 13,
@@ -567,7 +567,7 @@ export const VoucherPage = () => {
 							fontSize: 10,
 							letterSpacing: "0.06em",
 							textTransform: "uppercase",
-							color: "rgba(12,10,7,0.5)",
+							color: "rgba(31,26,21,0.5)",
 							marginBottom: 10,
 						}}
 					>
@@ -580,7 +580,7 @@ export const VoucherPage = () => {
 							borderRadius: 16,
 							padding: 20,
 							position: "relative",
-							boxShadow: "0 14px 30px -10px rgba(12,10,7,0.3)",
+							boxShadow: "0 14px 30px -10px rgba(31,26,21,0.3)",
 						}}
 					>
 						<div
