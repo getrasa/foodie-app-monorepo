@@ -1,14 +1,25 @@
-import { Logo05 } from "#/pages/logo-lab/variants";
+interface BrandMarkProps {
+	height?: number;
+}
 
-// Renders Logo 5 at the lab's "0.9" preview size (0.9 × 0.9 = 0.81 of the natural mark).
-export const BrandMark = () => (
-	<span
-		style={{
-			display: "inline-block",
-			transform: "scale(0.81)",
-			transformOrigin: "left center",
-		}}
-	>
-		<Logo05 />
-	</span>
-);
+// The PNG ships with ~26px of cream padding on each side at its native 203px
+// height. Negative horizontal margins crop that whitespace so the mark sits
+// flush with surrounding content. The ratio scales with `height`.
+const CREAM_PADDING_RATIO = 26 / 203;
+
+export const BrandMark = ({ height = 32 }: BrandMarkProps) => {
+	const crop = -(CREAM_PADDING_RATIO * height);
+	return (
+		<img
+			src="/jak_bylo_logo.png"
+			alt="Jak Było"
+			style={{
+				display: "block",
+				height,
+				width: "auto",
+				marginLeft: crop,
+				marginRight: crop,
+			}}
+		/>
+	);
+};

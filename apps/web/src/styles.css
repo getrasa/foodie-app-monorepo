@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --fb-cream: #F5F0E5;
-  --fb-paper: #EAE2D0;
-  --fb-ink: #0C0A07;
-  --fb-primary: #E67B3C;
-  --fb-olive: #566127;
-  --fb-paper-2: #DCD1B9;
-  --fb-bordeaux: #791F1F;
-  --fb-ink-soft: rgba(12,10,7,0.76);
-  --fb-ink-mute: rgba(12,10,7,0.56);
-  --fb-line: rgba(12,10,7,0.18);
+  --fb-cream: #FCEFDF;
+  --fb-paper: #F5E3CB;
+  --fb-paper-2: #EDD6B5;
+  --fb-ink: #221812;
+  --fb-primary: #751A1F;
+  --fb-primary-deep: #5A1318;
+  --fb-olive: #7E8B5C;
+  --fb-olive-deep: #5E6B40;
+  --fb-bordeaux: #C86A3E;
+  --fb-ink-soft: rgba(34,24,18,0.68);
+  --fb-ink-mute: rgba(34,24,18,0.48);
+  --fb-line: rgba(34,24,18,0.12);
   --fb-serif: 'Instrument Serif', Georgia, serif;
   --fb-sans: 'Instrument Sans', system-ui, sans-serif;
   --fb-mono: 'JetBrains Mono', monospace;
@@ -36,6 +38,6 @@ body {
   transition: background 120ms ease, color 120ms ease;
 }
 .fb-nav-item[data-active="false"]:hover {
-  background: rgba(12,10,7,0.05) !important;
+  background: rgba(34,24,18,0.05) !important;
   color: var(--fb-ink) !important;
 }

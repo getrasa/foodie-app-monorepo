@@ -2,7 +2,7 @@ import { AppShell, Burger, Center, Group, Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { BrandLogo } from "#/components/brand-logo";
+import { BrandMark } from "#/components/brand-mark";
 import { useMyBusiness } from "#/lib/api/use-my-business";
 import { authClient } from "#/lib/auth-client";
 import { ConsoleNavbar } from "./components/console-navbar";
@@ -94,7 +94,7 @@ export const ConsoleLayout = () => {
 						size="sm"
 						color="var(--fb-ink)"
 					/>
-					<BrandLogo size={26} wordmarkSize={18} />
+					<BrandMark height={26} />
 					<div style={{ width: 28 }} />
 				</Group>
 			</AppShell.Header>
