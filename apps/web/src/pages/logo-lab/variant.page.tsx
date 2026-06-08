@@ -18,9 +18,9 @@ interface BgChoice {
 }
 
 const BACKGROUNDS: BgChoice[] = [
-	{ id: "cream", bg: "#FBF4EB", tone: "light" },
-	{ id: "paper", bg: "#F5E3CB", tone: "light" },
-	{ id: "ink", bg: "#221812", tone: "dark" },
+	{ id: "cream", bg: "#FFFDF8", tone: "light" },
+	{ id: "paper", bg: "#FBF7F1", tone: "light" },
+	{ id: "ink", bg: "#2A1719", tone: "dark" },
 ];
 
 export const VariantPage = ({ slug }: VariantPageProps) => {

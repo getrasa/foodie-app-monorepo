@@ -76,7 +76,10 @@ export const LandingPage = () => {
 									<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z" />
 								</svg>
 								<span>Ocena Google</span>
-								<span style={{ marginLeft: "auto", color: "#2F8F4E", fontWeight: 600, fontFamily: "var(--fb-mono)", fontSize: 10.5 }}>▲ +0,6</span>
+								<span style={{ marginLeft: "auto", color: "#5F8E2E", fontWeight: 700, fontFamily: "var(--fb-mono)", fontSize: 10.5, display: "inline-flex", alignItems: "center", gap: 3 }}>
+									<span>+0,6</span>
+									<span style={{ fontSize: 24, lineHeight: 0.7, display: "inline-block", transform: "translateY(1px)" }}>★</span>
+								</span>
 							</div>
 							<div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 8 }}>
 								<span style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 36, lineHeight: 1, letterSpacing: "-0.02em", color: "var(--fb-ink)" }}>4,9</span>
@@ -85,8 +88,8 @@ export const LandingPage = () => {
 								</span>
 							</div>
 							<svg style={{ display: "block", margin: "6px 0 4px" }} width="100%" height="36" viewBox="0 0 160 36" preserveAspectRatio="none">
-								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5 L158 36 L2 36 Z" fill="rgba(230,123,60,0.12)" />
-								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5" stroke="var(--fb-primary)" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+								<path d="M2 31 L20 31 L38 30 L56 28 L74 24 L92 20 L110 15 L128 10 L146 5 L158 1 L158 36 L2 36 Z" fill="rgba(111,168,51,0.26)" />
+								<path d="M2 31 L20 31 L38 30 L56 28 L74 24 L92 20 L110 15 L128 10 L146 5 L158 1" stroke="#6FA833" strokeWidth={2.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9.5, letterSpacing: "0.08em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>OSTATNIE 60 DNI · 198 NOWYCH OPINII</div>
 						</div>
@@ -157,7 +160,7 @@ export const LandingPage = () => {
 									{step.art === "qr" && <div style={{ background: "#fff", padding: 16, borderRadius: 10, boxShadow: "0 4px 12px rgba(12,10,7,0.08)" }}><QrIllustration /></div>}
 									{step.art === "stars" && <div style={{ display: "flex", gap: 6 }}>{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={32} filled={i < 5} />)}</div>}
 									{step.art === "coupon" && (
-										<div style={{ background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 12, padding: "14px 16px", position: "relative", width: "75%", boxShadow: "0 8px 18px -6px rgba(12,10,7,0.25)" }}>
+										<div style={{ background: "var(--fb-primary)", color: "var(--fb-cream)", borderRadius: 12, padding: "14px 16px", position: "relative", width: "75%", boxShadow: "0 8px 18px -6px rgba(80,19,30,0.22)" }}>
 											<div style={{ position: "absolute", left: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-cream)" }} />
 											<div style={{ position: "absolute", right: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-cream)" }} />
 											<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9, opacity: 0.5, letterSpacing: "0.08em" }}>BISTRO POD LIPĄ</div>
@@ -191,7 +194,7 @@ export const LandingPage = () => {
 							<div style={{ width: 60, color: "var(--fb-ink-mute)" }}>
 								<svg width="100%" height="24" viewBox="0 0 60 24" preserveAspectRatio="none"><path d="M2 12 H56 M50 6 L56 12 L50 18" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
 							</div>
-							<div style={{ width: "100%", padding: 18, borderRadius: 14, background: "var(--fb-ink)", color: "var(--fb-cream)" }}>
+							<div style={{ width: "100%", padding: 18, borderRadius: 14, background: "var(--fb-primary)", color: "var(--fb-cream)" }}>
 								<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 22, letterSpacing: "-0.01em", lineHeight: 1.1 }}>Jak wrażenia?</div>
 								<div style={{ display: "flex", gap: 5, marginTop: 12 }}>
 									{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={20} />)}
@@ -347,7 +350,7 @@ export const LandingPage = () => {
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div className="fb-quote-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 60, alignItems: "center" }}>
 						<div style={{ width: "100%", aspectRatio: "4/5", borderRadius: 18, background: "radial-gradient(ellipse at 35% 30%, rgba(230,123,60,0.22), transparent 60%), linear-gradient(160deg, var(--fb-paper) 0%, var(--fb-paper-2) 100%)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center" }}>
-							<div style={{ width: "64%", height: "70%", borderRadius: 14, background: "linear-gradient(160deg, rgba(12,10,7,0.07) 0%, rgba(12,10,7,0.18) 100%)", display: "grid", placeItems: "center", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.1em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>Zdjęcie właściciela</div>
+							<img src="/owner-portrait.png" alt="Magdalena Kowalczyk" style={{ width: "64%", height: "70%", borderRadius: 14, objectFit: "cover", objectPosition: "center center", display: "block" }} />
 						</div>
 						<div>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Historia właściciela</div>

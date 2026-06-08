@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { VARIANTS } from "./variants";
 
-const TOP_BG = "#FBF4EB"; // matches variant page default bg (cream)
-const CAPTION_BG = "#F5E3CB";
+const TOP_BG = "#FFFDF8"; // matches variant page default bg (cream)
+const CAPTION_BG = "#FBF7F1";
 
 export const LabIndexPage = () => {
 	return (
