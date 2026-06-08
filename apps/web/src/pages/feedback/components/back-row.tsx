@@ -27,7 +27,7 @@ export const BackRow = ({ onBack, step, total = 3 }: BackRowProps) => {
 					gap: 6,
 					fontFamily: "var(--fb-sans)",
 					fontSize: 14,
-					color: "rgba(12,10,7,0.6)",
+					color: "rgba(31,26,21,0.6)",
 				}}
 			>
 				<svg width="16" height="16" viewBox="0 0 16 16">
@@ -50,7 +50,7 @@ export const BackRow = ({ onBack, step, total = 3 }: BackRowProps) => {
 							width: s === step ? 18 : 6,
 							height: 6,
 							borderRadius: 3,
-							background: s <= step ? "var(--fb-ink)" : "rgba(12,10,7,0.15)",
+							background: s <= step ? "var(--fb-ink)" : "rgba(31,26,21,0.15)",
 							transition: "width 0.2s, background 0.2s",
 						}}
 					/>

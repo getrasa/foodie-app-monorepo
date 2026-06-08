@@ -1,7 +1,7 @@
 import { Avatar, Burger, Group, Menu, Text } from "@mantine/core";
 import { useNavigate } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
-import { BrandLogo } from "#/components/brand-logo";
+import { BrandMark } from "#/components/brand-mark";
 import { authClient } from "#/lib/auth-client";
 
 interface ConsoleHeaderProps {
@@ -33,7 +33,7 @@ export const ConsoleHeader = ({
 					hiddenFrom="sm"
 					size="sm"
 				/>
-				<BrandLogo size={28} wordmarkSize={18} />
+				<BrandMark height={28} />
 			</Group>
 
 			<Menu shadow="md" width={200}>

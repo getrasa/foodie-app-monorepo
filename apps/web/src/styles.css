@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --fb-cream: #F5F0E5;
-  --fb-paper: #EAE2D0;
-  --fb-ink: #0C0A07;
-  --fb-primary: #E67B3C;
-  --fb-olive: #566127;
-  --fb-paper-2: #DCD1B9;
-  --fb-bordeaux: #791F1F;
-  --fb-ink-soft: rgba(12,10,7,0.76);
-  --fb-ink-mute: rgba(12,10,7,0.56);
-  --fb-line: rgba(12,10,7,0.18);
+  --fb-cream: #FFFDF8;
+  --fb-paper: #FBF7F1;
+  --fb-paper-2: #F2E8DE;
+  --fb-ink: #2A1719;
+  --fb-primary: #7A1F2C;
+  --fb-primary-deep: #50131E;
+  --fb-olive: #7A6F55;
+  --fb-olive-deep: #514A38;
+  --fb-bordeaux: #7A1F2C;
+  --fb-ink-soft: rgba(42,23,25,0.72);
+  --fb-ink-mute: rgba(42,23,25,0.48);
+  --fb-line: rgba(122,31,44,0.16);
   --fb-serif: 'Instrument Serif', Georgia, serif;
   --fb-sans: 'Instrument Sans', system-ui, sans-serif;
   --fb-mono: 'JetBrains Mono', monospace;
@@ -36,6 +38,56 @@ body {
   transition: background 120ms ease, color 120ms ease;
 }
 .fb-nav-item[data-active="false"]:hover {
-  background: rgba(12,10,7,0.05) !important;
+  background: rgba(42,23,25,0.05) !important;
   color: var(--fb-ink) !important;
+}
+
+/* Premium palette overrides — remap legacy ink-on-cream layout to burgundy-on-cream */
+html, body, #app { background: var(--fb-cream) !important; }
+body { color: var(--fb-ink) !important; }
+
+button[style*="background:var(--fb-ink)"],
+.fb-nav-signup,
+a[style*="background:var(--fb-ink)"] {
+  background: var(--fb-primary) !important;
+  color: var(--fb-cream) !important;
+}
+
+.fb-hero-coupon {
+  background: var(--fb-primary) !important;
+  box-shadow: 0 22px 46px -14px rgba(80,19,30,.28) !important;
+}
+
+div[style*="background:var(--fb-ink)"][style*="width:44px"] {
+  background: var(--fb-primary) !important;
+}
+div[style*="background:var(--fb-ink)"][style*="width:28px"] {
+  background: #F3E3E5 !important;
+  color: var(--fb-primary) !important;
+}
+div[style*="background:var(--fb-ink)"][style*="width:28px"] svg path {
+  fill: var(--fb-primary) !important;
+  stroke: var(--fb-primary) !important;
+}
+
+article[style*="background:var(--fb-ink)"] {
+  background: var(--fb-paper-2) !important;
+  color: var(--fb-ink) !important;
+  border: 1.5px solid var(--fb-primary) !important;
+  box-shadow: 0 18px 42px -24px rgba(80,19,30,.22) !important;
+}
+article[style*="background:var(--fb-ink)"] div,
+article[style*="background:var(--fb-ink)"] span {
+  color: var(--fb-ink) !important;
+}
+article[style*="background:var(--fb-ink)"] span[style*="color:var(--fb-primary)"] {
+  color: var(--fb-primary) !important;
+}
+article[style*="background:var(--fb-ink)"] button {
+  background: var(--fb-primary) !important;
+  color: var(--fb-cream) !important;
+}
+article[style*="background:var(--fb-ink)"] div[style*="text-transform:uppercase"] {
+  background: var(--fb-primary) !important;
+  color: var(--fb-cream) !important;
 }

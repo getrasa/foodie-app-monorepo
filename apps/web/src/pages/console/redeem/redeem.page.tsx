@@ -13,8 +13,8 @@ type ResultState =
 
 const STATUS_BADGE: Record<VoucherStatus, { color: string; label: string }> = {
 	active: { color: "var(--fb-olive)", label: "Aktywny" },
-	redeemed: { color: "rgba(12,10,7,0.55)", label: "Już zrealizowany" },
-	expired: { color: "rgba(12,10,7,0.55)", label: "Wygasł" },
+	redeemed: { color: "rgba(31,26,21,0.55)", label: "Już zrealizowany" },
+	expired: { color: "rgba(31,26,21,0.55)", label: "Wygasł" },
 	voided: { color: "#A63D2A", label: "Unieważniony" },
 };
 
@@ -198,7 +198,7 @@ export const RedeemPage = () => {
 			<div
 				style={{
 					fontSize: 13,
-					color: "rgba(12,10,7,0.55)",
+					color: "rgba(31,26,21,0.55)",
 					marginTop: 4,
 				}}
 			>
@@ -211,7 +211,7 @@ export const RedeemPage = () => {
 						padding: 22,
 						borderRadius: 16,
 						background: "#fff",
-						border: "0.5px solid rgba(12,10,7,0.08)",
+						border: "0.5px solid rgba(31,26,21,0.08)",
 					}}
 				>
 					<div
@@ -220,7 +220,7 @@ export const RedeemPage = () => {
 							fontSize: 10.5,
 							letterSpacing: "0.06em",
 							textTransform: "uppercase",
-							color: "rgba(12,10,7,0.55)",
+							color: "rgba(31,26,21,0.55)",
 							marginBottom: 8,
 						}}
 					>
@@ -234,7 +234,7 @@ export const RedeemPage = () => {
 							padding: "4px 4px 4px 14px",
 							borderRadius: 12,
 							background: "var(--fb-paper)",
-							border: "1px solid rgba(12,10,7,0.12)",
+							border: "1px solid rgba(31,26,21,0.12)",
 						}}
 					>
 						<input
@@ -435,7 +435,7 @@ const FoundVoucher = ({
 						style={{
 							marginTop: 6,
 							fontSize: 12,
-							color: "rgba(12,10,7,0.55)",
+							color: "rgba(31,26,21,0.55)",
 						}}
 					>
 						Ważny do {expiry}
@@ -475,7 +475,7 @@ const FoundVoucher = ({
 							borderRadius: 10,
 							background: "transparent",
 							color: "var(--fb-ink)",
-							border: "0.5px solid rgba(12,10,7,0.2)",
+							border: "0.5px solid rgba(31,26,21,0.2)",
 							cursor: "pointer",
 							fontSize: 13,
 						}}

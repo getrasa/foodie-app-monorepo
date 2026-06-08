@@ -12,37 +12,37 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { createQueryClient } from "#/lib/query-client";
 
-const terracotta: MantineColorsTuple = [
-	"#fefaf7",
-	"#fcede4",
-	"#f7d2bd",
-	"#f1b592",
-	"#ec9b6b",
-	"#e98850",
-	"#e67b3c",
-	"#ba6431",
-	"#955027",
-	"#723d1e",
+const burgundy: MantineColorsTuple = [
+	"#FBF1F3",
+	"#F3E3E5",
+	"#E3BFC5",
+	"#C98D98",
+	"#A94F5F",
+	"#873142",
+	"#6B1E2A",
+	"#551722",
+	"#3A0E16",
+	"#24080D",
 ];
 
 const olive: MantineColorsTuple = [
-	"#f8f9f6",
-	"#e7e9e1",
-	"#c6c9b6",
-	"#a0a786",
-	"#7f875b",
-	"#67713d",
-	"#566127",
-	"#464f20",
-	"#383f19",
-	"#2b3013",
+	"#f8f9f5",
+	"#ebeee2",
+	"#d4d9c2",
+	"#b6bf9a",
+	"#9aa67b",
+	"#889668",
+	"#7e8b5c",
+	"#5e6b40",
+	"#485333",
+	"#353d25",
 ];
 
 const theme = createTheme({
-	primaryColor: "terracotta",
+	primaryColor: "burgundy",
 	autoContrast: true,
 	colors: {
-		terracotta,
+		burgundy,
 		olive,
 	},
 	fontFamily: "'Instrument Sans', system-ui, sans-serif",
@@ -78,7 +78,7 @@ export const Route = createRootRoute({
 			},
 			{
 				name: "theme-color",
-				content: "#F5F0E5",
+				content: "#FFFDF8",
 			},
 			// Open Graph (Facebook, LinkedIn, Messenger, …)
 			{ property: "og:type", content: "website" },

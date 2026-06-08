@@ -62,8 +62,8 @@ const Chip = ({ selected, onClick, children }: ChipProps) => (
 			padding: "5px 10px",
 			borderRadius: 999,
 			background: selected ? "var(--fb-ink)" : "transparent",
-			color: selected ? "var(--fb-cream)" : "rgba(12,10,7,0.7)",
-			border: selected ? "none" : "0.5px solid rgba(12,10,7,0.15)",
+			color: selected ? "var(--fb-cream)" : "rgba(31,26,21,0.7)",
+			border: selected ? "none" : "0.5px solid rgba(31,26,21,0.15)",
 			fontFamily: "var(--fb-sans)",
 			fontSize: 12,
 			display: "inline-flex",
@@ -88,7 +88,7 @@ const Section = ({ label, children }: SectionProps) => (
 				fontSize: 9.5,
 				letterSpacing: "0.06em",
 				textTransform: "uppercase",
-				color: "rgba(12,10,7,0.45)",
+				color: "rgba(31,26,21,0.45)",
 				marginBottom: 6,
 			}}
 		>
@@ -141,8 +141,8 @@ export const FeedbackFilters = ({
 								padding: "5px 10px",
 								borderRadius: 999,
 								background: moreCount > 0 ? "var(--fb-cream)" : "transparent",
-								color: "rgba(12,10,7,0.7)",
-								border: "0.5px solid rgba(12,10,7,0.15)",
+								color: "rgba(31,26,21,0.7)",
+								border: "0.5px solid rgba(31,26,21,0.15)",
 								fontFamily: "var(--fb-sans)",
 								fontSize: 12,
 								display: "inline-flex",
@@ -234,7 +234,7 @@ export const FeedbackFilters = ({
 									alignSelf: "flex-start",
 									fontFamily: "var(--fb-sans)",
 									fontSize: 11.5,
-									color: "rgba(12,10,7,0.55)",
+									color: "rgba(31,26,21,0.55)",
 									textDecoration: "underline",
 								}}
 							>

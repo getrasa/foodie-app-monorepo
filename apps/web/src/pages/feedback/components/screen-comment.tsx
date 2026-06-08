@@ -83,7 +83,7 @@ export const ScreenComment = ({
 						padding: "6px 12px",
 						borderRadius: 999,
 						background: "var(--fb-paper)",
-						border: "0.5px solid rgba(12,10,7,0.07)",
+						border: "0.5px solid rgba(31,26,21,0.07)",
 					}}
 				>
 					{[1, 2, 3, 4, 5].map((i) => (
@@ -93,7 +93,7 @@ export const ScreenComment = ({
 						style={{
 							fontFamily: "var(--fb-sans)",
 							fontSize: 12,
-							color: "rgba(12,10,7,0.65)",
+							color: "rgba(31,26,21,0.65)",
 							marginLeft: 4,
 						}}
 					>
@@ -121,7 +121,7 @@ export const ScreenComment = ({
 						fontSize: 13.5,
 						color: commentRequired
 							? "var(--fb-primary)"
-							: "rgba(12,10,7,0.55)",
+							: "rgba(31,26,21,0.55)",
 					}}
 				>
 					{commentRequired
@@ -138,7 +138,7 @@ export const ScreenComment = ({
 							fontSize: 10,
 							letterSpacing: "0.06em",
 							textTransform: "uppercase",
-							color: "rgba(12,10,7,0.5)",
+							color: "rgba(31,26,21,0.5)",
 							marginBottom: 8,
 						}}
 					>
@@ -159,7 +159,7 @@ export const ScreenComment = ({
 										color: active ? "var(--fb-cream)" : "var(--fb-ink)",
 										border: active
 											? "1px solid var(--fb-ink)"
-											: "0.5px solid rgba(12,10,7,0.12)",
+											: "0.5px solid rgba(31,26,21,0.12)",
 										fontFamily: "var(--fb-sans)",
 										fontSize: 13,
 										cursor: "pointer",
@@ -183,8 +183,8 @@ export const ScreenComment = ({
 					borderRadius: 14,
 					border:
 						commentRequired && !commentFilled
-							? "1px solid rgba(230,123,60,0.45)"
-							: "0.5px solid rgba(12,10,7,0.07)",
+							? "1px solid rgba(117,26,31,0.45)"
+							: "0.5px solid rgba(31,26,21,0.07)",
 					display: "flex",
 					flexDirection: "column",
 				}}
@@ -213,7 +213,7 @@ export const ScreenComment = ({
 						fontFamily: "var(--fb-mono)",
 						fontSize: 10,
 						letterSpacing: "0.04em",
-						color: "rgba(12,10,7,0.35)",
+						color: "rgba(31,26,21,0.35)",
 						textAlign: "right",
 					}}
 				>
@@ -228,12 +228,12 @@ export const ScreenComment = ({
 						display: "block",
 						fontFamily: "var(--fb-sans)",
 						fontSize: 13,
-						color: "rgba(12,10,7,0.65)",
+						color: "rgba(31,26,21,0.65)",
 						marginBottom: 6,
 					}}
 				>
 					Wyślij mi kod e-mailem{" "}
-					<span style={{ color: "rgba(12,10,7,0.4)" }}>(opcjonalnie)</span>
+					<span style={{ color: "rgba(31,26,21,0.4)" }}>(opcjonalnie)</span>
 				</label>
 				<div
 					style={{
@@ -241,8 +241,8 @@ export const ScreenComment = ({
 						background: "var(--fb-paper)",
 						borderRadius: 12,
 						border: !emailValid
-							? "1px solid rgba(230,123,60,0.45)"
-							: "0.5px solid rgba(12,10,7,0.1)",
+							? "1px solid rgba(117,26,31,0.45)"
+							: "0.5px solid rgba(31,26,21,0.1)",
 						display: "flex",
 						alignItems: "center",
 						gap: 10,
@@ -251,7 +251,7 @@ export const ScreenComment = ({
 					<svg width="16" height="16" viewBox="0 0 18 18" fill="none">
 						<path
 							d="M2 4.5h14v9H2zM2 4.5l7 5 7-5"
-							stroke="rgba(12,10,7,0.45)"
+							stroke="rgba(31,26,21,0.45)"
 							strokeWidth="1.4"
 							strokeLinejoin="round"
 						/>
@@ -282,7 +282,7 @@ export const ScreenComment = ({
 							marginTop: 6,
 							fontFamily: "var(--fb-sans)",
 							fontSize: 12,
-							color: "rgba(230,123,60,0.95)",
+							color: "rgba(117,26,31,0.95)",
 						}}
 					>
 						Sprawdź adres e-mail — wygląda na niepoprawny.
@@ -295,11 +295,11 @@ export const ScreenComment = ({
 					marginTop: 16,
 					padding: "11px 13px",
 					borderRadius: 12,
-					border: "0.5px dashed rgba(12,10,7,0.15)",
+					border: "0.5px dashed rgba(31,26,21,0.15)",
 					fontFamily: "var(--fb-sans)",
 					fontSize: 11.5,
 					lineHeight: 1.5,
-					color: "rgba(12,10,7,0.6)",
+					color: "rgba(31,26,21,0.6)",
 				}}
 			>
 				Wysyłając opinię zapisujemy ocenę, komentarz oraz — dla ochrony przed
@@ -313,7 +313,7 @@ export const ScreenComment = ({
 						marginTop: 12,
 						padding: "10px 12px",
 						borderRadius: 10,
-						background: "rgba(230,123,60,0.08)",
+						background: "rgba(117,26,31,0.08)",
 						color: "var(--fb-primary)",
 						fontFamily: "var(--fb-sans)",
 						fontSize: 13,
@@ -335,7 +335,7 @@ export const ScreenComment = ({
 							marginTop: 8,
 							fontFamily: "var(--fb-sans)",
 							fontSize: 12,
-							color: "rgba(12,10,7,0.5)",
+							color: "rgba(31,26,21,0.5)",
 							textAlign: "center",
 						}}
 					>

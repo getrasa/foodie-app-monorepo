@@ -129,7 +129,7 @@ export const ConsoleNavbar = ({
 					<Text fz={13} fw={500} c="var(--fb-ink)" lineClamp={1} lh={1.1}>
 						{session.user.name ?? "Moja restauracja"}
 					</Text>
-					<Text fz={10.5} c="rgba(12,10,7,0.5)" mt={2}>
+					<Text fz={10.5} c="rgba(31,26,21,0.5)" mt={2}>
 						Jak Było · Beta
 					</Text>
 				</div>
@@ -165,10 +165,10 @@ export const ConsoleNavbar = ({
 								borderRadius: 8,
 								fontFamily: "var(--fb-sans)",
 								fontSize: 13,
-								color: active ? "var(--fb-ink)" : "rgba(12,10,7,0.7)",
+								color: active ? "var(--fb-ink)" : "rgba(31,26,21,0.7)",
 								fontWeight: active ? 500 : 400,
 								boxShadow: active
-									? "0 1px 0 rgba(255,255,255,0.6) inset, 0 1px 2px rgba(12,10,7,0.04)"
+									? "0 1px 0 rgba(255,255,255,0.6) inset, 0 1px 2px rgba(31,26,21,0.04)"
 									: "none",
 							}}
 						>
@@ -204,7 +204,7 @@ export const ConsoleNavbar = ({
 					background: "var(--fb-cream)",
 					borderRadius: 10,
 					padding: 12,
-					border: "0.5px solid rgba(12,10,7,0.07)",
+					border: "0.5px solid rgba(31,26,21,0.07)",
 				}}
 			>
 				<div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -219,7 +219,7 @@ export const ConsoleNavbar = ({
 					<div
 						style={{
 							fontSize: 11,
-							color: "rgba(12,10,7,0.6)",
+							color: "rgba(31,26,21,0.6)",
 							fontFamily: "var(--fb-mono)",
 							letterSpacing: "0.04em",
 						}}
@@ -231,7 +231,7 @@ export const ConsoleNavbar = ({
 					style={{
 						marginTop: 6,
 						fontSize: 11.5,
-						color: "rgba(12,10,7,0.55)",
+						color: "rgba(31,26,21,0.55)",
 						lineHeight: 1.45,
 					}}
 				>
@@ -256,7 +256,7 @@ export const ConsoleNavbar = ({
 								width: 22,
 								height: 22,
 								borderRadius: "50%",
-								background: "rgba(12,10,7,0.08)",
+								background: "rgba(31,26,21,0.08)",
 								display: "grid",
 								placeItems: "center",
 								fontSize: 10,
@@ -266,7 +266,7 @@ export const ConsoleNavbar = ({
 						>
 							{userInitial}
 						</div>
-						<Text fz={12} c="rgba(12,10,7,0.55)">
+						<Text fz={12} c="rgba(31,26,21,0.55)">
 							{session.user.name ?? "Konto"}
 						</Text>
 					</UnstyledButton>

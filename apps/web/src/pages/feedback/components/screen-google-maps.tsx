@@ -57,7 +57,7 @@ export const ScreenGoogleMaps = ({
 					fontSize: 11,
 					letterSpacing: "0.08em",
 					textTransform: "uppercase",
-					color: "rgba(12,10,7,0.5)",
+					color: "rgba(31,26,21,0.5)",
 				}}
 			>
 				Krok dodatkowy · opcjonalny
@@ -84,7 +84,7 @@ export const ScreenGoogleMaps = ({
 					fontFamily: "var(--fb-sans)",
 					fontSize: 14.5,
 					lineHeight: 1.5,
-					color: "rgba(12,10,7,0.62)",
+					color: "rgba(31,26,21,0.62)",
 				}}
 			>
 				Krótka opinia w Mapach Google daje{" "}
@@ -99,7 +99,7 @@ export const ScreenGoogleMaps = ({
 					padding: 16,
 					background: "var(--fb-paper)",
 					borderRadius: 14,
-					border: "0.5px solid rgba(12,10,7,0.07)",
+					border: "0.5px solid rgba(31,26,21,0.07)",
 					display: "flex",
 					flexDirection: "column",
 					gap: 14,
@@ -112,7 +112,7 @@ export const ScreenGoogleMaps = ({
 							height: 40,
 							borderRadius: 10,
 							background: "#fff",
-							border: "0.5px solid rgba(12,10,7,0.1)",
+							border: "0.5px solid rgba(31,26,21,0.1)",
 							display: "grid",
 							placeItems: "center",
 							flexShrink: 0,
@@ -141,7 +141,7 @@ export const ScreenGoogleMaps = ({
 							style={{
 								fontFamily: "var(--fb-sans)",
 								fontSize: 12.5,
-								color: "rgba(12,10,7,0.55)",
+								color: "rgba(31,26,21,0.55)",
 								marginTop: 2,
 							}}
 						>
@@ -151,11 +151,11 @@ export const ScreenGoogleMaps = ({
 				</div>
 				<div
 					style={{
-						borderTop: "0.5px solid rgba(12,10,7,0.08)",
+						borderTop: "0.5px solid rgba(31,26,21,0.08)",
 						paddingTop: 12,
 						fontFamily: "var(--fb-sans)",
 						fontSize: 12.5,
-						color: "rgba(12,10,7,0.55)",
+						color: "rgba(31,26,21,0.55)",
 						lineHeight: 1.5,
 					}}
 				>
@@ -169,7 +169,7 @@ export const ScreenGoogleMaps = ({
 							padding: 12,
 							borderRadius: 10,
 							background: "var(--fb-cream)",
-							border: "0.5px solid rgba(12,10,7,0.1)",
+							border: "0.5px solid rgba(31,26,21,0.1)",
 						}}
 					>
 						<div
@@ -178,7 +178,7 @@ export const ScreenGoogleMaps = ({
 								fontSize: 10,
 								letterSpacing: "0.06em",
 								textTransform: "uppercase",
-								color: "rgba(12,10,7,0.5)",
+								color: "rgba(31,26,21,0.5)",
 								marginBottom: 6,
 							}}
 						>
@@ -249,7 +249,7 @@ export const ScreenGoogleMaps = ({
 						cursor: "pointer",
 						fontFamily: "var(--fb-sans)",
 						fontSize: 14,
-						color: "rgba(12,10,7,0.55)",
+						color: "rgba(31,26,21,0.55)",
 						padding: 12,
 					}}
 				>

@@ -3,7 +3,7 @@ import { BackRow } from "./back-row";
 import { PrimaryButton } from "./primary-button";
 
 const RATING_WORDS: Record<number, { word: string; color: string }> = {
-	0: { word: "—", color: "rgba(12,10,7,0.35)" },
+	0: { word: "—", color: "rgba(31,26,21,0.35)" },
 	1: { word: "Słabo", color: "var(--fb-ink)" },
 	2: { word: "Mogło być lepiej", color: "var(--fb-ink)" },
 	3: { word: "W porządku", color: "var(--fb-ink)" },
@@ -21,7 +21,7 @@ const Star = ({
 	onPointerDown: () => void;
 }) => {
 	const fill = filled ? "var(--fb-primary)" : "transparent";
-	const stroke = filled ? "var(--fb-primary)" : "rgba(12,10,7,0.22)";
+	const stroke = filled ? "var(--fb-primary)" : "rgba(31,26,21,0.22)";
 	return (
 		<button
 			type="button"
@@ -97,7 +97,7 @@ export const ScreenRating = ({
 						marginTop: 10,
 						fontFamily: "var(--fb-sans)",
 						fontSize: 15,
-						color: "rgba(12,10,7,0.6)",
+						color: "rgba(31,26,21,0.6)",
 					}}
 				>
 					Dotknij, aby ocenić swoje wrażenia.

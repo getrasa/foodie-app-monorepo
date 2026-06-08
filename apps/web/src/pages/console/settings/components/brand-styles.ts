@@ -7,7 +7,7 @@ export const brandInputStyle = (invalid: boolean): CSSProperties => ({
 	background: "#fff",
 	border: invalid
 		? "1px solid var(--fb-primary)"
-		: "1px solid rgba(12,10,7,0.12)",
+		: "1px solid rgba(31,26,21,0.12)",
 	fontFamily: "var(--fb-sans)",
 	fontSize: 14,
 	color: "var(--fb-ink)",
@@ -32,7 +32,7 @@ export const brandSecondaryButtonStyle = (disabled: boolean): CSSProperties => (
 	borderRadius: 10,
 	background: "transparent",
 	color: "var(--fb-ink)",
-	border: "0.5px solid rgba(12,10,7,0.2)",
+	border: "0.5px solid rgba(31,26,21,0.2)",
 	cursor: disabled ? "not-allowed" : "pointer",
 	opacity: disabled ? 0.5 : 1,
 	fontSize: 13,

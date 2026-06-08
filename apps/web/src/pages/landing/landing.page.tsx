@@ -76,7 +76,10 @@ export const LandingPage = () => {
 									<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z" />
 								</svg>
 								<span>Ocena Google</span>
-								<span style={{ marginLeft: "auto", color: "#2F8F4E", fontWeight: 600, fontFamily: "var(--fb-mono)", fontSize: 10.5 }}>▲ +0,6</span>
+								<span style={{ marginLeft: "auto", color: "#5F8E2E", fontWeight: 700, fontFamily: "var(--fb-mono)", fontSize: 10.5, display: "inline-flex", alignItems: "center", gap: 3 }}>
+									<span>+0,6</span>
+									<span style={{ fontSize: 24, lineHeight: 0.7, display: "inline-block", transform: "translateY(1px)" }}>★</span>
+								</span>
 							</div>
 							<div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 8 }}>
 								<span style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 36, lineHeight: 1, letterSpacing: "-0.02em", color: "var(--fb-ink)" }}>4,9</span>
@@ -85,8 +88,8 @@ export const LandingPage = () => {
 								</span>
 							</div>
 							<svg style={{ display: "block", margin: "6px 0 4px" }} width="100%" height="36" viewBox="0 0 160 36" preserveAspectRatio="none">
-								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5 L158 36 L2 36 Z" fill="rgba(230,123,60,0.12)" />
-								<path d="M2 28 L20 26 L38 24 L56 22 L74 18 L92 14 L110 11 L128 8 L146 6 L158 5" stroke="var(--fb-primary)" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+								<path d="M2 31 L20 31 L38 30 L56 28 L74 24 L92 20 L110 15 L128 10 L146 5 L158 1 L158 36 L2 36 Z" fill="rgba(111,168,51,0.26)" />
+								<path d="M2 31 L20 31 L38 30 L56 28 L74 24 L92 20 L110 15 L128 10 L146 5 L158 1" stroke="#6FA833" strokeWidth={2.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9.5, letterSpacing: "0.08em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>OSTATNIE 60 DNI · 198 NOWYCH OPINII</div>
 						</div>
@@ -135,7 +138,7 @@ export const LandingPage = () => {
 			<hr style={{ border: "none", borderTop: "0.5px solid var(--fb-line)", maxWidth: 1240, margin: "0 auto" }} />
 
 			{/* ─── HOW IT WORKS ─── */}
-			<section id="how" className="fb-section" style={{ padding: "96px 0", background: "var(--fb-paper)" }}>
+			<section id="how" className="fb-section" style={{ padding: "96px 0", background: "var(--fb-cream)" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div style={{ maxWidth: 720, marginBottom: 48 }}>
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Jak to działa</div>
@@ -149,17 +152,17 @@ export const LandingPage = () => {
 							{ num: "02 · Recenzja", h: "Goście mówią swoimi słowami.", p: "Bez konta, bez aplikacji. Gwiazdki, krótki komentarz, tagi — wszystko opcjonalne. Nawet trzy gwiazdki przychodzą z ręką na sercu, bo trafiają tylko do Ciebie.", art: "stars" },
 							{ num: "03 · Nagroda", h: "Rabacik prosto od Ciebie.", p: "W chwili wysłania opinii na telefonie ląduje unikalny kod. Wykorzystają go przy następnej wizycie — a wracają niemal zawsze.", art: "coupon" },
 						].map((step) => (
-							<article key={step.num} style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 18, padding: 28, display: "flex", flexDirection: "column", gap: 16 }}>
+							<article key={step.num} style={{ background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)", borderRadius: 18, padding: 28, display: "flex", flexDirection: "column", gap: 16 }}>
 								<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, color: "var(--fb-primary)", letterSpacing: "0.06em" }}>{step.num}</div>
 								<h3 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 28, letterSpacing: "-0.01em", lineHeight: 1.1, margin: 0 }}>{step.h}</h3>
 								<p style={{ fontSize: 14.5, color: "var(--fb-ink-soft)", lineHeight: 1.55, margin: 0 }}>{step.p}</p>
-								<div style={{ height: 180, borderRadius: 12, background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center", overflow: "hidden" }}>
+								<div style={{ height: 180, borderRadius: 12, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center", overflow: "hidden" }}>
 									{step.art === "qr" && <div style={{ background: "#fff", padding: 16, borderRadius: 10, boxShadow: "0 4px 12px rgba(12,10,7,0.08)" }}><QrIllustration /></div>}
 									{step.art === "stars" && <div style={{ display: "flex", gap: 6 }}>{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={32} filled={i < 5} />)}</div>}
 									{step.art === "coupon" && (
-										<div style={{ background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 12, padding: "14px 16px", position: "relative", width: "75%", boxShadow: "0 8px 18px -6px rgba(12,10,7,0.25)" }}>
-											<div style={{ position: "absolute", left: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-paper)" }} />
-											<div style={{ position: "absolute", right: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-paper)" }} />
+										<div style={{ background: "var(--fb-primary)", color: "var(--fb-cream)", borderRadius: 12, padding: "14px 16px", position: "relative", width: "75%", boxShadow: "0 8px 18px -6px rgba(80,19,30,0.22)" }}>
+											<div style={{ position: "absolute", left: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-cream)" }} />
+											<div style={{ position: "absolute", right: -7, top: "55%", width: 14, height: 14, borderRadius: "50%", background: "var(--fb-cream)" }} />
 											<div style={{ fontFamily: "var(--fb-mono)", fontSize: 9, opacity: 0.5, letterSpacing: "0.08em" }}>BISTRO POD LIPĄ</div>
 											<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 28, letterSpacing: "-0.02em", lineHeight: 1, marginTop: 4 }}>15% rabatu</div>
 											<div style={{ fontFamily: "var(--fb-mono)", fontSize: 12, letterSpacing: "0.1em", marginTop: 10, paddingTop: 8, borderTop: "1px dashed rgba(251,247,239,0.25)" }}>LIPA-4KX9</div>
@@ -173,7 +176,7 @@ export const LandingPage = () => {
 			</section>
 
 			{/* ─── FUNNEL ─── */}
-			<section className="fb-section" style={{ padding: "96px 0", background: "var(--fb-paper)" }}>
+			<section className="fb-section" style={{ padding: "96px 0", background: "var(--fb-cream)" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div style={{ maxWidth: 720, marginBottom: 48 }}>
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Lejek opinii</div>
@@ -183,15 +186,15 @@ export const LandingPage = () => {
 
 					<div className="fb-funnel-diagram" style={{ display: "grid", gridTemplateColumns: "minmax(280px, 1fr) 100px minmax(320px, 1.2fr)", gap: 24, alignItems: "center", marginTop: 56 }}>
 						{/* Source */}
-						<div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 18, padding: 24 }}>
-							<div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", background: "var(--fb-paper)", borderRadius: 999, fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--fb-ink)" }}>
+						<div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14, background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)", borderRadius: 18, padding: 24 }}>
+							<div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", background: "var(--fb-cream)", borderRadius: 999, fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--fb-ink)" }}>
 								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4" /><rect x="4" y="4" width="2" height="2" fill="currentColor" /><rect x="8" y="4" width="2" height="2" fill="currentColor" /><rect x="4" y="8" width="2" height="2" fill="currentColor" /><rect x="8" y="8" width="2" height="2" fill="currentColor" /></svg>
 								Skan QR
 							</div>
 							<div style={{ width: 60, color: "var(--fb-ink-mute)" }}>
 								<svg width="100%" height="24" viewBox="0 0 60 24" preserveAspectRatio="none"><path d="M2 12 H56 M50 6 L56 12 L50 18" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
 							</div>
-							<div style={{ width: "100%", padding: 18, borderRadius: 14, background: "var(--fb-ink)", color: "var(--fb-cream)" }}>
+							<div style={{ width: "100%", padding: 18, borderRadius: 14, background: "var(--fb-primary)", color: "var(--fb-cream)" }}>
 								<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: 22, letterSpacing: "-0.01em", lineHeight: 1.1 }}>Jak wrażenia?</div>
 								<div style={{ display: "flex", gap: 5, marginTop: 12 }}>
 									{[1, 2, 3, 4, 5].map((i) => <StarSvg key={i} size={20} />)}
@@ -211,8 +214,8 @@ export const LandingPage = () => {
 						<div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
 							{/* 5-star → Google */}
 							<div>
-								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)" }}>5 gwiazdek</div>
-								<div style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid var(--fb-olive)" }}>
+								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)" }}>5 gwiazdek</div>
+								<div style={{ background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid var(--fb-olive)" }}>
 									<div style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
 										<svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z" /><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83C6.71 7.31 9.14 5.38 12 5.38z" /></svg>
 										Podziel się na Google?
@@ -225,8 +228,8 @@ export const LandingPage = () => {
 
 							{/* 1-4 star → Private */}
 							<div>
-								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)" }}>1–4 gwiazdki</div>
-								<div style={{ background: "var(--fb-cream)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid var(--fb-bordeaux)" }}>
+								<div style={{ alignSelf: "flex-start", display: "inline-block", fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fb-ink-mute)", padding: "4px 10px", borderRadius: 999, background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)" }}>1–4 gwiazdki</div>
+								<div style={{ background: "var(--fb-paper)", border: "0.5px solid var(--fb-line)", borderRadius: 14, padding: "16px 18px", marginTop: 8, borderLeft: "3px solid var(--fb-bordeaux)" }}>
 									<div style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "var(--fb-mono)", fontSize: 10.5, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>
 										<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6l-3 2.5V12a2 2 0 01-1-2V4z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>
 										Tylko dla kuchni
@@ -240,7 +243,7 @@ export const LandingPage = () => {
 					</div>
 
 					{/* Shared outcome */}
-					<div style={{ marginTop: 40, padding: "18px 22px", border: "1px dashed rgba(12,10,7,0.2)", borderRadius: 14, background: "var(--fb-cream)", display: "flex", alignItems: "center", gap: 14, color: "var(--fb-ink-soft)", fontSize: 14.5, lineHeight: 1.45 }}>
+					<div style={{ marginTop: 40, padding: "18px 22px", border: "1px dashed rgba(12,10,7,0.2)", borderRadius: 14, background: "var(--fb-paper)", display: "flex", alignItems: "center", gap: 14, color: "var(--fb-ink-soft)", fontSize: 14.5, lineHeight: 1.45 }}>
 						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
 						<div><strong style={{ color: "var(--fb-ink)", fontWeight: 500 }}>Obie strony</strong> dostają jednorazowy kod rabatowy na następną wizytę. Nawet ci niezadowoleni — bo właśnie tak zły wieczór zamienia się w powrót.</div>
 					</div>
@@ -321,10 +324,10 @@ export const LandingPage = () => {
 
 			{/* ─── STATS ─── */}
 			<section style={{ padding: 0 }}>
-				<div className="fb-math" style={{ background: "var(--fb-ink)", color: "var(--fb-cream)", borderRadius: 24, margin: "0 auto", padding: "80px 64px", maxWidth: 1240 }}>
-					<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(251,247,239,0.55)" }}>Matematyka po obiedzie</div>
-					<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.02, margin: "12px 0 0", fontWeight: 400, color: "var(--fb-cream)" }}>Liczby od naszych beta-lokali.</h2>
-					<p style={{ marginTop: 16, maxWidth: 580, color: "rgba(251,247,239,0.65)" }}>Po 90 dniach, w 47 niezależnych restauracjach w Polsce i Europie.</p>
+				<div className="fb-math" style={{ background: "var(--fb-paper)", color: "var(--fb-ink)", borderRadius: 24, margin: "0 auto", padding: "80px 64px", maxWidth: 1240 }}>
+					<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Matematyka po obiedzie</div>
+					<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.02em", lineHeight: 1.02, margin: "12px 0 0", fontWeight: 400, color: "var(--fb-ink)" }}>Liczby od naszych beta-lokali.</h2>
+					<p style={{ marginTop: 16, maxWidth: 580, color: "var(--fb-ink-soft)" }}>Po 90 dniach, w 47 niezależnych restauracjach w Polsce i Europie.</p>
 
 					<div className="fb-math-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24, marginTop: 48 }}>
 						{[
@@ -333,9 +336,9 @@ export const LandingPage = () => {
 							{ v: "17%", l: "Wykorzystanych rabatów — czyli powrotów, które bezpośrednio możesz przypisać Jak Było." },
 							{ v: "92 zł", l: "Średni przychód na jedno skanowanie, po rabacie. (Średni rachunek 340 zł, średni rabat 15%.)" },
 						].map((stat) => (
-							<div key={stat.v} style={{ borderTop: "0.5px solid rgba(251,247,239,0.15)", paddingTop: 18 }}>
+							<div key={stat.v} style={{ borderTop: "0.5px solid var(--fb-line)", paddingTop: 18 }}>
 								<div style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(48px, 5vw, 68px)", lineHeight: 1, letterSpacing: "-0.02em", color: "var(--fb-primary)" }}>{stat.v}</div>
-								<div style={{ marginTop: 12, fontSize: 13.5, color: "rgba(251,247,239,0.65)", lineHeight: 1.45 }}>{stat.l}</div>
+								<div style={{ marginTop: 12, fontSize: 13.5, color: "var(--fb-ink-soft)", lineHeight: 1.45 }}>{stat.l}</div>
 							</div>
 						))}
 					</div>
@@ -347,7 +350,7 @@ export const LandingPage = () => {
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div className="fb-quote-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 60, alignItems: "center" }}>
 						<div style={{ width: "100%", aspectRatio: "4/5", borderRadius: 18, background: "radial-gradient(ellipse at 35% 30%, rgba(230,123,60,0.22), transparent 60%), linear-gradient(160deg, var(--fb-paper) 0%, var(--fb-paper-2) 100%)", border: "0.5px solid var(--fb-line)", display: "grid", placeItems: "center" }}>
-							<div style={{ width: "64%", height: "70%", borderRadius: 14, background: "linear-gradient(160deg, rgba(12,10,7,0.07) 0%, rgba(12,10,7,0.18) 100%)", display: "grid", placeItems: "center", fontFamily: "var(--fb-mono)", fontSize: 10, letterSpacing: "0.1em", color: "var(--fb-ink-mute)", textTransform: "uppercase" }}>Zdjęcie właściciela</div>
+							<img src="/owner-portrait.png" alt="Magdalena Kowalczyk" style={{ width: "64%", height: "70%", borderRadius: 14, objectFit: "cover", objectPosition: "center center", display: "block" }} />
 						</div>
 						<div>
 							<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Historia właściciela</div>
@@ -367,7 +370,7 @@ export const LandingPage = () => {
 			</section>
 
 			{/* ─── PRICING ─── */}
-			<section id="pricing" className="fb-section" style={{ padding: "96px 0", background: "var(--fb-paper)" }}>
+			<section id="pricing" className="fb-section" style={{ padding: "96px 0", background: "var(--fb-cream)" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<div style={{ maxWidth: 720, marginBottom: 48 }}>
 						<div style={{ fontFamily: "var(--fb-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fb-ink-mute)" }}>Cennik</div>
@@ -403,7 +406,7 @@ export const LandingPage = () => {
 			</section>
 
 			{/* ─── FINAL CTA ─── */}
-			<section style={{ textAlign: "center", padding: "140px 0 100px", background: "radial-gradient(ellipse at 50% 100%, rgba(230,123,60,0.15), transparent 70%), var(--fb-cream)" }}>
+			<section style={{ textAlign: "center", padding: "140px 0 100px", background: "radial-gradient(ellipse at 50% 100%, rgba(108,43,49,0.18), transparent 70%), var(--fb-cream)" }}>
 				<div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
 					<h2 style={{ fontFamily: "var(--fb-serif)", fontStyle: "italic", fontSize: "clamp(56px, 8vw, 110px)", lineHeight: 0.95, letterSpacing: "-0.025em", margin: "0 auto", maxWidth: 880, fontWeight: 400 }}>
 						Najlepsza recenzja<br />to ta, która <em style={{ color: "var(--fb-primary)", fontFamily: "var(--fb-serif)", fontStyle: "italic" }}>wraca.</em>
@@ -626,7 +629,7 @@ const PriceCard = ({ tier, sub, price, features, featured, ghost, onCta }: {
 	featured?: boolean; ghost?: boolean; onCta: () => void;
 }) => (
 	<article style={{
-		padding: "32px 28px", background: featured ? "var(--fb-ink)" : "var(--fb-cream)",
+		padding: "32px 28px", background: featured ? "var(--fb-ink)" : "var(--fb-paper)",
 		borderRadius: 18, border: featured ? "none" : "0.5px solid var(--fb-line)",
 		color: featured ? "var(--fb-cream)" : "var(--fb-ink)",
 		display: "flex", flexDirection: "column", gap: 18,
